@@ -1,0 +1,9 @@
+body {
+    margin:auto;
+    width:1024px;
+    padding:10px;
+    background: rgb(195,195,195);
+    background: linear-gradient(90deg, rgba(195,195,195,1) 0%, rgba(0,1,23,1) 50%, rgba(236,236,236,1) 100%);
+    font-size:14px;
+    font-family:Verdana;
+}
