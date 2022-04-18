@@ -1,0 +1,30 @@
+.questionText {
+    font-size: small;
+}
+
+.titleLink {
+    text-decoration: none;
+}
+
+.titleLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.usernameLink {
+    font-size: small;
+    text-decoration: none;
+}
+
+.usernameLink:hover {
+    cursor: pointer;
+}
+
+.bodyText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+ }
