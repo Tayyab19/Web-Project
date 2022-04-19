@@ -34,7 +34,6 @@ const Navbar = () => {
                   />
                 </a>
               </li>
-
               <li class="nav-item">
                 <a class="nav-link" href="#">
                   <img
@@ -67,7 +66,7 @@ const Navbar = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button class="btn btn-outline-dark" type="submit">
               Search
             </button>
           </form>
