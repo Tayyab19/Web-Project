@@ -24,8 +24,8 @@ const Profile = () => {
       <Navbar />
       <div class="container">
         <div class="row">
-          <div class="col-lg-1"></div>
-          <div class="col-md-4 col-lg-5 col-sm-6">
+          <div class="col-lg-2"></div>
+          <div class="col-md-4 col-lg-4 col-sm-6">
             {/* Fix Image */}
             <img class="profile-picture" src={profile_pic} />
           </div>
