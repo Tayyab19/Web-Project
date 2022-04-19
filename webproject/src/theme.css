@@ -1,7 +1,28 @@
 body {
-    margin:auto;
-    background: rgb(195,195,195);
-    background: linear-gradient(90deg, rgba(195,195,195,1) 0%, rgba(238,238,238,1) 50%, rgba(195,195,195,1) 100%);
-    font-size:14px;
-    font-family:Verdana;
+  margin: auto;
+  background: rgb(195, 195, 195);
+  background: linear-gradient(
+    90deg,
+    rgba(195, 195, 195, 1) 0%,
+    rgba(238, 238, 238, 1) 50%,
+    rgba(195, 195, 195, 1) 100%
+  );
+  font-size: 14px;
+  font-family: Verdana;
+}
+
+.theme {
+  background-color: blueviolet !important;
+}
+
+.collapse .logo-icon {
+  width: 40%;
+}
+
+.logo-icon {
+  width: 5%;
+}
+
+.navbar form {
+  width: 50%;
 }

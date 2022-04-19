@@ -1,8 +1,12 @@
-const Login = () => {
+import Navbar from "../global_component/navbar";
 
-    return (
-        <h1 className="text-center text-light">Login</h1>
-    )
-}
+const Login = () => {
+  return (
+    <>
+      <Navbar />
+      <h1 className="text-center text-light">Login</h1>
+    </>
+  );
+};
 
 export default Login;
