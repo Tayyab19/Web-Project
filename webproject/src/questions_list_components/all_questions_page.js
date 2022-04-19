@@ -5,7 +5,7 @@ import Pagination from "./pagination";
 import Footer from "../global_component/footer";
 import { useParams } from "react-router-dom";
 
-const AllQuestionPage = ({questions, setQuestions}) => {
+const AllQuestionPage = ({questions, username}) => {
 
     const [questionsPerPage, setQuestionsPerPage] = useState(15);
 
@@ -19,7 +19,7 @@ const AllQuestionPage = ({questions, setQuestions}) => {
             <div className="row">
                 <div className="col-12 d-flex justify-content-between">
                     <h1 className="text-start" style={{fontSize: '30px'}}>All Questions</h1>
-                    <Link to={'/questions'}><button className="btn btn-primary d-flex justify-content-end">Ask Question</button></Link>
+                    <Link to={'/questions/ask'}><button className="btn btn-primary d-flex justify-content-end">Ask Question</button></Link>
                 </div>
             </div>
 

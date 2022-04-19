@@ -22,7 +22,7 @@ const QuestionCard = ({question}) => {
             <div className='col-12 col-md-10 row'>
 
                 <div className="col-12">
-                    <Link className='titleLink' to={`/question/${question.question_id}`}>{question.title}</Link>
+                    <Link className='titleLink' to={`/questions/question/${question.question_id}`}>{question.title}</Link>
                 </div>
 
                 <div className="col-12">
@@ -32,7 +32,7 @@ const QuestionCard = ({question}) => {
                     <div className='col-10'>
                         {
                             question.tags.map(tag => {
-                                return (<span className='mx-1' style={{fontSize:'12px', backgroundColor:'#ADD8E6', padding:'4px'}}>{tag}</span>)
+                                return (<span className='mx-1' style={{fontSize:'12px', backgroundColor:'#ADD8E6', padding:'6px'}}>{tag}</span>)
                             })
                         }
                     </div>

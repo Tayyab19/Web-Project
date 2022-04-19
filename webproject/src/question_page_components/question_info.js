@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 
-const QuestionInfo = ({getQuestion}) => {
+const QuestionInfo = ({getQuestion, username}) => {
     const { qID } = useParams(); 
     const [question, setQuestion] = useState(getQuestion(qID)[0])
 

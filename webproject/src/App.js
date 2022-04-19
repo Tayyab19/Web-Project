@@ -6,8 +6,10 @@ import Login from './login_components/Login';
 import AllQuestionPage from './questions_list_components/all_questions_page';
 import { useState } from 'react';
 import QuestionInfo from './question_page_components/question_info';
+import AddQuestion from './add_question_components/add_question';
 
 function App() {
+
   const [questions, setQuestions] = useState([
     {
         "question_id": 1,
@@ -275,8 +277,18 @@ function App() {
     }
 ])
 
-  const updateQuestions = (q) => {
-    setQuestions(q);
+  const currUsername = {
+    "name": "Ten Hag",
+    "reputation": 112,
+    "votes": 22,
+    "answers": 11,
+    "views": 44
+  };
+
+  const updateQuestion = (q) => {
+    setQuestions(questions.map(question => {
+      question.question_id == q.question_id ? q : question;
+    }));
   }
 
   const getQuestion = (id) => {
@@ -286,12 +298,17 @@ function App() {
     return q;
   }
 
+  const addQuestion = (q) => {
+    setQuestions([...questions, q]);
+  }
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/questions/page/:pageNumber" element={<AllQuestionPage questions={questions} setQuestions={updateQuestions}/>} />
-        <Route path="/question/:qID" element={<QuestionInfo getQuestion={getQuestion}/>} />
+        <Route path="/questions/page/:pageNumber" element={<AllQuestionPage questions={questions} username={currUsername} />} />
+        <Route path="/questions/question/:qID" element={<QuestionInfo getQuestion={getQuestion} username={currUsername} />} />
+        <Route path="/questions/ask" element={<AddQuestion addQuestion={addQuestion} questionID={+questions.length+ +1} username={currUsername} />} />
       </Routes>
     </Router>
   );
