@@ -22,7 +22,7 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <div class="container">
+      <div class="container profile-page">
         <div class="row"></div>
         <div class="row">
           <div class="col-lg-2"></div>
@@ -96,8 +96,10 @@ const Profile = () => {
         </div>
         <div class="row">
           <div class="col-lg-2"></div>
-          <div class="col-lg-2 col-sm-4 col-md-4">
-            Change Password. Open Modal
+          <div class="col-lg-2 col-sm-4 col-md-4"><br/>
+          <button class="btn btn-outline-primary" type="submit" onClick={<ChangeModal/>}>
+              Change Password
+            </button>
           </div>
           <div class="col-sm-8 col-md-8 col-lg-6">
             <label for="address">Address:</label>
