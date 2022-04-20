@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../questions_list_components/question.css"
 
 const QuestionForm = ({submitQuestion}) => {
 
@@ -51,7 +53,7 @@ const QuestionForm = ({submitQuestion}) => {
                 <label for="QuestionTags" className="form-label small">Add upto a maximum of 5 tags (Seperated by a comma)</label>
                 <input type="text" class="form-control" id="QuestionTags" onChange={e => {e.preventDefault(); updateTags(e)}} placeholder="e.g. java, c++"/>
             </div>
-            <button type="submit" onClick={e => {e.preventDefault(); submitQuestion(title, body, tags)}} class={isValid() ? "btn disabled btn-primary" : "btn active btn-primary"}>Add Question</button>
+            <Link to={"/questions/page/1"} className={isValid() ? 'disabled-link' : ''}><button type="btn" onClick={e => {submitQuestion(title, body, tags)}} class={isValid() ? "btn disabled btn-primary" : "btn active btn-primary"}>Add Question</button></Link>
         </form>
     )
 }

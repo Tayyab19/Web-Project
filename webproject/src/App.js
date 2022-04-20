@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, renderMatches} from 'react-router-dom';
 import Login from './login_components/Login';
 import AllQuestionPage from './questions_list_components/all_questions_page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuestionInfo from './question_page_components/question_info';
 import AddQuestion from './add_question_components/add_question';
 
@@ -277,6 +277,20 @@ function App() {
     }
 ])
 
+  const [filteredQuestions, setFilteredQuestions] = useState(questions);
+
+  const [isFilter, setFilter] = useState(false);
+
+  const getTags = () => {
+    let tags = []
+    questions.forEach(q => {
+      tags = tags.concat(q.tags);
+    });
+  
+    tags = [...new Set(tags)];
+    return tags;
+  }
+
   const currUsername = {
     "name": "Ten Hag",
     "reputation": 112,
@@ -289,24 +303,41 @@ function App() {
     setQuestions(questions.map(question => {
       question.question_id == q.question_id ? q : question;
     }));
+    setFilteredQuestions(questions);
   }
 
   const getQuestion = (id) => {
-    const q = questions.filter(q => {
+    const q = filteredQuestions.filter(q => {
       return (q.question_id == id)
     });
     return q;
   }
 
   const addQuestion = (q) => {
+    setFilteredQuestions([...questions, q]);
     setQuestions([...questions, q]);
   }
+
+  const applyFilter = (selectedTags) => {
+    selectedTags.length > 0 ?
+      setFilteredQuestions(questions.filter(q => {
+        return q.tags.some(tag => selectedTags.includes(tag))
+      }))
+    :
+    setFilteredQuestions(questions);
+  }
+
+  useEffect(()=>{}, [filteredQuestions]);
+
+  useEffect(() => {
+    isFilter ? null : setFilteredQuestions(questions);
+  }, [isFilter])
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/questions/page/:pageNumber" element={<AllQuestionPage questions={questions} username={currUsername} />} />
+        <Route path="/questions/page/:pageNumber" element={<AllQuestionPage questions={filteredQuestions} username={currUsername} getTags={getTags} applyFilter={applyFilter} isFilter={isFilter} setFilter={setFilter}/>} />
         <Route path="/questions/question/:qID" element={<QuestionInfo getQuestion={getQuestion} username={currUsername} />} />
         <Route path="/questions/ask" element={<AddQuestion addQuestion={addQuestion} questionID={+questions.length+ +1} username={currUsername} />} />
       </Routes>

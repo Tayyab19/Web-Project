@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import QuestionCard from "./question_card";
+import Filter from "./filter";
 import {Link} from 'react-router-dom'
 import Pagination from "./pagination";
 import Footer from "../global_component/footer";
 import { useParams } from "react-router-dom";
 
-const AllQuestionPage = ({questions, username}) => {
+const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, setFilter}) => {
 
     const [questionsPerPage, setQuestionsPerPage] = useState(15);
 
@@ -26,14 +27,20 @@ const AllQuestionPage = ({questions, username}) => {
             <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-between">
                     <p className="text-start" style={{fontSize: '24px'}}>{questions.length} questions</p>
-                    <button className="btn btn-outline-secondary d-flex justify-content-end" style={{height: '40px', fontWeight:'bold'}} >Filter</button>
+                    <button onClick={e => {e.preventDefault(); setFilter(!isFilter)}} className="btn btn-outline-secondary d-flex justify-content-end" style={{height: '40px', fontWeight:'bold'}} >Filter</button>
                 </div>
             </div>
 
+            {
+                isFilter ? <Filter getTags={getTags} applyFilter={applyFilter} /> : null
+            }
+
+
             <hr />
 
+            {console.log(questions)}
             {
-                questions.map((question, index) => {
+                questions?.map((question, index) => {
                     return(
                     ( index >= questionsPerPage * (pageNumber-1) && index <= questionsPerPage * pageNumber ?
                     <div className="container mb-2" style={{padding: '3px'}}>
