@@ -8,6 +8,7 @@ import QuestionInfo from "./question_page_components/question_info";
 import AddQuestion from "./add_question_components/add_question";
 import Profile from "./profile_components/profile";
 import { useEffect, useState } from 'react';
+import Navbar from "./global_component/navbar";
 
 function App() {
   const [questions, setQuestions] = useState([
@@ -334,14 +335,18 @@ function App() {
   }, [isFilter])
 
   return (
+    <>
+    <Navbar />
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/questions/page/:pageNumber" element={<AllQuestionPage questions={filteredQuestions} username={currUsername} getTags={getTags} applyFilter={applyFilter} isFilter={isFilter} setFilter={setFilter}/>} />
         <Route path="/questions/question/:qID" element={<QuestionInfo getQuestion={getQuestion} username={currUsername} />} />
         <Route path="/questions/ask" element={<AddQuestion addQuestion={addQuestion} questionID={+questions.length+ +1} username={currUsername} />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
     </Router>
+    </>
   );
 }
 

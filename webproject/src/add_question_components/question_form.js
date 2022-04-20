@@ -44,7 +44,7 @@ const QuestionForm = ({submitQuestion}) => {
             <div class="mb-5">
                 <label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
                 <label for="QuestionBody" className="form-label small">Include all the information someone would need to answer your question</label>
-                <input style={{lineHeight: "12em"}} type="text" onChange={e => {e.preventDefault(); updateBody(e)}} class="form-control" id="QuestionBody"/>
+                <input style={{lineHeight: "8em"}} type="text" onChange={e => {e.preventDefault(); updateBody(e)}} class="form-control" id="QuestionBody"/>
             </div>
 
 

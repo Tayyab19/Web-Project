@@ -27,7 +27,7 @@ const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, s
             <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-between">
                     <p className="text-start" style={{fontSize: '24px'}}>{questions.length} questions</p>
-                    <button onClick={e => {e.preventDefault(); setFilter(!isFilter)}} className="btn btn-outline-secondary d-flex justify-content-end" style={{height: '40px', fontWeight:'bold'}} >Filter</button>
+                    <button onClick={e => {e.preventDefault(); setFilter(!isFilter)}} className="btn btn-outline-secondary d-flex justify-content-end" style={{height: '40px', fontWeight:'bold'}} >{isFilter ? "Remove Filter" : "Filter"}</button>
                 </div>
             </div>
 
@@ -63,9 +63,9 @@ const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, s
                 <nav aria-label="Page navigation example">
                     <ul class="pagination pagination-sm">
 
-                        <li className= "page-item"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(15)}} className= {questionsPerPage === 15 ? "btn bg-primary text-white" : "btn bg-secondary text-white"} >15</button></li>
-                        <li className="page-item"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(30)}} className= {questionsPerPage === 30 ? "btn bg-primary text-white" : "btn bg-secondary text-white"} >30</button></li>
-                        <li className="page-item"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(50)}} className= {questionsPerPage === 50 ? "btn bg-primary text-white" : "btn bg-secondary text-white"}>50</button></li> 
+                        <li className= "page-item mx-1"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(15)}} className= {questionsPerPage === 15 ? "btn bg-primary text-white" : "btn bg-secondary text-white"} >15</button></li>
+                        <li className="page-item mx-1"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(30)}} className= {questionsPerPage === 30 ? "btn bg-primary text-white" : "btn bg-secondary text-white"} >30</button></li>
+                        <li className="page-item mx-1"><button onClick={(e) => {e.preventDefault(); setQuestionsPerPage(50)}} className= {questionsPerPage === 50 ? "btn bg-primary text-white" : "btn bg-secondary text-white"}>50</button></li> 
                         <p className="mx-1 mt-1" style={{fontWeight:'bold'}}>per page</p>
                         
                     </ul>

@@ -34,7 +34,3 @@
     background: linear-gradient(90deg, rgba(80,80,80,1) 0%, rgba(130,130,130,1) 50%, rgba(80,80,80,1) 100%);
     font-weight: bold;
  }
-
- .disabled-link {
-    pointer-events: none;
-  }

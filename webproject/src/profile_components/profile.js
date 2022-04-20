@@ -21,7 +21,6 @@ const Profile = () => {
   };
   return (
     <>
-      <Navbar />
       <div class="container">
         <div class="row"></div>
         <div class="row">
