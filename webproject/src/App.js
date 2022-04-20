@@ -278,7 +278,7 @@ function App() {
     },
   ]);
 
-  const [users, setUsers] = useState([
+  let [users, setUsers] = useState([
     {
       username: "BenHan1",
       firstName: "Ben",
@@ -347,7 +347,7 @@ function App() {
   };
 
   const currUsername = {
-    name: "Ten Hag",
+    name: "TenHang1",
     reputation: 112,
     votes: 22,
     answers: 11,
@@ -368,6 +368,22 @@ function App() {
       return q.question_id == id;
     });
     return q;
+  };
+
+  const getUser = (id) => {
+    for (const element of users) {
+      if (element.username === id) return element;
+    }
+    return null;
+  };
+
+  const updateUser = (obj) => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === obj.username) {
+        users[i] = obj;
+      }
+    }
+    console.log(obj);
   };
 
   const addQuestion = (q) => {
@@ -426,7 +442,16 @@ function App() {
               />
             }
           />
-          <Route path="/profile/:username" element={<Profile />} />
+          <Route
+            path="/profile/:uID"
+            element={
+              <Profile
+                username={currUsername}
+                getUser={getUser}
+                updateUser={updateUser}
+              />
+            }
+          />
         </Routes>
       </Router>
     </>
