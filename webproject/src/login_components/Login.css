@@ -1,0 +1,13 @@
+.card-style {
+  /* margin-right: 200px;
+  margin-left: 200px;
+  margin-top: 25px;
+  margin-bottom: 25px; */
+  border-radius: 20%;
+}
+.login-color {
+  color: rgba(81, 43, 197, 0.642);
+}
+.login-btn {
+  background-color: rgba(81, 43, 197, 0.642);
+}

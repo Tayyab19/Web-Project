@@ -2,6 +2,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signup from "./login_components/Signup";
+import ForgotPassword from "./login_components/ForgotPassword";
 import Login from "./login_components/Login";
 import AllQuestionPage from "./questions_list_components/all_questions_page";
 import QuestionInfo from "./question_page_components/question_info";
@@ -413,6 +415,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route
             path="/questions/page/:pageNumber"
             element={
