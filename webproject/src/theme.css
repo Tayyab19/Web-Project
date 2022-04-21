@@ -15,12 +15,16 @@ body {
   background-color: blueviolet !important;
 }
 
-.collapse .logo-icon {
-  width: 40%;
+@media (max-width: 990px) {
+  .show .logo-icon {
+    width: 4%;
+  }
 }
 
-.logo-icon {
-  width: 5%;
+@media (min-width: 991px) {
+  .show .logo-icon {
+    width: 40%;
+  }
 }
 
 .navbar form {
