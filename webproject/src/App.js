@@ -278,6 +278,21 @@ function App() {
     },
   ]);
 
+  const [answers, setAnswers] = useState([
+    {
+      answer_id: 1,
+      question_id: 1,
+      votes: 7,
+      string: "The answer is simple, it helps you to work in a team and people dont have to get angry with you and smash you over the head with things"
+    },
+    {
+      answer_id: 1,
+      question_id: 2,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    }
+  ]);
+
   let [users, setUsers] = useState([
     {
       username: "BenHan1",
@@ -334,6 +349,8 @@ function App() {
   ]);
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
 
+  const [filteredAnswers, setFilteredAnswers] = useState(answers);
+
   const [isFilter, setFilter] = useState(false);
 
   const getTags = () => {
@@ -369,6 +386,13 @@ function App() {
     });
     return q;
   };
+
+  const getAnswers = (qid) => {
+    const ans = filteredAnswers.filter((a)=>{
+      return (a.question_id == qid)
+    })
+    return ans;
+  }
 
   const getUser = (id) => {
     for (const element of users) {
@@ -429,7 +453,7 @@ function App() {
           <Route
             path="/questions/question/:qID"
             element={
-              <QuestionInfo getQuestion={getQuestion} username={currUsername} />
+              <QuestionInfo getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} />
             }
           />
           <Route

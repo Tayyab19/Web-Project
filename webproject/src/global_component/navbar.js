@@ -7,7 +7,14 @@ import ReactTooltip from "react-tooltip";
 const Navbar = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light theme">
+      <nav class="navbar navbar-expand-lg navbar-light" 
+      style={{
+        backgroundColor: "#e49b35",
+        color: "white",
+        position: "sticky",
+        top: "0",
+        zIndex: "100",
+      }}>
         <div class="container-fluid">
           <button
             className="navbar-toggler collapsed"
@@ -66,7 +73,12 @@ const Navbar = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <button class="btn btn-outline-dark" type="submit">
+            <button class="btn btn-outline-dark" type="submit"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+            }}
+            >
               Search
             </button>
           </form>
