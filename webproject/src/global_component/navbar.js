@@ -18,6 +18,7 @@ const Navbar = ({ username }) => {
           position: "sticky",
           top: "0",
           zIndex: "100",
+          width: "auto",
         }}
       >
         <div class="container-fluid">
@@ -84,7 +85,7 @@ const Navbar = ({ username }) => {
           >
             FAST FLOW
           </Link>
-          <form class="d-flex justify-content-center col-12 col-md-6 mt-3 mt-md-0 mx-5 mx-md-0">
+          <form class="d-flex justify-content-center col-12 col-md-6 mt-3 mt-md-0 mx-5 mx-md-0" style ={{width: 'auto'}}>
             <input
               className="form-control"
               type="search"

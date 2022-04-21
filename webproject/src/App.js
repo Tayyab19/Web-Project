@@ -20,7 +20,7 @@ function App() {
       username: "Rick Peters",
       reputation: 2,
       votes: 1,
-      answers: 0,
+      answers: 1,
       views: 2,
     },
     {
@@ -286,8 +286,8 @@ function App() {
       string: "The answer is simple, it helps you to work in a team and people dont have to get angry with you and smash you over the head with things"
     },
     {
-      answer_id: 1,
-      question_id: 2,
+      answer_id: 2,
+      question_id: 1,
       votes: 2,
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     }
@@ -387,9 +387,26 @@ function App() {
     return q;
   };
 
+  const upVote = (qid) => {
+      const q = filteredQuestions.filter((a)=>{
+          return (a.question_id === qid)
+      })
+      q.votes = q.votes+1;
+      updateQuestion(q);
+      console.log("upvote");
+    
+    /*for (let i = 0; i < answers.length; i++) {
+      if (qid === answers[i].question_id) {
+        answers[i].votes = answers[i].votes + 1 
+        console.log('UPVOTE QUESTION');
+      }
+    }*/
+
+  };
+
   const getAnswers = (qid) => {
     const ans = filteredAnswers.filter((a)=>{
-      return (a.question_id == qid)
+      return (a.question_id == qid);
     })
     return ans;
   }
@@ -453,7 +470,7 @@ function App() {
           <Route
             path="/questions/question/:qID"
             element={
-              <QuestionInfo getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} />
+              <QuestionInfo upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} />
             }
           />
           <Route
