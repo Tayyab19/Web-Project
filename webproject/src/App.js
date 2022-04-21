@@ -433,8 +433,8 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Router>
+    <Router>
+      <Navbar username={currUsername}/>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
