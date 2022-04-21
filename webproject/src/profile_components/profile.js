@@ -65,8 +65,8 @@ const Profile = ({ username, getUser, updateUser }) => {
       <div class="container profile-page">
         <div class="row"></div>
         <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-md-4 col-lg-4 col-sm-6">
+          <div class="col-lg-2 col-sm-1"></div>
+          <div class="col-md-4 col-lg-4 col-sm-10">
             {/* Fix Image */}
             <img
               class="profile-picture"
@@ -76,7 +76,7 @@ const Profile = ({ username, getUser, updateUser }) => {
               }}
             />
           </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label for="email">Email:</label>
             <input
               id="email"
@@ -86,7 +86,7 @@ const Profile = ({ username, getUser, updateUser }) => {
               disabled
             />
           </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div class="col-lg-2 col-md-3 col-sm-6">
             <label for="username">Username: </label>
             <input
               id="username"
@@ -96,7 +96,7 @@ const Profile = ({ username, getUser, updateUser }) => {
               disabled
             />
           </div>
-          <div class="col-lg-2"></div>
+          <div class="col-lg-2 col-sm-1"></div>
         </div>
         <div class="row">
           <div class="col-lg-2"></div>
