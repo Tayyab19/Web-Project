@@ -5,6 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Signup from "./login_components/Signup";
 import ForgotPassword from "./login_components/ForgotPassword";
 import Login from "./login_components/Login";
+import SyntaxNav from "./syntaxes_components/SyntaxNav";
+import Html from "./syntaxes_components/Html";
+import CSS from "./syntaxes_components/CSS";
+import Javascript from "./syntaxes_components/Javascript";
 import AllQuestionPage from "./questions_list_components/all_questions_page";
 import QuestionInfo from "./question_page_components/question_info";
 import AddQuestion from "./add_question_components/add_question";
@@ -417,11 +421,10 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/" element={<SyntaxesNav />} />
-          <Route path="/signup" element={<Html />} />
-          <Route path="/signup" element={<CSS />} />
-          <Route path="/signup" element={<Javascript />} />
-          <Route path="/signup" element={<Python />} />
+          <Route path="/syntaxes" element={<SyntaxNav />} />
+          <Route path="/syntaxhtml" element={<Html />} />
+          <Route path="/syntaxcss" element={<CSS />} />
+          <Route path="/syntaxjavascript" element={<Javascript />} />
           <Route
             path="/questions/page/:pageNumber"
             element={
