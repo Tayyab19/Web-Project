@@ -5,14 +5,17 @@ import $ from "jquery";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ChangePasswordModal from "./changePasswordModal";
+import ChangePictureModal from "./changePictureModal";
 
+//ChangePassword and ChangeProfilePicture should be from App.js
 const Profile = ({ username, getUser, updateUser }) => {
   const { uID } = useParams();
   let [userData, setUser] = useState(getUser(uID));
-  //   const initialData = userData;
   const [changePassword, setChangePassword] = useState(false);
-  //   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
+  const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [password, setPassword] = useState("a");
+  const [picture, setPicture] = useState("b");
+  //setPicture(profile_pic);
   //Redirect to 404 Not found
 
   useEffect(() => {
@@ -27,6 +30,7 @@ const Profile = ({ username, getUser, updateUser }) => {
       }
     }
     console.log("Password: " + password);
+    console.log(picture);
   });
 
   const handleUpdate = (value) => {
@@ -51,13 +55,26 @@ const Profile = ({ username, getUser, updateUser }) => {
         />
       )}
       ;
+      {changeProfilePicture && (
+        <ChangePictureModal
+          picture={profile_pic}
+          setChangeProfilePicture={setChangeProfilePicture}
+          setPicture={setPicture}
+        />
+      )}
       <div class="container profile-page">
         <div class="row"></div>
         <div class="row">
           <div class="col-lg-2"></div>
           <div class="col-md-4 col-lg-4 col-sm-6">
             {/* Fix Image */}
-            <img class="profile-picture" src={profile_pic} />
+            <img
+              class="profile-picture"
+              src={profile_pic}
+              onClick={() => {
+                setChangeProfilePicture(true);
+              }}
+            />
           </div>
           <div class="col-lg-2 col-md-3 col-sm-3">
             <label for="email">Email:</label>
