@@ -46,7 +46,7 @@ const ChangePictureModal = ({
               if (fileInput === undefined) {
                 alert("No Picture Selected");
               } else {
-                setPicture(fileInput);
+                setPicture(fileInput.current.files[0].name);
                 setChangeProfilePicture(false);
               }
             }}
