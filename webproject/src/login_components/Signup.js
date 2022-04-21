@@ -22,6 +22,7 @@ const Signup = () => {
                           id="form3email"
                           class="form-control form-control-md"
                           placeholder="email"
+                          required="true"
                         />
                       </div>
 
@@ -31,6 +32,7 @@ const Signup = () => {
                           id="formusername"
                           class="form-control form-control-md"
                           placeholder="username"
+                          required="true"
                         />
                       </div>
 
@@ -40,6 +42,7 @@ const Signup = () => {
                           id="formpassword"
                           class="form-control form-control-md"
                           placeholder="password"
+                          required="true"
                         />
                       </div>
 
