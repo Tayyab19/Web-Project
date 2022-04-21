@@ -11,3 +11,8 @@
 .login-btn {
   background-color: rgba(81, 43, 197, 0.642);
 }
+.error-msg {
+  font: 12px;
+  width: 100%;
+  color: red;
+}

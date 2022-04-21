@@ -1,7 +1,10 @@
-import Navbar from "../global_component/navbar";
 import "./Login.css";
 import { Link } from "react-router-dom";
 const Signup = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("You have been successfully registered!");
+  };
   return (
     <>
       <section>
@@ -15,10 +18,10 @@ const Signup = () => {
                       Signup
                     </h2>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="form-outline mb-4">
                         <input
-                          type="Email"
+                          type="email"
                           id="form3email"
                           class="form-control form-control-md"
                           placeholder="email"
@@ -114,8 +117,8 @@ const Signup = () => {
 
                       <div class="d-flex justify-content-center mb-3">
                         <button
-                          type="button"
                           class="btn btn-primary  btn-block btn-lg gradient-custom-4 text-body"
+                          type="submit"
                         >
                           Sign up
                         </button>
