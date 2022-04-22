@@ -40,7 +40,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
     return (
         <div className="row">
         <div className="col-sm-2"></div>
-        <div className="Question col-sm-7 row" style={{paddingTop:'40px'}}>
+        <div className="Question col-sm-8 row" style={{paddingTop:'40px'}}>
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
                 <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote(qID);}}>Upvote</button>
@@ -66,17 +66,17 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
                 
             }
             
-            <form className="bg-white p-5 mb-5">
+            <form className="p-5 mb-5">
             <h6>Add New Comment:</h6>
             <div class="mb-5">
-                <label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
-                <label for="QuestionBody" className="form-label small">Include all the information someone would need to answer your question</label>
-                <input style={{lineHeight: "8em"}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
+                {/*<label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
+                <label for="QuestionBody" className="form-label small"></label>*/}
+                <textarea style={{height:'120px'}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
             </div>
                 <button type="btn btn-primary" onClick={e => {e.preventDefault(); submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
             </form>
         </div>
-        <div className="col-sm-3"></div>
+        <div className="col-sm-2"></div>
         </div>
     )
 }
