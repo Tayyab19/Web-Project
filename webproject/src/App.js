@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,6 +10,7 @@ import Navbar from "./global_component/navbar";
 import Login from "./login_components/Login";
 import Signup from "./login_components/Signup";
 import ForgotPassword from "./login_components/ForgotPassword";
+import SyntaxNav from "./syntaxes_components/SyntaxNav";
 
 function App() {
   const [questions, setQuestions] = useState([
@@ -677,7 +677,9 @@ function App() {
       : setFilteredQuestions(questions);
   };
 
-  useEffect(() => {console.log(filteredAnswers)}, [filteredQuestions, filteredAnswers]);
+  useEffect(() => {
+    console.log(filteredAnswers);
+  }, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
     // isFilter ? null : setFilteredQuestions(questions);
@@ -699,10 +701,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          {/* <Route path="/syntaxes" element={<SyntaxNav />} />
-          <Route path="/syntaxhtml" element={<Html />} />
-          <Route path="/syntaxcss" element={<CSS />} />
-          <Route path="/syntaxjavascript" element={<Javascript />} /> */}
+          <Route path="/syntaxes" element={<SyntaxNav />} />
           <Route
             path="/questions/page/:pageNumber"
             element={

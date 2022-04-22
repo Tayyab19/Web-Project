@@ -1,5 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
-import React, { useState } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 
 const ChangePictureModal = ({

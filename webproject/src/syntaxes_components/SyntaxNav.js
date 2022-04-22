@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
+import Javascript from "./Javascript";
+import CSS from "./CSS";
+import HTML from "./Html";
+import { useState } from "react";
 
 const SyntaxNav = () => {
+  const [sID, setsID] = useState("html");
   return (
     <>
       <Navbar bg="light" variant="light">
@@ -9,18 +13,20 @@ const SyntaxNav = () => {
           <Navbar.Brand href="#home">Languages</Navbar.Brand>
           <Nav className=" text-black me-auto">
             <Nav.Link className="text-black">
-              <Link to="/syntaxes/html">Html </Link>
+              <a onClick={() => setsID("html")}>Html </a>
             </Nav.Link>
             <Nav.Link>
-              <Link to="/syntaxes/css">CSS</Link>
+              <a onClick={() => setsID("css")}>CSS</a>
             </Nav.Link>
             <Nav.Link>
-              <Link to="/syntaxes/javascript">Javascript </Link>
+              <a onClick={() => setsID("javascript")}>Javascript </a>
             </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <h2 className="text-centre">Laguages Syntaxes</h2>
+      {sID === "css" ? <CSS /> : null}
+      {sID === "javascript" ? <Javascript /> : null}
+      {sID === "html" ? <HTML /> : null}
     </>
   );
 };

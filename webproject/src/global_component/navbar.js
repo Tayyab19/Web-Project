@@ -56,14 +56,14 @@ const Navbar = ({ username }) => {
                   />
                 </Link>
               </li>
-              <li class="nav-item">
-                <a class="navbar-brand" href="#">
+              <li class="nav-item mt-2">
+                <Link to={"/syntaxes"}>
                   <img
                     class="logo-icon"
                     src={list_logo}
                     data-tip="View Syntax List"
                   />
-                </a>
+                </Link>
               </li>
               <li class="nav-item mt-2">
                 <Link to={"/"}>
@@ -85,7 +85,10 @@ const Navbar = ({ username }) => {
           >
             FAST FLOW
           </Link>
-          <form class="d-flex justify-content-center col-12 col-md-6 mt-3 mt-md-0 mx-5 mx-md-0" style ={{width: 'auto'}}>
+          <form
+            class="d-flex justify-content-center col-12 col-md-6 mt-3 mt-md-0 mx-5 mx-md-0"
+            style={{ width: "auto" }}
+          >
             <input
               className="form-control"
               type="search"
