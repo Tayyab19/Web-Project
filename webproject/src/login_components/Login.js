@@ -1,5 +1,4 @@
-import { FaGoogle } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
