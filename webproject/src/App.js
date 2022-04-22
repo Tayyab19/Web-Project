@@ -2,13 +2,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./login_components/Login";
 import AllQuestionPage from "./questions_list_components/all_questions_page";
 import QuestionInfo from "./question_page_components/question_info";
 import AddQuestion from "./add_question_components/add_question";
 import Profile from "./profile_components/profile";
 import { useEffect, useState } from "react";
 import Navbar from "./global_component/navbar";
+import Login from "./login_components/Login";
+import Signup from "./login_components/Signup";
+import ForgotPassword from "./login_components/ForgotPassword";
 
 function App() {
   const [questions, setQuestions] = useState([
@@ -590,7 +592,7 @@ function App() {
   const updateQuestion = (q) => {
     setQuestions(
       questions.map((question) => {
-        question.question_id == q.question_id ? q : question;
+        // question.question_id == q.question_id ? q : question;
       })
     );
     setFilteredQuestions(questions);
@@ -678,7 +680,7 @@ function App() {
   // useEffect(() => {}, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
-    isFilter ? null : setFilteredQuestions(questions);
+    // isFilter ? null : setFilteredQuestions(questions);
   }, [isFilter]);
 
   const getQuestions = (uID) => {
@@ -695,6 +697,12 @@ function App() {
         <Navbar username={currUsername} />
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          {/* <Route path="/syntaxes" element={<SyntaxNav />} />
+          <Route path="/syntaxhtml" element={<Html />} />
+          <Route path="/syntaxcss" element={<CSS />} />
+          <Route path="/syntaxjavascript" element={<Javascript />} /> */}
           <Route
             path="/questions/page/:pageNumber"
             element={
