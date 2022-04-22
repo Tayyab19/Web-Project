@@ -12,7 +12,7 @@ const AnswerInfo = ({answer, upVoteForAnswers}) => {
         <div className="row">
             <div className="answerButton col-sm-2" style={{textAlign:"center"}}>
                 <p>{currAnsVote} likes</p>
-                <button onClick={e => {e.preventDefault(); setCurrAnsVote(currAnsVote + 1)}} className="btn btn-primary">upvote</button>
+                <button onClick={e => {e.preventDefault(); setCurrAnsVote(currAnsVote + 1)}} className="btn btn-primary">Like</button>
             </div>
             <div className="col-sm-10" style={{
                 display:"flex",

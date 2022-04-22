@@ -16,9 +16,9 @@ function App() {
   const [questions, setQuestions] = useState([
     {
       question_id: 1,
-      title: "Why do we need to follow programming conventions?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-      tags: ["java", "php", "python"],
+      title: "Converting Multiple Nested JSON files to CSV using Pandas",
+      body: "I have 170 files of twitter data in the format of JSON files and I am trying to convert all of them into CSV files and add them into a new directory. This was my initial code, where I iterate through a folder containing all 170 JSON files",
+      tags: ["json", "pandas", "python", "csv"],
       username: "TenHang1",
       reputation: 2,
       votes: 1,
@@ -28,8 +28,8 @@ function App() {
     {
       question_id: 2,
       title: "What is MVC framework?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      tags: ["java", "javascript", "python"],
+      body: "Can any one let me know what is the difference between Spring and Spring MVC Framework?",
+      tags: ["java", "spring", "mvc"],
       username: "TenHang1",
       reputation: 12,
       votes: 4,
@@ -38,9 +38,9 @@ function App() {
     },
     {
       question_id: 3,
-      title: "What is MVC framework?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      tags: ["java", "javascript", "python"],
+      title: "Unable to use gopacket to snoop on connected socket",
+      body: "I'm trying to use gopacket to snoop on a socket and print tcp packet payloads. If I start the snooper app first and then connect a tcp socket, things work correctly. If the socket is already connected, how should I proceed?",
+      tags: ["go", "gopacket"],
       username: "Nick",
       reputation: 12,
       votes: 4,
