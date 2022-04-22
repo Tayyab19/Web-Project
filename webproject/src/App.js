@@ -20,7 +20,7 @@ function App() {
       username: "Rick Peters",
       reputation: 2,
       votes: 1,
-      answers: 1,
+      answers: 3,
       views: 2,
     },
     {
@@ -31,7 +31,7 @@ function App() {
       username: "Nick",
       reputation: 12,
       votes: 4,
-      answers: 1,
+      answers: 2,
       views: 22,
     },
     {
@@ -288,9 +288,166 @@ function App() {
     {
       answer_id: 2,
       question_id: 1,
+      votes: 1,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 3,
+      question_id: 1,
+      votes: 3,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 4,
+      question_id: 2,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 5,
+      question_id: 2,
+      votes: 4,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 6,
+      question_id: 3,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 7,
+      question_id: 4,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 8,
+      question_id: 3,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 9,
+      question_id: 5,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 10,
+      question_id: 6,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 11,
+      question_id: 7,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 12,
+      question_id: 8,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 13,
+      question_id: 9,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 14,
+      question_id: 10,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 15,
+      question_id: 11,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 16,
+      question_id: 12,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 17,
+      question_id: 13,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 18,
+      question_id: 14,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 19,
+      question_id: 15,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 20,
+      question_id: 16,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 21,
+      question_id: 17,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 22,
+      question_id: 18,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 23,
+      question_id: 19,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 24,
+      question_id: 20,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 25,
+      question_id: 21,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 26,
+      question_id: 22,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 27,
+      question_id: 23,
+      votes: 2,
+      string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
+    },
+    {
+      answer_id: 28,
+      question_id: 24,
       votes: 2,
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     }
+
   ]);
 
   let [users, setUsers] = useState([
@@ -374,7 +531,7 @@ function App() {
   const updateQuestion = (q) => {
     setQuestions(
       questions.map((question) => {
-        question.question_id == q.question_id ? q : question;
+        //question.question_id == q.question_id ? q : question;
       })
     );
     setFilteredQuestions(questions);
@@ -388,13 +545,20 @@ function App() {
   };
 
   const upVote = (qid) => {
-      const q = filteredQuestions.filter((a)=>{
-          return (a.question_id === qid)
-      })
-      q.votes = q.votes+1;
-      updateQuestion(q);
-      console.log("upvote");
+    const q = questions.filter((a)=>{
+      return a.question_id == qid
+    })
     
+    q[0].votes = q[0].votes+1;
+    console.log(q[0])
+    setQuestions(
+      questions.map((a) => {
+        return a.question_id === q.question_id? q : a;
+      })
+    );
+    setFilteredQuestions(questions);
+    return q;
+
     /*for (let i = 0; i < answers.length; i++) {
       if (qid === answers[i].question_id) {
         answers[i].votes = answers[i].votes + 1 
@@ -445,7 +609,7 @@ function App() {
   useEffect(() => {}, [filteredQuestions]);
 
   useEffect(() => {
-    isFilter ? null : setFilteredQuestions(questions);
+    //isFilter ? null : setFilteredQuestions(questions);
   }, [isFilter]);
 
   return (

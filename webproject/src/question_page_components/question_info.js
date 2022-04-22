@@ -22,7 +22,7 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username}) => {
 
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
-                <button className="btn btn-primary" style={{width:'100%'}} onClick={() => setVote2(qID)}>Upvote</button>
+                <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote2(qID);}}>Upvote</button>
             </div>
             <div className="col-sm-10">
                 <h3>{question.title}</h3>
@@ -44,6 +44,8 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username}) => {
                 })
                 
             }
+            <h6>Add New Comment:</h6>
+            <input></input>
         </div>
         <div className="col-sm-3"></div>
         </div>
