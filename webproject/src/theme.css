@@ -16,14 +16,14 @@ body {
 }
 
 @media (max-width: 990px) {
-  .show .logo-icon {
-    width: 4%;
+  .logo-icon {
+    width: 1.5rem;
   }
 }
 
 @media (min-width: 991px) {
-  .show .logo-icon {
-    width: 40%;
+  .logo-icon {
+    width: 50%;
   }
 }
 

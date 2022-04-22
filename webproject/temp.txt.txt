@@ -1,0 +1,70 @@
+          <Route
+            path="/profile/:uID"
+            element={
+              <Profile
+                username={currUsername}
+                getUser={getUser}
+                updateUser={updateUser}
+                getQuestion={getQuestion}
+              />
+            }
+          />
+
+  let [users, setUsers] = useState([
+    {
+      username: "BenHan1",
+      firstName: "Ben",
+      lastName: "Han",
+      reputation: 190,
+      badges: ["A", "B"],
+      email: "benhan@gmail.com",
+      addrress: "221-B Baker Street",
+      linkedIn: "benhan12",
+      gitHub: "benHan123",
+      company: "Softec",
+      preferredStack: "MERN",
+      questions: ["1", "2"],
+    },
+    {
+      username: "TenHang1",
+      firstName: "Ten",
+      lastName: "Hang",
+      reputation: 100,
+      badges: ["A", "B", "C"],
+      email: "tenhang@gmail.com",
+      addrress: "221-B Baker Street",
+      linkedIn: "tenHang12",
+      gitHub: "tenHang123",
+      company: "Softec",
+      preferredStack: "MERN",
+      questions: ["3", "4"],
+    },
+    {
+      username: "GenHang1",
+      firstName: "Gen",
+      lastName: "Hang",
+      reputation: 200,
+      badges: ["A", "B", "C", "D"],
+      email: "genhang@gmail.com",
+      addrress: "221-B Baker Street",
+      linkedIn: "genHang12",
+      gitHub: "genHang123",
+      company: "Softec",
+      preferredStack: "MERN",
+      questions: ["4", "5"],
+    },
+    {
+      username: "WenHang1",
+      firstName: "Wen",
+      lastName: "Hang",
+      reputation: 10,
+      badges: ["B", "C"],
+      email: "wenhang@gmail.com",
+      addrress: "221-B Baker Street",
+      linkedIn: "wenHang12",
+      gitHub: "wenHang123",
+      company: "Softec",
+      preferredStack: "MERN",
+      questions: ["7", "6"],
+    },
+  ]);
