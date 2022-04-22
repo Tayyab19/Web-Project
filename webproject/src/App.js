@@ -588,6 +588,11 @@ function App() {
     return q;
   };
 
+  const upVoteForAnswers = (answerID, votes) => {
+    setFilteredAnswers(filteredAnswers.map(ans => ans.answer_id === answerID ? {...ans, votes: votes} : ans))
+    setAnswers(answers.map(ans => ans.answer_id === answerID ? {...ans, votes: votes} : ans))
+  }
+
   const getAnswers = (qid) => {
     const ans = filteredAnswers.filter((a)=>{
       return (a.question_id == qid);
@@ -619,7 +624,7 @@ function App() {
   const addAnswer = (a) => {
     setFilteredAnswers([...answers,a]);
     setAnswers([...answers,a]);
-    console.log(a);
+    console.log(filteredAnswers);
   }
 
   const applyFilter = (selectedTags) => {
@@ -632,10 +637,11 @@ function App() {
       : setFilteredQuestions(questions);
   };
 
-  useEffect(() => {}, [filteredQuestions]);
+  // useEffect(() => {}, [filteredQuestions, filteredAnswers]);
+
 
   useEffect(() => {
-    //isFilter ? null : setFilteredQuestions(questions);
+    isFilter ? null : setFilteredQuestions(questions);
   }, [isFilter]);
 
   return (
@@ -660,7 +666,7 @@ function App() {
           <Route
             path="/questions/question/:qID"
             element={
-              <QuestionInfo upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} addAnswer={addAnswer} answerID={+answers.length + +1} />
+              <QuestionInfo upVoteForAnswers={upVoteForAnswers} upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} addAnswer={addAnswer} answerID={+answers.length + +1} />
             }
           />
           <Route

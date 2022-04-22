@@ -2,8 +2,10 @@ import { useState } from "react"
 import usePlaceholder from "react-bootstrap/esm/usePlaceholder";
 import { useParams } from "react-router-dom"
 import AnswerInfo from "./answer_info";
+import { Link } from "react-router-dom";
+import { OverlayTrigger } from "react-bootstrap";
 
-const QuestionInfo = ({upVote,getAnswers,getQuestion, username,addAnswer, answerID}) => {
+const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username,addAnswer, answerID}) => {
     const { qID } = useParams(); 
     const [question, setQuestion] = useState(getQuestion(qID)[0])
     const [votes,increaseVotes] = useState(getQuestion(qID)[0].votes)
@@ -18,6 +20,10 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username,addAnswer, answer
     const setVote = (qID) => {
         const q = upVote(qID);
         return q.votes;
+    };
+
+    const setAnswerVote = (aID, votes) => {
+        upVoteForAnswers(aID, votes);
     };
 
     const submitAnswer = (body) => {
@@ -52,7 +58,7 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username,addAnswer, answer
                     return(
                     <div className="container" style={{padding: '5px'}}>
                         <br></br>
-                            <AnswerInfo key={answer.answer_id} answer={answer}/>
+                            <AnswerInfo key={answer.answer_id} answer={answer} upVoteForAnswers={setAnswerVote}/>
                             <br></br>
                         <hr />
                     </div>
@@ -66,9 +72,9 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username,addAnswer, answer
             <div class="mb-5">
                 <label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
                 <label for="QuestionBody" className="form-label small">Include all the information someone would need to answer your question</label>
-                <input style={{lineHeight: "8em"}} type="text" onChange={e => {e.preventDefault(); updateBody(e)}} class="form-control" id="QuestionBody"/>
+                <input style={{lineHeight: "8em"}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
             </div>
-                <button type="btn btn-primary" onClick={e => {submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
+                <Link to={`/questions/page/1`}><button type="btn btn-primary" onClick={e => {submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button></Link>
             </form>
         </div>
         <div className="col-sm-3"></div>

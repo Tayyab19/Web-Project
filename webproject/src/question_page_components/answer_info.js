@@ -1,12 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-const AnswerInfo = ({answer}) => {
+const AnswerInfo = ({answer, upVoteForAnswers}) => {
+    const [currAnsVote, setCurrAnsVote] = useState(answer.votes);
+
+    useEffect(() => {
+        upVoteForAnswers(answer.answer_id ,currAnsVote)
+    }, [currAnsVote]);
+
     return(
         <div className="row">
             <div className="answerButton col-sm-2" style={{textAlign:"center"}}>
-                <p>{answer.votes} likes</p>
-                <button className="btn btn-primary">upvote</button>
+                <p>{currAnsVote} likes</p>
+                <button onClick={e => {e.preventDefault(); setCurrAnsVote(currAnsVote + 1)}} className="btn btn-primary">upvote</button>
             </div>
             <div className="col-sm-10" style={{
                 display:"flex",
