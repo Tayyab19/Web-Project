@@ -1,10 +1,21 @@
 import { FaGoogle, FaFacebook } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./Login.css";
 
-const Login = () => {
+const Login = ({verifyLogin}) => {
+
+  const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (verifyLogin(e.target.typeEmailX.value, e.target.typePasswordX.value)) {
+      navigate('/questions/page/1');
+    }else{
+      setErrorMessage('Invalid Username or Password');
+    }
   };
 
   return (
@@ -21,7 +32,7 @@ const Login = () => {
                     </h2>
                     <p>Please enter your login and password!</p>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={e => handleSubmit(e)}>
                       <div className="form-outline form-white mb-4">
                         <input
                           type="email"
@@ -41,6 +52,10 @@ const Login = () => {
                           required="true"
                         />
                       </div>
+
+                      {errorMessage && (
+                        <p style={{fontSize:'20px', color:'red', fontWeight:'bolder'}}> {errorMessage} </p>
+                      )}
 
                       <p className="small mb-5 pb-lg-2">
                         <a class="text-black-50" href="#!">

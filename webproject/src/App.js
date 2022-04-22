@@ -581,13 +581,22 @@ function App() {
     return tags;
   };
 
-  const currUsername = {
+  const [currUsername, setCurrUsername] = useState({
     name: "TenHang1",
     reputation: 112,
     votes: 22,
     answers: 11,
     views: 44,
-  };
+  });
+
+  const verifyLogin = (email, password) => {
+    if (users.some(user => user.email === email && password === "12345")) {
+    let temp = users.find(user => user.email === email);
+    temp = {...temp, name: temp.username};
+    setCurrUsername(temp);
+    return true;
+    } else {return false;}
+  }
 
   const updateQuestion = (q) => {
     setQuestions(
@@ -698,7 +707,7 @@ function App() {
       <Router>
         <Navbar username={currUsername} />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login verifyLogin={verifyLogin}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/syntaxes" element={<SyntaxNav />} />

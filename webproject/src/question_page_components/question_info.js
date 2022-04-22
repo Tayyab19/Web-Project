@@ -33,14 +33,16 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
         "username": username.name, 
         "string": body
         }
-        setAnswers([...answers, a]);
         addAnswer(a);
+        setAnswers([...answers, a]);
     }; 
+
 
     return (
         <div className="row">
         <div className="col-sm-2"></div>
         <div className="Question col-sm-7 row" style={{paddingTop:'40px'}}>
+
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
                 <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote(qID);}}>Upvote</button>
