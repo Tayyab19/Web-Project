@@ -120,7 +120,7 @@ const Signup = () => {
                           class="btn btn-primary  btn-block btn-lg gradient-custom-4 text-body"
                           type="submit"
                         >
-                          Sign up
+                          SIGN UP
                         </button>
                       </div>
 
