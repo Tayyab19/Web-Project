@@ -28,7 +28,7 @@ const Filter = ({ getTags, applyFilter }) => {
             <input
               className="form-check-input"
               type="checkbox"
-              id="inlineCheckbox1"
+              id=""
               value={tag}
             />
             <label className="form-check-label" for="inlineCheckbox1">
