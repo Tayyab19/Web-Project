@@ -667,7 +667,7 @@ function App() {
       : setFilteredQuestions(questions);
   };
 
-  // useEffect(() => {}, [filteredQuestions, filteredAnswers]);
+  useEffect(() => {console.log(filteredAnswers)}, [filteredQuestions, filteredAnswers]);
 
 
   useEffect(() => {

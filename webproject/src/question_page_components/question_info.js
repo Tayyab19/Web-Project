@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import usePlaceholder from "react-bootstrap/esm/usePlaceholder";
 import { useParams } from "react-router-dom"
 import AnswerInfo from "./answer_info";
@@ -12,7 +12,6 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
     const [answers, setAnswers] = useState(getAnswers(qID))
     //const [votes, setVote] = useState(upVote(qID)) This line isnt working, turning full screen white
     const [body, setBody] = useState("");
-    
     const updateBody = (e) => {
         setBody(e.target.value);
     }
@@ -29,11 +28,12 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
     const submitAnswer = (body) => {
         const a = {
         "answer_id": answerID,
-        "question_id": qID,
+        "question_id": parseInt(qID, 10),
         "votes": 0,
-        "username": username, 
+        "username": username.name, 
         "string": body
         }
+        setAnswers([...answers, a]);
         addAnswer(a);
     }; 
 
@@ -41,7 +41,6 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
         <div className="row">
         <div className="col-sm-2"></div>
         <div className="Question col-sm-7 row" style={{paddingTop:'40px'}}>
-
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
                 <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote(qID);}}>Upvote</button>
@@ -74,7 +73,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
                 <label for="QuestionBody" className="form-label small">Include all the information someone would need to answer your question</label>
                 <input style={{lineHeight: "8em"}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
             </div>
-                <Link to={`/questions/page/1`}><button type="btn btn-primary" onClick={e => {submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button></Link>
+                <button type="btn btn-primary" onClick={e => {e.preventDefault(); submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
             </form>
         </div>
         <div className="col-sm-3"></div>
