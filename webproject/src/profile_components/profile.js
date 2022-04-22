@@ -235,12 +235,13 @@ const Profile = ({ username, getUser, updateUser, getQuestion }) => {
           <div class="col-lg-2"></div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
             <button class="btn btn-outline-primary remove" onClick={handleSave}>
               Save Changes
             </button>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
             <button
               class="btn btn-outline-dark  remove"
               onClick={handleDiscard}
@@ -248,7 +249,7 @@ const Profile = ({ username, getUser, updateUser, getQuestion }) => {
               Discard Changes
             </button>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
             <button
               class="btn btn-outline-dark  remove"
               onClick={(e) => {
@@ -259,6 +260,7 @@ const Profile = ({ username, getUser, updateUser, getQuestion }) => {
               My Questions
             </button>
           </div>
+          <div class="col-lg-3"></div>
         </div>
       </div>
       <Footer />
