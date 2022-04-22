@@ -283,168 +283,196 @@ function App() {
       answer_id: 1,
       question_id: 1,
       votes: 7,
+      username: "TenHang1", 
       string: "The answer is simple, it helps you to work in a team and people dont have to get angry with you and smash you over the head with things"
     },
     {
       answer_id: 2,
       question_id: 1,
       votes: 1,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 3,
       question_id: 1,
       votes: 3,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 4,
       question_id: 2,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 5,
       question_id: 2,
       votes: 4,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 6,
       question_id: 3,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 7,
       question_id: 4,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 8,
       question_id: 3,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 9,
       question_id: 5,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 10,
       question_id: 6,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 11,
       question_id: 7,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 12,
       question_id: 8,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 13,
       question_id: 9,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 14,
       question_id: 10,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 15,
       question_id: 11,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 16,
       question_id: 12,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 17,
       question_id: 13,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 18,
       question_id: 14,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 19,
       question_id: 15,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 20,
       question_id: 16,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 21,
       question_id: 17,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 22,
       question_id: 18,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 23,
       question_id: 19,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 24,
       question_id: 20,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 25,
       question_id: 21,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 26,
       question_id: 22,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 27,
       question_id: 23,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     },
     {
       answer_id: 28,
       question_id: 24,
       votes: 2,
+      username: "TenHang1", 
       string: "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before"
     }
 
@@ -558,14 +586,6 @@ function App() {
     );
     setFilteredQuestions(questions);
     return q;
-
-    /*for (let i = 0; i < answers.length; i++) {
-      if (qid === answers[i].question_id) {
-        answers[i].votes = answers[i].votes + 1 
-        console.log('UPVOTE QUESTION');
-      }
-    }*/
-
   };
 
   const getAnswers = (qid) => {
@@ -595,6 +615,12 @@ function App() {
     setFilteredQuestions([...questions, q]);
     setQuestions([...questions, q]);
   };
+
+  const addAnswer = (a) => {
+    setFilteredAnswers([...answers,a]);
+    setAnswers([...answers,a]);
+    console.log(a);
+  }
 
   const applyFilter = (selectedTags) => {
     selectedTags.length > 0
@@ -634,7 +660,7 @@ function App() {
           <Route
             path="/questions/question/:qID"
             element={
-              <QuestionInfo upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} />
+              <QuestionInfo upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} addAnswer={addAnswer} answerID={+answers.length + +1} />
             }
           />
           <Route

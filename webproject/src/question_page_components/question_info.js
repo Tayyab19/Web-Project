@@ -3,17 +3,33 @@ import usePlaceholder from "react-bootstrap/esm/usePlaceholder";
 import { useParams } from "react-router-dom"
 import AnswerInfo from "./answer_info";
 
-const QuestionInfo = ({upVote,getAnswers,getQuestion, username}) => {
+const QuestionInfo = ({upVote,getAnswers,getQuestion, username,addAnswer, answerID}) => {
     const { qID } = useParams(); 
     const [question, setQuestion] = useState(getQuestion(qID)[0])
     const [votes,increaseVotes] = useState(getQuestion(qID)[0].votes)
     const [answers, setAnswers] = useState(getAnswers(qID))
     //const [votes, setVote] = useState(upVote(qID)) This line isnt working, turning full screen white
+    const [body, setBody] = useState("");
+    
+    const updateBody = (e) => {
+        setBody(e.target.value);
+    }
 
-    const setVote2 = (qID) => {
+    const setVote = (qID) => {
         const q = upVote(qID);
         return q.votes;
     };
+
+    const submitAnswer = (body) => {
+        const a = {
+        "answer_id": answerID,
+        "question_id": qID,
+        "votes": 0,
+        "username": username, 
+        "string": body
+        }
+        addAnswer(a);
+    }; 
 
     return (
         <div className="row">
@@ -22,7 +38,7 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username}) => {
 
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
-                <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote2(qID);}}>Upvote</button>
+                <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote(qID);}}>Upvote</button>
             </div>
             <div className="col-sm-10">
                 <h3>{question.title}</h3>
@@ -44,8 +60,16 @@ const QuestionInfo = ({upVote,getAnswers,getQuestion, username}) => {
                 })
                 
             }
+            
+            <form className="bg-white p-5 mb-5">
             <h6>Add New Comment:</h6>
-            <input></input>
+            <div class="mb-5">
+                <label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
+                <label for="QuestionBody" className="form-label small">Include all the information someone would need to answer your question</label>
+                <input style={{lineHeight: "8em"}} type="text" onChange={e => {e.preventDefault(); updateBody(e)}} class="form-control" id="QuestionBody"/>
+            </div>
+                <button type="btn btn-primary" onClick={e => {submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
+            </form>
         </div>
         <div className="col-sm-3"></div>
         </div>
