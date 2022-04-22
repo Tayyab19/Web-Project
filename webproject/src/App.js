@@ -66,13 +66,12 @@ function App() {
       username: "Rick Peters",
       reputation: 2,
       votes: 1,
-      answers: 0,
+      answers: 2,
       views: 2,
     },
     {
       question_id: 6,
-      title:
-        "How do I make a button show and hide text when clicked and why does getElement not work?",
+      title: "How do I make a button show and hide text when clicked and why does getElement not work?",
       body: "Pretty self-explanatory",
       tags: ["java", "javascript", "python"],
       username: "Nick",
@@ -193,8 +192,7 @@ function App() {
     },
     {
       question_id: 17,
-      title:
-        "Why is processing a sorted array faster than processing an unsorted array?",
+      title: "Why is processing a sorted array faster than processing an unsorted array?",
       body: "My first thought was that sorting brings the data into the cache, but then I thought how silly that was because the array was just generated. What is going on?",
       tags: ["java", "php", "python"],
       username: "Rick Peters",
@@ -285,7 +283,7 @@ function App() {
   const [answers, setAnswers] = useState([
     {
       answer_id: 1,
-      question_id: 1,
+      question_id: 5,
       votes: 7,
       username: "TenHang1",
       string:
@@ -295,33 +293,42 @@ function App() {
       answer_id: 2,
       question_id: 1,
       votes: 1,
-      username: "TenHang1",
+      username: "Rick Peters",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "What you can do is that change the inital work to get your updated work and google the issue.",
     },
     {
       answer_id: 3,
       question_id: 1,
       votes: 3,
-      username: "TenHang1",
+      username: "Nick",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "Clean your code and do it all over again",
+    },
+    {
+      answer_id: 4,
+      question_id: 1,
+      votes: 2,
+      username: "Nick",
+      string:
+        "Take the initial code from the nested files and compare them one by one",
     },
     {
       answer_id: 4,
       question_id: 2,
       votes: 2,
-      username: "TenHang1",
+      username: "Nick",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "MVC framework helps us to completely grasp the model w.r.t the views",
     },
+    
     {
       answer_id: 5,
       question_id: 2,
       votes: 4,
-      username: "TenHang1",
+      username: "Rick Peters",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "Model-View-Controller Framework",
     },
     {
       answer_id: 6,
@@ -329,27 +336,11 @@ function App() {
       votes: 2,
       username: "TenHang1",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "Reinstall it. Worked for me",
     },
     {
       answer_id: 7,
       question_id: 4,
-      votes: 2,
-      username: "TenHang1",
-      string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
-    },
-    {
-      answer_id: 8,
-      question_id: 3,
-      votes: 2,
-      username: "TenHang1",
-      string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
-    },
-    {
-      answer_id: 9,
-      question_id: 5,
       votes: 2,
       username: "TenHang1",
       string:
@@ -441,7 +432,7 @@ function App() {
       votes: 2,
       username: "TenHang1",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "There should be a link given there saying x Commits. Click that and restore from last version",
     },
     {
       answer_id: 21,
@@ -449,7 +440,7 @@ function App() {
       votes: 2,
       username: "TenHang1",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "algorithms like Binary Search take lg(n) time for it so its quicker",
     },
     {
       answer_id: 22,
@@ -457,7 +448,7 @@ function App() {
       votes: 2,
       username: "TenHang1",
       string:
-        "Helps you to get ready for the industry and face new and upcoming challenges which have never been seen before",
+        "Go to source control -> branch -> rename branch",
     },
     {
       answer_id: 23,
@@ -677,6 +668,18 @@ function App() {
   const addAnswer = (a) => {
     setFilteredAnswers([...answers, a]);
     setAnswers([...answers, a]);
+
+    const q = questions.filter((a2) => {
+      return a2.question_id == a.question_id;
+    });
+
+    q[0].answers = q[0].answers + 1;
+    setQuestions(
+      questions.map((a2) => {
+        return a2.question_id === q.question_id ? q : a2;
+      })
+    );
+    setFilteredQuestions(questions);
   };
 
   const applyFilter = (selectedTags) => {

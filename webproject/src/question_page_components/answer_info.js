@@ -20,6 +20,9 @@ const AnswerInfo = ({answer, upVoteForAnswers}) => {
             }}>
                 {answer.string}
             </div>
+            <div style={{display:"flex",justifyContent:"right"}}>
+                <p><i>~{answer.username}</i></p>
+            </div>
         </div>
     )
 }
