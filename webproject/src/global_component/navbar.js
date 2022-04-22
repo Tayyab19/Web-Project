@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import $ from "jquery";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-const Navbar = ({ username }) => {
+const Navbar = ({ username, renderLogin }) => {
   return (
     <>
       <nav
@@ -69,7 +69,7 @@ const Navbar = ({ username }) => {
                 </Link>
               </li>
               <li class="nav-item mt-2" style={{paddingLeft:'17px'}}>
-                <Link to={"/"}>
+                <Link to={"/"} onClick={e => renderLogin(false)}>
                   <img class="logo-icon" src={logout_logo} style={{width:'40px'}} data-tip="Logout" />
                 </Link>
               </li>

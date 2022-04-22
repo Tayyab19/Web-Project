@@ -571,6 +571,8 @@ function App() {
 
   const [isFilter, setFilter] = useState(false);
 
+  const [renderLogin, setRenderLogin] = useState(false); 
+
   const getTags = () => {
     let tags = [];
     questions.forEach((q) => {
@@ -594,6 +596,7 @@ function App() {
     let temp = users.find(user => user.email === email);
     temp = {...temp, name: temp.username};
     setCurrUsername(temp);
+    setRenderLogin(true);
     return true;
     } else {return false;}
   }
@@ -707,11 +710,12 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar username={currUsername} />
+      {renderLogin && <Navbar username={currUsername} renderLogin={renderLogin} />}
         <Routes>
           <Route path="/" element={<Login verifyLogin={verifyLogin}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          {renderLogin && ( <>
           <Route path="/syntaxes" element={<SyntaxNav />} />
           <Route
             path="/questions/page/:pageNumber"
@@ -761,6 +765,7 @@ function App() {
               />
             }
           />
+          </>)}
         </Routes>
       </Router>
     </>
