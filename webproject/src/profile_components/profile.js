@@ -9,7 +9,7 @@ import ChangePictureModal from "./changePictureModal";
 import MyQuestionseModal from "./myQuestionsModal";
 
 //ChangePassword and ChangeProfilePicture should be from App.js
-const Profile = ({ username, getUser, updateUser, getQuestion }) => {
+const Profile = ({ username, getUser, updateUser, getQuestions }) => {
   const { uID } = useParams();
   let [userData, setUser] = useState(getUser(uID));
   const [changePassword, setChangePassword] = useState(false);
@@ -18,10 +18,7 @@ const Profile = ({ username, getUser, updateUser, getQuestion }) => {
   const [password, setPassword] = useState("a");
   const [picture, setPicture] = useState("b");
 
-  let questions = [];
-  for (const element of userData["questions"]) {
-    questions.push(getQuestion(element)[0]);
-  }
+  const questions = getQuestions(uID);
 
   console.log(questions);
   //setPicture(profile_pic);

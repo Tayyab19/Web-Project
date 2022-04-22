@@ -17,7 +17,7 @@ function App() {
       title: "Why do we need to follow programming conventions?",
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
       tags: ["java", "php", "python"],
-      username: "Rick Peters",
+      username: "TenHang1",
       reputation: 2,
       votes: 1,
       answers: 3,
@@ -28,7 +28,7 @@ function App() {
       title: "What is MVC framework?",
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       tags: ["java", "javascript", "python"],
-      username: "Nick",
+      username: "TenHang1",
       reputation: 12,
       votes: 4,
       answers: 2,
@@ -590,7 +590,7 @@ function App() {
   const updateQuestion = (q) => {
     setQuestions(
       questions.map((question) => {
-        //question.question_id == q.question_id ? q : question;
+        question.question_id == q.question_id ? q : question;
       })
     );
     setFilteredQuestions(questions);
@@ -620,9 +620,17 @@ function App() {
   };
 
   const upVoteForAnswers = (answerID, votes) => {
-    setFilteredAnswers(filteredAnswers.map(ans => ans.answer_id === answerID ? {...ans, votes: votes} : ans))
-    setAnswers(answers.map(ans => ans.answer_id === answerID ? {...ans, votes: votes} : ans))
-  }
+    setFilteredAnswers(
+      filteredAnswers.map((ans) =>
+        ans.answer_id === answerID ? { ...ans, votes: votes } : ans
+      )
+    );
+    setAnswers(
+      answers.map((ans) =>
+        ans.answer_id === answerID ? { ...ans, votes: votes } : ans
+      )
+    );
+  };
 
   const getAnswers = (qid) => {
     const ans = filteredAnswers.filter((a) => {
@@ -653,9 +661,9 @@ function App() {
   };
 
   const addAnswer = (a) => {
-    setFilteredAnswers([...answers,a]);
-    setAnswers([...answers,a]);
-  }
+    setFilteredAnswers([...answers, a]);
+    setAnswers([...answers, a]);
+  };
 
   const applyFilter = (selectedTags) => {
     selectedTags.length > 0
@@ -669,10 +677,17 @@ function App() {
 
   // useEffect(() => {}, [filteredQuestions, filteredAnswers]);
 
-
   useEffect(() => {
     isFilter ? null : setFilteredQuestions(questions);
   }, [isFilter]);
+
+  const getQuestions = (uID) => {
+    let myQuestions = [];
+    for (const element of questions) {
+      if (element.username === uID) myQuestions.push(element);
+    }
+    return myQuestions;
+  };
 
   return (
     <>
@@ -696,7 +711,15 @@ function App() {
           <Route
             path="/questions/question/:qID"
             element={
-              <QuestionInfo upVoteForAnswers={upVoteForAnswers} upVote={upVote} getAnswers={getAnswers} getQuestion={getQuestion} username={currUsername} addAnswer={addAnswer} answerID={+answers.length + +1} />
+              <QuestionInfo
+                upVoteForAnswers={upVoteForAnswers}
+                upVote={upVote}
+                getAnswers={getAnswers}
+                getQuestion={getQuestion}
+                username={currUsername}
+                addAnswer={addAnswer}
+                answerID={+answers.length + +1}
+              />
             }
           />
           <Route
@@ -716,7 +739,7 @@ function App() {
                 username={currUsername}
                 getUser={getUser}
                 updateUser={updateUser}
-                getQuestion={getQuestion}
+                getQuestions={getQuestions}
               />
             }
           />
