@@ -691,7 +691,9 @@ function App() {
   }, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
-    // isFilter ? null : setFilteredQuestions(questions);
+    if (!isFilter) {
+      setFilteredQuestions(questions);
+    }
   }, [isFilter]);
 
   const getQuestions = (uID) => {

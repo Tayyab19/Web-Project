@@ -1,6 +1,6 @@
 import profile_logo from "./profile_logo.png";
 import logout_logo from "./logout_logo.png";
-import question_logo from "./question_logo.png";
+import question_logo from "./questionflag.png";
 import list_logo from "./list_logo.png";
 import ReactTooltip from "react-tooltip";
 import { Link } from "react-router-dom";
@@ -34,40 +34,43 @@ const Navbar = ({ username }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            class="navbar-collapse collapse col-6 col-md-4"
+            class="navbar-collapse collapse col-4 col-md-5"
             id="navbarSupportedContent"
           >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
-              <li class="nav-item mt-2">
+              <li class="nav-item mt-2" style={{paddingLeft:'17px'}}>
                 <Link to={`/profile/${username.name}`}>
                   <img
                     data-tip="Profile"
                     class="logo-icon"
                     src={profile_logo}
+                    style={{width:'40px'}}
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2">
+              <li class="nav-item" style={{paddingLeft:'13px',marginTop: '0px !important'}}>
                 <Link to={"/questions/ask"}>
                   <img
                     class="logo-icon"
                     src={question_logo}
+                    style={{width:'50px'}}
                     data-tip="Ask a Question"
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2">
+              <li class="nav-item mt-2 " style={{paddingLeft:'13px'}}>
                 <Link to={"/syntaxes"}>
                   <img
                     class="logo-icon"
                     src={list_logo}
                     data-tip="View Syntax List"
+                    style={{width:'40px'}}
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2">
+              <li class="nav-item mt-2" style={{paddingLeft:'17px'}}>
                 <Link to={"/"}>
-                  <img class="logo-icon" src={logout_logo} data-tip="Logout" />
+                  <img class="logo-icon" src={logout_logo} style={{width:'40px'}} data-tip="Logout" />
                 </Link>
               </li>
             </ul>
@@ -75,7 +78,7 @@ const Navbar = ({ username }) => {
           <Link
             to={"questions/page/1"}
             className={
-              "mx-5 fw-bolder text-dark p-1 text-center col-6 col-md-2"
+              "mx-5 fw-bolder text-dark p-1 text-center col-4 col-md-3"
             }
             style={{
               fontSize: "18px",
@@ -86,7 +89,7 @@ const Navbar = ({ username }) => {
             FAST FLOW
           </Link>
           <form
-            class="d-flex justify-content-center col-12 col-md-6 mt-3 mt-md-0 mx-5 mx-md-0"
+            class="d-flex justify-content-center col-3 col-md-4 mt-3 mt-md-0 mx-5 mx-md-0"
             style={{ width: "auto" }}
           >
             <input

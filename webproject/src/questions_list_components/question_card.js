@@ -15,9 +15,6 @@ const QuestionCard = ({question}) => {
                 <div className="d-none d-md-flex row">
                     <p className='questionText'>{question.answers} answers</p>
                 </div>
-                <div className="d-none d-md-flex row">
-                    <p className='questionText'>{question.views} views</p>
-                </div>
             </div>
             <div className='col-12 col-md-10 row'>
 
