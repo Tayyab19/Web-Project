@@ -520,7 +520,6 @@ function App() {
       gitHub: "benHan123",
       company: "Softec",
       preferredStack: "MERN",
-      questions: ["1", "2"],
     },
     {
       username: "TenHang1",
@@ -534,7 +533,6 @@ function App() {
       gitHub: "tenHang123",
       company: "Softec",
       preferredStack: "MERN",
-      questions: ["3", "4"],
     },
     {
       username: "GenHang1",
@@ -548,7 +546,6 @@ function App() {
       gitHub: "genHang123",
       company: "Softec",
       preferredStack: "MERN",
-      questions: ["4", "5"],
     },
     {
       username: "WenHang1",
@@ -562,7 +559,6 @@ function App() {
       gitHub: "wenHang123",
       company: "Softec",
       preferredStack: "MERN",
-      questions: ["7", "6"],
     },
   ]);
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
@@ -571,7 +567,7 @@ function App() {
 
   const [isFilter, setFilter] = useState(false);
 
-  const [renderLogin, setRenderLogin] = useState(false); 
+  const [renderLogin, setRenderLogin] = useState(false);
 
   const getTags = () => {
     let tags = [];
@@ -592,14 +588,16 @@ function App() {
   });
 
   const verifyLogin = (email, password) => {
-    if (users.some(user => user.email === email && password === "12345")) {
-    let temp = users.find(user => user.email === email);
-    temp = {...temp, name: temp.username};
-    setCurrUsername(temp);
-    setRenderLogin(true);
-    return true;
-    } else {return false;}
-  }
+    if (users.some((user) => user.email === email && password === "12345")) {
+      let temp = users.find((user) => user.email === email);
+      temp = { ...temp, name: temp.username };
+      setCurrUsername(temp);
+      setRenderLogin(true);
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const updateQuestion = (q) => {
     setQuestions(
@@ -710,62 +708,66 @@ function App() {
   return (
     <>
       <Router>
-      {renderLogin && <Navbar username={currUsername} renderLogin={renderLogin} />}
+        {renderLogin && (
+          <Navbar username={currUsername} renderLogin={renderLogin} />
+        )}
         <Routes>
-          <Route path="/" element={<Login verifyLogin={verifyLogin}/>} />
+          <Route path="/" element={<Login verifyLogin={verifyLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          {renderLogin && ( <>
-          <Route path="/syntaxes" element={<SyntaxNav />} />
-          <Route
-            path="/questions/page/:pageNumber"
-            element={
-              <AllQuestionPage
-                questions={filteredQuestions}
-                username={currUsername}
-                getTags={getTags}
-                applyFilter={applyFilter}
-                isFilter={isFilter}
-                setFilter={setFilter}
+          {renderLogin && (
+            <>
+              <Route path="/syntaxes" element={<SyntaxNav />} />
+              <Route
+                path="/questions/page/:pageNumber"
+                element={
+                  <AllQuestionPage
+                    questions={filteredQuestions}
+                    username={currUsername}
+                    getTags={getTags}
+                    applyFilter={applyFilter}
+                    isFilter={isFilter}
+                    setFilter={setFilter}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="/questions/question/:qID"
-            element={
-              <QuestionInfo
-                upVoteForAnswers={upVoteForAnswers}
-                upVote={upVote}
-                getAnswers={getAnswers}
-                getQuestion={getQuestion}
-                username={currUsername}
-                addAnswer={addAnswer}
-                answerID={+answers.length + +1}
+              <Route
+                path="/questions/question/:qID"
+                element={
+                  <QuestionInfo
+                    upVoteForAnswers={upVoteForAnswers}
+                    upVote={upVote}
+                    getAnswers={getAnswers}
+                    getQuestion={getQuestion}
+                    username={currUsername}
+                    addAnswer={addAnswer}
+                    answerID={+answers.length + +1}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="/questions/ask"
-            element={
-              <AddQuestion
-                addQuestion={addQuestion}
-                questionID={+questions.length + +1}
-                username={currUsername}
+              <Route
+                path="/questions/ask"
+                element={
+                  <AddQuestion
+                    addQuestion={addQuestion}
+                    questionID={+questions.length + +1}
+                    username={currUsername}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="/profile/:uID"
-            element={
-              <Profile
-                username={currUsername}
-                getUser={getUser}
-                updateUser={updateUser}
-                getQuestions={getQuestions}
+              <Route
+                path="/profile/:uID"
+                element={
+                  <Profile
+                    username={currUsername}
+                    getUser={getUser}
+                    updateUser={updateUser}
+                    getQuestions={getQuestions}
+                  />
+                }
               />
-            }
-          />
-          </>)}
+            </>
+          )}
         </Routes>
       </Router>
     </>
