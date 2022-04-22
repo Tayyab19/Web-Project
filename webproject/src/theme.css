@@ -8,6 +8,7 @@ body {
     rgba(195, 195, 195, 1) 100%
   );
   font-size: 14px;
+  overflow-x: hidden;
   font-family: Verdana;
 }
 

@@ -100,7 +100,7 @@ const Navbar = ({ username, renderLogin }) => {
               style={{ width: "12em" }}
             />
             <button
-              class="btn btn-outline-dark"
+              class="btn btn-outline-dark mx-2"
               type="submit"
               style={{
                 backgroundColor: "black",
