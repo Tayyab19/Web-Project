@@ -71,7 +71,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
             <div class="mb-5">
                 {/*<label for="QuestionBody" className="form-label fw-bold">Body</label> <br/>
                 <label for="QuestionBody" className="form-label small"></label>*/}
-                <textarea style={{height:'120px'}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
+                <textarea style={{height:'120px', resize:'none'}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
             </div>
                 <button type="btn btn-primary" onClick={e => {e.preventDefault(); submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
             </form>
