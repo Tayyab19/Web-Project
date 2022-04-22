@@ -6,15 +6,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ChangePasswordModal from "./changePasswordModal";
 import ChangePictureModal from "./changePictureModal";
+import MyQuestionseModal from "./myQuestionsModal";
 
 //ChangePassword and ChangeProfilePicture should be from App.js
-const Profile = ({ username, getUser, updateUser }) => {
+const Profile = ({ username, getUser, updateUser, getQuestion }) => {
   const { uID } = useParams();
   let [userData, setUser] = useState(getUser(uID));
   const [changePassword, setChangePassword] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
+  const [myQuestion, setMyQuestions] = useState(false);
   const [password, setPassword] = useState("a");
   const [picture, setPicture] = useState("b");
+
+  let questions = [];
+  for (const element of userData["questions"]) {
+    questions.push(getQuestion(element)[0]);
+  }
+
+  console.log(questions);
   //setPicture(profile_pic);
   //Redirect to 404 Not found
 
@@ -54,7 +63,12 @@ const Profile = ({ username, getUser, updateUser }) => {
           setPassword={setPassword}
         />
       )}
-      ;
+      {myQuestion && (
+        <MyQuestionseModal
+          questions={questions}
+          setMyQuestions={setMyQuestions}
+        />
+      )}
       {changeProfilePicture && username.name == uID && (
         <ChangePictureModal
           picture={profile_pic}
@@ -221,13 +235,12 @@ const Profile = ({ username, getUser, updateUser }) => {
           <div class="col-lg-2"></div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3 col-sm-3"></div>
-          <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <button class="btn btn-outline-primary remove" onClick={handleSave}>
               Save Changes
             </button>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <button
               class="btn btn-outline-dark  remove"
               onClick={handleDiscard}
@@ -235,7 +248,17 @@ const Profile = ({ username, getUser, updateUser }) => {
               Discard Changes
             </button>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3"></div>
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <button
+              class="btn btn-outline-dark  remove"
+              onClick={(e) => {
+                e.preventDefault();
+                setMyQuestions(true);
+              }}
+            >
+              My Questions
+            </button>
+          </div>
         </div>
       </div>
       <Footer />
