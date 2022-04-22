@@ -1,38 +1,26 @@
 import { Link } from "react-router-dom";
+import { Container, Navbar, Nav } from "react-bootstrap";
 
 const SyntaxNav = () => {
   return (
     <>
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-          Syntaxes
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <Link to="/syntaxhtml">Html </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/syntaxcss">CSS</Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/syntaxjavascript">Javascript </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <Navbar bg="light" variant="light">
+        <Container class="container-fluid">
+          <Navbar.Brand href="#home">Languages</Navbar.Brand>
+          <Nav className=" text-black me-auto">
+            <Nav.Link className="text-black">
+              <Link to="/syntaxes/html">Html </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/syntaxes/css">CSS</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/syntaxes/javascript">Javascript </Link>
+            </Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+      <h2 className="text-centre">Laguages Syntaxes</h2>
     </>
   );
 };

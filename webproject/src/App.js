@@ -422,9 +422,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/syntaxes" element={<SyntaxNav />} />
-          <Route path="/syntaxhtml" element={<Html />} />
-          <Route path="/syntaxcss" element={<CSS />} />
-          <Route path="/syntaxjavascript" element={<Javascript />} />
+          <Route path="/syntaxes/html" element={<Html />} />
+          <Route path="/syntaxes/css" element={<CSS />} />
+          <Route path="/syntaxes/javascript" element={<Javascript />} />
           <Route
             path="/questions/page/:pageNumber"
             element={
