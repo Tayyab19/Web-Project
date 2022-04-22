@@ -41,12 +41,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
     return (
         <div className="row">
         <div className="col-sm-2"></div>
-<<<<<<< HEAD
-        <div className="Question col-sm-7 row" style={{paddingTop:'40px'}}>
-
-=======
         <div className="Question col-sm-8 row" style={{paddingTop:'40px'}}>
->>>>>>> 743104ff8b21fcd5cd0c8524d244e15f436fad80
             <div className="col-sm-2" style={{textAlign:"center"}}>
                 <h5>{question.votes} People liked this</h5>  {/* question.votes to be updated */}
                 <button className="btn btn-primary" style={{width:'100%'}} onClick={() => {setVote(qID);}}>Upvote</button>
