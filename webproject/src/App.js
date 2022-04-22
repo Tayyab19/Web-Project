@@ -71,7 +71,8 @@ function App() {
     },
     {
       question_id: 6,
-      title: "How do I make a button show and hide text when clicked and why does getElement not work?",
+      title:
+        "How do I make a button show and hide text when clicked and why does getElement not work?",
       body: "Pretty self-explanatory",
       tags: ["java", "javascript", "python"],
       username: "Nick",
@@ -192,7 +193,8 @@ function App() {
     },
     {
       question_id: 17,
-      title: "Why is processing a sorted array faster than processing an unsorted array?",
+      title:
+        "Why is processing a sorted array faster than processing an unsorted array?",
       body: "My first thought was that sorting brings the data into the cache, but then I thought how silly that was because the array was just generated. What is going on?",
       tags: ["java", "php", "python"],
       username: "Rick Peters",
@@ -705,11 +707,23 @@ function App() {
     return myQuestions;
   };
 
+  const getSearchQuestion = (searchTerm) => {
+    let myQuestions = [];
+    for (const element of questions) {
+      if (element.title.includes(searchTerm)) myQuestions.push(element);
+    }
+    return myQuestions;
+  };
+
   return (
     <>
       <Router>
         {renderLogin && (
-          <Navbar username={currUsername} renderLogin={renderLogin} />
+          <Navbar
+            username={currUsername}
+            renderLogin={renderLogin}
+            getSearchQuestion={getSearchQuestion}
+          />
         )}
         <Routes>
           <Route path="/" element={<Login verifyLogin={verifyLogin} />} />

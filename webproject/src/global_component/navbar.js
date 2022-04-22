@@ -2,14 +2,28 @@ import profile_logo from "./profile_logo.png";
 import logout_logo from "./logout_logo.png";
 import question_logo from "./questionflag.png";
 import list_logo from "./list_logo.png";
-import ReactTooltip from "react-tooltip";
+import MyQuestionseModal from "../profile_components/myQuestionsModal";
 import { Link } from "react-router-dom";
-import $ from "jquery";
+import { useState } from "react";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-const Navbar = ({ username, renderLogin }) => {
+const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
+  const [myQuestion, setMyQuestions] = useState(false);
+  const [questions, setQuestions] = useState(" ");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setQuestions(getSearchQuestion(e.target.searchInput.value));
+    console.log(questions.length);
+    setMyQuestions(true);
+  };
   return (
     <>
+      {myQuestion && (
+        <MyQuestionseModal
+          questions={questions}
+          setMyQuestions={setMyQuestions}
+        />
+      )}
       <nav
         class="navbar navbar-expand-lg navbar-light row"
         style={{
@@ -38,39 +52,47 @@ const Navbar = ({ username, renderLogin }) => {
             id="navbarSupportedContent"
           >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
-              <li class="nav-item mt-2" style={{paddingLeft:'17px'}}>
+              <li class="nav-item mt-2" style={{ paddingLeft: "17px" }}>
                 <Link to={`/profile/${username.name}`}>
                   <img
                     data-tip="Profile"
                     class="logo-icon"
                     src={profile_logo}
-                    style={{width:'40px'}}
+                    style={{ width: "40px" }}
                   />
                 </Link>
               </li>
-              <li class="nav-item" style={{paddingLeft:'13px',marginTop: '0px !important'}}>
+              <li
+                class="nav-item"
+                style={{ paddingLeft: "13px", marginTop: "0px !important" }}
+              >
                 <Link to={"/questions/ask"}>
                   <img
                     class="logo-icon"
                     src={question_logo}
-                    style={{width:'50px'}}
+                    style={{ width: "50px" }}
                     data-tip="Ask a Question"
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2 " style={{paddingLeft:'13px'}}>
+              <li class="nav-item mt-2 " style={{ paddingLeft: "13px" }}>
                 <Link to={"/syntaxes"}>
                   <img
                     class="logo-icon"
                     src={list_logo}
                     data-tip="View Syntax List"
-                    style={{width:'40px'}}
+                    style={{ width: "40px" }}
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2" style={{paddingLeft:'17px'}}>
-                <Link to={"/"} onClick={e => renderLogin(false)}>
-                  <img class="logo-icon" src={logout_logo} style={{width:'40px'}} data-tip="Logout" />
+              <li class="nav-item mt-2" style={{ paddingLeft: "17px" }}>
+                <Link to={"/"} onClick={(e) => renderLogin(false)}>
+                  <img
+                    class="logo-icon"
+                    src={logout_logo}
+                    style={{ width: "40px" }}
+                    data-tip="Logout"
+                  />
                 </Link>
               </li>
             </ul>
@@ -91,6 +113,7 @@ const Navbar = ({ username, renderLogin }) => {
           <form
             class="d-flex justify-content-center col-3 col-md-4 mt-3 mt-md-0 mx-5 mx-md-0"
             style={{ width: "auto" }}
+            onSubmit={(e) => handleSubmit(e)}
           >
             <input
               className="form-control"
@@ -98,6 +121,7 @@ const Navbar = ({ username, renderLogin }) => {
               placeholder="Search"
               aria-label="Search"
               style={{ width: "12em" }}
+              id="searchInput"
             />
             <button
               class="btn btn-outline-dark mx-2"

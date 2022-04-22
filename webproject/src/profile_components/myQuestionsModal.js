@@ -12,7 +12,6 @@ const MyQuestionseModal = ({ questions, setMyQuestions }) => {
           <Modal.Title>My Questions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {console.log(2)}
           {questions.map((question) => {
             return (
               <div className="container mb-2" style={{ padding: "3px" }}>
