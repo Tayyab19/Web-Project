@@ -16,3 +16,14 @@
   width: 100%;
   color: red;
 }
+
+.forgetPassword, .signup {
+  text-decoration: none;
+}
+
+.forgetPassword:hover, .signup:hover {
+  font-weight: bolder;
+  font-size: 15px;
+  cursor: pointer;
+  color:black;
+}

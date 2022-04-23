@@ -1,6 +1,7 @@
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ForgotPassword from "./ForgotPassword";
 import "./Login.css";
 
 const Login = ({verifyLogin}) => {
@@ -8,6 +9,8 @@ const Login = ({verifyLogin}) => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [showForgetPassword, setForgetPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +24,7 @@ const Login = ({verifyLogin}) => {
   return (
     <>
       <section>
+        {showForgetPassword && <ForgotPassword setForgetPassword={setForgetPassword}/>}
         <div className="container py-5">
           <div className="row d-flex justify-content-center align-items-center">
             <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -57,16 +61,12 @@ const Login = ({verifyLogin}) => {
                         <p style={{fontSize:'20px', color:'red', fontWeight:'bolder'}}> {errorMessage} </p>
                       )}
 
-                      <p className="small mb-5 pb-lg-2">
-                        <a class="text-black-50" href="#!">
-                          <Link
-                            to="/forgotpassword"
-                            className="text-black-50 fw-bold"
-                          >
+                      <div class="text-end mt-2 mb-5">
+                          <a className="forgetPassword" onClick={e => {e.preventDefault(); setForgetPassword(true)}}>
                             Forgot password?
-                          </Link>
-                        </a>
-                      </p>
+                          </a>
+                      </div>
+
                       <button
                         className="btn btn-primary  btn-block btn-expand btn-lg"
                         type="submit"
@@ -88,7 +88,7 @@ const Login = ({verifyLogin}) => {
                   <div>
                     <p className="mb-0">
                       Don't have an account?{" "}
-                      <Link to="/signup" className="text-black-50 fw-bold">
+                      <Link to="/signup" className="signup">
                         Sign Up
                       </Link>
                     </p>
