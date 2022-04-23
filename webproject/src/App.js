@@ -21,7 +21,7 @@ function App() {
       tags: ["json", "pandas", "python", "csv"],
       username: "TenHang1",
       reputation: 2,
-      votes: 1,
+      votes: 7,
       answers: 3,
       views: 2,
     },

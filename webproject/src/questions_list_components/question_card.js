@@ -35,7 +35,7 @@ const QuestionCard = ({question}) => {
                     </div>
                     <div className='col-2'>
                         <p style={{fontWeight:'bolder', fontSize:'12px'}}>
-                            <Link className='usernameLink' to={`/profile/${question.username}`}>{question.username}</Link> {question.reputation}
+                            <Link className='usernameLink' to={`/profile/${question.username}`}>{question.username}</Link>
                         </p>
                     </div>
                 </div>
