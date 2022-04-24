@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ChangePasswordModal from "./changePasswordModal";
 import ChangePictureModal from "./changePictureModal";
-import MyQuestionseModal from "./myQuestionsModal";
+import MyQuestionsModal from "./myQuestionsModal";
 
 //ChangePassword and ChangeProfilePicture should be from App.js
 const Profile = ({ username, getUser, updateUser, getQuestions }) => {
@@ -61,7 +61,7 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
         />
       )}
       {myQuestion && (
-        <MyQuestionseModal
+        <MyQuestionsModal
           questions={questions}
           setMyQuestions={setMyQuestions}
         />

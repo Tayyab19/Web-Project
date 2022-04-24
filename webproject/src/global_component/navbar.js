@@ -2,7 +2,7 @@ import profile_logo from "./profile_logo.png";
 import logout_logo from "./logout_logo.png";
 import question_logo from "./questionflag.png";
 import list_logo from "./list_logo.png";
-import MyQuestionseModal from "../profile_components/myQuestionsModal";
+import MyQuestionsModal from "../profile_components/myQuestionsModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -19,7 +19,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
   return (
     <>
       {myQuestion && (
-        <MyQuestionseModal
+        <MyQuestionsModal
           questions={questions}
           setMyQuestions={setMyQuestions}
         />

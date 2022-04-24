@@ -3,7 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import QuestionCard from "../questions_list_components/question_card.js";
 
-const MyQuestionseModal = ({ questions, setMyQuestions }) => {
+const MyQuestionsModal = ({ questions, setMyQuestions }) => {
   return (
     <>
       {console.log(questions)}
@@ -31,4 +31,4 @@ const MyQuestionseModal = ({ questions, setMyQuestions }) => {
   );
 };
 
-export default MyQuestionseModal;
+export default MyQuestionsModal;
