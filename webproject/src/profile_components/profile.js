@@ -168,14 +168,19 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
             </button>
           </div>
           <div class="col-sm-8 col-md-8 col-lg-6">
-            <label for="address">Address:</label>
-            <input
-              id="address"
-              class="form-control  disable"
-              type="text"
-              value={userData.addrress}
+            <label for="invites">Invites to Answer:</label>
+            {/* Handle List */}
+            <select
+              class="form-select  remove"
+              aria-label="Answer Invites"
+              id="invites"
               onChange={(e) => handleUpdate(e.target)}
-            />
+            >
+              <option defaultValue>Question Title</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
           </div>
           <div class="col-lg-2"></div>
         </div>
@@ -216,7 +221,7 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
-            <label for="company">Preferred Stack:</label>
+            <label for="stack">Preferred Stack:</label>
             <select
               class="form-select  disable"
               aria-label="Preferred Stack"

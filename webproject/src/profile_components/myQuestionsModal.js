@@ -16,6 +16,23 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
             return (
               <div className="container mb-2" style={{ padding: "3px" }}>
                 <QuestionCard key={question.question_id} question={question} />
+                <button
+                  class="btn btn-outline-primary remove"
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  Edit Question
+                </button>
+                <button
+                  class="btn btn-outline-secondary remove"
+                  style={{ float: "right" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  Archive Question
+                </button>
                 <hr />
               </div>
             );

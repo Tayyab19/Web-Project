@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("You have been successfully registered!");
+    if (e.target.formpassword.value === e.target.formpassword2.value) {
+      alert(
+        "Please Click on the Confirmation Link Sent to your Email Account to verify your Account"
+      );
+    } else {
+      alert("Entered Passwords Do Not Match");
+    }
   };
   return (
     <>
@@ -22,9 +28,9 @@ const Signup = () => {
                       <div className="form-outline mb-4">
                         <input
                           type="email"
-                          id="form3email"
+                          id="formemail"
                           class="form-control form-control-md"
-                          placeholder="email"
+                          placeholder="Email"
                           required="true"
                         />
                       </div>
@@ -34,7 +40,7 @@ const Signup = () => {
                           type="text"
                           id="formusername"
                           class="form-control form-control-md"
-                          placeholder="username"
+                          placeholder="Username"
                           required="true"
                         />
                       </div>
@@ -44,75 +50,19 @@ const Signup = () => {
                           type="password"
                           id="formpassword"
                           class="form-control form-control-md"
-                          placeholder="password"
+                          placeholder="Password"
                           required="true"
                         />
                       </div>
 
                       <div class="form-outline mb-4">
                         <input
-                          type="text"
-                          id="form3FirstName"
+                          type="password"
+                          id="formpassword2"
                           class="form-control form-control-md"
-                          placeholder="first name"
+                          placeholder="Re-Type Your Password"
+                          required="true"
                         />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3LastName"
-                          class="form-control form-control-md"
-                          placeholder="last name"
-                        />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Address"
-                          class="form-control form-control-md"
-                          placeholder="address"
-                        />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Github"
-                          class="form-control form-control-md"
-                          placeholder="github"
-                        />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Linkedin"
-                          class="form-control form-control-md"
-                          placeholder="linkedin"
-                        />
-                      </div>
-
-                      <div class="form-outline mb-4 ">
-                        <div class="col-auto my-1">
-                          <label
-                            class="mr-sm-2 mx-2"
-                            for="inlineFormCustomSelect"
-                          >
-                            Stack Preference
-                          </label>
-                          <select
-                            class="custom-select mr-sm-2"
-                            id="inlineFormCustomSelect"
-                          >
-                            <option selected>Choose...</option>
-                            <option value="1">Ruby on Rails</option>
-                            <option value="2">Python</option>
-                            <option value="3">Java</option>
-                            <option value="3">ASP.NET</option>
-                          </select>
-                        </div>
                       </div>
 
                       <div class="d-flex justify-content-center mb-3">
