@@ -5,6 +5,7 @@ const answers = require("../models/answer");
 
 //Return all answers in database
 router.get("/", async (req, res) => {
+<<<<<<< HEAD
     answers.find({}).then(answers => {
         if (answers.length > 0){
             res.json(answers);
@@ -13,6 +14,16 @@ router.get("/", async (req, res) => {
         }
     }).catch(err => {
         res.status(400).send(err);
+=======
+  answers
+    .find({})
+    .then((answers) => {
+      if (answers.length > 0) {
+        res.json(answers);
+      } else {
+        res.sendStatus(404);
+      }
+>>>>>>> 2dd4b1c2c418fdbfb1b8d18e9932622c279d9ad0
     })
 })
 
