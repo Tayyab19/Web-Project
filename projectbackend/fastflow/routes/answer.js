@@ -3,20 +3,73 @@ const mongoose = require("mongoose");
 var router = express.Router();
 const answers = require("../models/answer");
 
-//Return all Answers in database
+//Return all answers in database
 router.get("/", async (req, res) => {
-  answers
-    .find({})
-    .then((questions) => {
-      if (questions.length > 0) {
-        res.json(questions);
-      } else {
-        res.send(404);
-      }
+    answers.find({}).then(answers => {
+        if (answers.length > 0){
+            res.json(answers);
+        } else {
+            res.send(404);
+        }
+    }).catch(err => {
+        res.status(400).send(err);
     })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
-});
+})
+
+//Return all answers of a single user
+router.get("/:username", async (req, res) => {
+    answers.find({username: req.params.username}).then(answers => {
+        if (answers.length > 0){
+            res.json(answers);
+        } else {
+            res.send(404);
+        }
+    }).catch(err => {
+        res.status(400).send(err);
+    })
+})
+
+//Return single answer by ID
+router.get("/answer/:id", async (req, res) => {
+    answers.find({_id: req.params.id}).then(answers => {
+        if (answers.length > 0){
+            res.json(answers);
+        } else {
+            res.send(404);
+        }
+    }).catch(err => {
+        res.status(400).send(err);
+    })
+})
+
+//Add answer to database
+router.post("/", async (req, res) => {
+    if(req.body.body && req.body.username) {
+        const newAnswer = new answers({
+            username: req.body.username,
+            question_id: req.body.question_id,
+            body: req.body.body,
+            votes: 0,
+        })
+        newAnswer.save();
+        res.status(201).send("Answer Added Succefully");
+    }else{
+        res.send(400);
+    }
+})
+
+//Update answer
+router.put("/:id", async (req, res) => {
+    answers.findOneAndUpdate({_id: req.params.id}, req.body).then(result => {
+        result ? res.send(201) : res.send(404)
+    }).catch(err => {res.status(400).send(err)})
+})
+
+//Delete answer by ID
+router.delete("/:id", async (req, res) => {
+    answers.deleteOne({_id: req.params.id}).then(result => {
+        result ? res.send(201) : res.send(404)
+    }).catch(err => res.status(400).send(err));
+})
 
 module.exports = router;
