@@ -7,11 +7,11 @@ const answers = require("../models/answer");
 router.get("/", async (req, res) => {
   answers
     .find({})
-    .then((questions) => {
-      if (questions.length > 0) {
-        res.json(questions);
+    .then((answers) => {
+      if (answers.length > 0) {
+        res.json(answers);
       } else {
-        res.send(404);
+        res.sendStatus(404);
       }
     })
     .catch((err) => {

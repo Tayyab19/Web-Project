@@ -8,6 +8,7 @@ var mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var questionsRouter = require("./routes/question");
+var answersRouter = require("./routes/answer");
 
 const DB =
   "mongodb+srv://Tayyab:Tayyab@cluster0.tgmvh.mongodb.net/?retryWrites=true&w=majority";
