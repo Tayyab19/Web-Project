@@ -23,6 +23,8 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
           questions={questions}
           setMyQuestions={setMyQuestions}
         />
+        //Alternatively Delete Buttons if search performed from NavBar
+        //Should redirect to Filter Page. Shoul Not Use MyQuestions Modal.
       )}
       <nav
         class="navbar navbar-expand-lg navbar-light row"
