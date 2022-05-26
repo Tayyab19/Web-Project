@@ -1,14 +1,47 @@
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Signup = () => {
+  const navigate = useNavigate();
+  const signUp = (email, username, password) => {
+    axios({
+      method: "post",
+      url: `http://localhost:5000/users/signup`,
+      data: {
+        email: email,
+        password: password,
+        username: username,
+      },
+      Headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 201) {
+          alert(
+            "Please Click on the Confirmation Link Sent to your Email Account to Verify your Account"
+          );
+          navigate("/");
+        } else {
+          alert("Username\\Email Already in Use");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (e.target.formpassword.value === e.target.formpassword2.value) {
-      alert(
-        "Please Click on the Confirmation Link Sent to your Email Account to verify your Account"
-      );
+    if (e.target.formpassword.value.length > 5) {
+      if (e.target.formpassword.value === e.target.formpassword2.value) {
+        signUp(
+          e.target.formemail.value,
+          e.target.formusername.value,
+          e.target.formpassword.value
+        );
+      } else {
+        alert("Entered Passwords Do Not Match");
+      }
     } else {
-      alert("Entered Passwords Do Not Match");
+      alert("Password too short");
     }
   };
   return (
