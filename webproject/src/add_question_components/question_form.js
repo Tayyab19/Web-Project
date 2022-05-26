@@ -53,6 +53,7 @@ const QuestionForm = ({ submitQuestion }) => {
         </ButtonGroup>
       </div>
       <div class="mb-5">
+        <br />
         <label for="QuestionTitle" className="form-label fw-bold">
           Title
         </label>{" "}
@@ -116,6 +117,29 @@ const QuestionForm = ({ submitQuestion }) => {
           placeholder="e.g. java, c++"
         />
       </div>
+      {radioValue === "Private" && (
+        <div id="privateQuestion">
+          <br />
+          <label for="InvitedUsers" className="form-label fw-bold">
+            Invited Users
+          </label>
+          <br />
+          <label for="InvitedUsers" className="form-label small">
+            Invite Users to Answer Questions
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="InvitedUSers"
+            onChange={(e) => {
+              e.preventDefault();
+            }}
+            placeholder="Username1, Username2....."
+          />
+          <br />
+        </div>
+      )}
+
       <Link
         to={"/questions/page/1"}
         className={isValid() ? "disabled-link" : ""}
