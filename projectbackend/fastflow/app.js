@@ -3,9 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require("mongoose");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+const DB = "mongodb+srv://Tayyab:Tayyab@cluster0.tgmvh.mongodb.net/?retryWrites=true&w=majority";
+mongoose
+  .connect(DB)
+  .then(() => console.log("Database Connected"))
+  .catch((err) => console.log(err));
 
 var app = express();
 
