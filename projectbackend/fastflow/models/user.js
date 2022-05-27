@@ -13,6 +13,7 @@ const schema = mongoose.Schema({
   linkedInHandle: String,
   preferredStack: String,
   invites: Array,
+  company: String,
 });
 
 module.exports = mongoose.model("users", schema);

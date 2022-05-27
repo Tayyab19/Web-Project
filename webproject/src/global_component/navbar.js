@@ -13,7 +13,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setQuestions(getSearchQuestion(e.target.searchInput.value));
-    console.log(questions.length);
+    // console.log(questions.length);
     setMyQuestions(true);
   };
   return (

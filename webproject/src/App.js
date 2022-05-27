@@ -11,6 +11,7 @@ import Login from "./login_components/Login";
 import Signup from "./login_components/Signup";
 import ForgotPassword from "./login_components/ForgotPassword";
 import SyntaxNav from "./syntaxes_components/SyntaxNav";
+import NotFound from "./global_component/notFound";
 
 function App() {
   const [questions, setQuestions] = useState([
@@ -571,16 +572,12 @@ function App() {
   };
 
   const [currUsername, setCurrUsername] = useState({
-    name: "TenHang1",
-    reputation: 112,
-    votes: 22,
-    answers: 11,
-    views: 44,
+    name: "",
   });
 
   const verifyLogin = (returnedUser) => {
-    let temp = { ...returnedUser, name: returnedUser.username };
-    setCurrUsername(temp);
+    setCurrUsername(returnedUser);
+    console.log(returnedUser);
     setRenderLogin(true);
     return true;
   };
@@ -686,7 +683,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(filteredAnswers);
+    //console.log(filteredAnswers);
   }, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
@@ -767,14 +764,11 @@ function App() {
               />
               <Route
                 path="/profile/:uID"
-                element={
-                  <Profile
-                    username={currUsername}
-                    getUser={getUser}
-                    updateUser={updateUser}
-                    getQuestions={getQuestions}
-                  />
-                }
+                element={<Profile username={currUsername} />}
+              />
+              <Route
+                path="/notFound"
+                element={<NotFound username={currUsername} />}
               />
             </>
           )}

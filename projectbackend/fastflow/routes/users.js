@@ -53,7 +53,8 @@ router.post("/signup", async (req, res) => {
         linkedInHandle = " ",
         preferredStack = " ",
         invites = [],
-        verified = false;
+        verified = false,
+        company = " ";
 
       const result = await users.create({
         email: email,
@@ -68,6 +69,7 @@ router.post("/signup", async (req, res) => {
         linkedInHandle: linkedInHandle,
         preferredStack: preferredStack,
         invites: invites,
+        company: company,
       });
 
       if (result.email != null) {
@@ -106,7 +108,7 @@ router.post("/signin", async (req, res) => {
           //   accessToken: accessToken,
           // });
           res.status(200).json({
-            userWithEmail,
+            name: userWithEmail.username,
           });
         } else {
           //Look for Status Code
@@ -118,4 +120,16 @@ router.post("/signin", async (req, res) => {
     }
   }
 });
+
+//Get a Particular User from User ID
+router.get("/profile/:username", async (req, res) => {
+  if (req.params.username != null) {
+    const thisUser = await users.findOne({ username: req.params.username });
+
+    if (thisUser != null) {
+      res.status(200).json(thisUser);
+    } else res.sendStatus(404);
+  } else res.sendStatus(400);
+});
+
 module.exports = router;
