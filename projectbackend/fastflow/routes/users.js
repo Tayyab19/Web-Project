@@ -132,4 +132,31 @@ router.get("/profile/:username", async (req, res) => {
   } else res.sendStatus(400);
 });
 
+router.patch("/profile/edit", async (req, res) => {
+  const body = req.body;
+
+  if (body != null) {
+    try {
+      await users.findOneAndUpdate(
+        { username: body.username },
+        {
+          firstName: body.firstName,
+          lastName: body.lastName,
+          githubHandle: body.githubHandle,
+          linkedInHandle: body.linkedInHandle,
+          preferredStack: body.preferredStack,
+          company: body.company,
+        }
+      );
+
+      res.sendStatus(200);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(400);
+  }
+});
+
 module.exports = router;

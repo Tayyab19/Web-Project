@@ -30,8 +30,21 @@ const Profile = ({ username }) => {
 
   const navigate = useNavigate();
 
-  const updateUser = () => {
-    //console.log("update User");
+  const updateUser = (newUserData) => {
+    console.log("Update User");
+    console.log(newUserData);
+    axios({
+      method: "patch",
+      url: `http://localhost:5000/users/profile/edit`,
+      Headers: { "Content-Type": "application/json" },
+      data: newUserData,
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const getQuestions = () => {
     //console.log("Get Questions");
@@ -230,7 +243,7 @@ const Profile = ({ username }) => {
               id="gitHub"
               class="form-control  disable"
               type="text"
-              value={userData.gitHubHandle}
+              value={userData.githubHandle}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
