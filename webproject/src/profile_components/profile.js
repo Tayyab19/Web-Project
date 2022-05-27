@@ -3,28 +3,68 @@ import profile_pic from "./download.jpg";
 import "./profile.css";
 import $ from "jquery";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./changePasswordModal";
 import ChangePictureModal from "./changePictureModal";
 import MyQuestionsModal from "./myQuestionsModal";
+import axios from "axios";
 
 //ChangePassword and ChangeProfilePicture should be from App.js
-const Profile = ({ username, getUser, updateUser, getQuestions }) => {
+const Profile = ({ username }) => {
+  const getUser = async (username) => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/users/profile/${username}`,
+      Headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        console.log(response.data);
+        setUser(response.data);
+        setUserFetched(true);
+      })
+      .catch((err) => {
+        if (err.response.status == 404) navigate("/notFound");
+        console.log(err);
+      });
+  };
+
+  const navigate = useNavigate();
+
+  const updateUser = (newUserData) => {
+    console.log("Update User");
+    console.log(newUserData);
+    axios({
+      method: "patch",
+      url: `http://localhost:5000/users/profile/edit`,
+      Headers: { "Content-Type": "application/json" },
+      data: newUserData,
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getQuestions = () => {
+    //console.log("Get Questions");
+  };
+
   const { uID } = useParams();
-  let [userData, setUser] = useState(getUser(uID));
+  let [userData, setUser] = useState([]);
   const [changePassword, setChangePassword] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [myQuestion, setMyQuestions] = useState(false);
-  const [password, setPassword] = useState("a");
   const [picture, setPicture] = useState("b");
+  const [userFetched, setUserFetched] = useState(false);
 
   const questions = getQuestions(uID);
-
-  console.log(questions);
+  //console.log(questions);
   //setPicture(profile_pic);
   //Redirect to 404 Not found
 
   useEffect(() => {
+    if (!userFetched) getUser(uID);
     if (username.name != uID) {
       let classList = $(".disable");
       for (const element of classList) {
@@ -35,8 +75,6 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
         element.remove();
       }
     }
-    console.log("Password: " + password);
-    console.log(picture);
   });
 
   const handleUpdate = (value) => {
@@ -49,7 +87,7 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
   };
 
   const handleDiscard = () => {
-    window.location.reload(false);
+    getUser(uID);
   };
 
   return (
@@ -57,7 +95,7 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
       {changePassword && (
         <ChangePasswordModal
           setChangePassword={setChangePassword}
-          setPassword={setPassword}
+          username={username}
         />
       )}
       {myQuestion && (
@@ -127,7 +165,7 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
               id="badges"
               class="form-control"
               type="text"
-              value={userData.Badges}
+              value={userData.badges}
               disabled
             />
           </div>
@@ -167,16 +205,18 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
               Change Password
             </button>
           </div>
-          <div class="col-sm-8 col-md-8 col-lg-6">
+          <div class="col-sm-8 col-md-8 col-lg-6 remove">
             <label for="invites">Invites to Answer:</label>
             {/* Handle List */}
             <select
-              class="form-select  remove"
+              class="form-select"
               aria-label="Answer Invites"
               id="invites"
               onChange={(e) => handleUpdate(e.target)}
             >
-              <option defaultValue>Question Title</option>
+              <option defaultValue>
+                {userData.invites && userData.invites[0]}
+              </option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
@@ -187,22 +227,22 @@ const Profile = ({ username, getUser, updateUser, getQuestions }) => {
         <div class="row">
           <div class="col-lg-2"></div>
           <div class="col-lg-4 col-md-6 col-sm-6">
-            <label for="linkedIn">LinkedIn Address:</label>
+            <label for="linkedInHandle">LinkedIn Address:</label>
             <input
-              id="linkedIn"
+              id="linkedInHandle"
               class="form-control  disable"
               type="text"
-              value={userData.linkedIn}
+              value={userData.linkedInHandle}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
-            <label for="gitHub">GitHub Handle:</label>
+            <label for="githubHandle">GitHub Handle:</label>
             <input
-              id="gitHub"
+              id="githubHandle"
               class="form-control  disable"
               type="text"
-              value={userData.gitHub}
+              value={userData.githubHandle}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>

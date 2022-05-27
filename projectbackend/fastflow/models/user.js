@@ -4,6 +4,7 @@ const schema = mongoose.Schema({
   username: { type: String, minlength: 5, required: true },
   password: { type: String, select: false, minlength: 6, required: true },
   email: { type: String, minlength: 5, required: true },
+  verified: Boolean,
   firstName: String,
   lastName: String,
   reputation: Number,
@@ -12,6 +13,7 @@ const schema = mongoose.Schema({
   linkedInHandle: String,
   preferredStack: String,
   invites: Array,
+  company: String,
 });
 
 module.exports = mongoose.model("users", schema);

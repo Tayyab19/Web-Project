@@ -11,6 +11,7 @@ import Login from "./login_components/Login";
 import Signup from "./login_components/Signup";
 import ForgotPassword from "./login_components/ForgotPassword";
 import SyntaxNav from "./syntaxes_components/SyntaxNav";
+import NotFound from "./global_component/notFound";
 
 function App() {
   const [questions, setQuestions] = useState([
@@ -71,7 +72,8 @@ function App() {
     },
     {
       question_id: 6,
-      title: "How do I make a button show and hide text when clicked and why does getElement not work?",
+      title:
+        "How do I make a button show and hide text when clicked and why does getElement not work?",
       body: "Pretty self-explanatory",
       tags: ["java", "javascript", "python"],
       username: "Nick",
@@ -192,7 +194,8 @@ function App() {
     },
     {
       question_id: 17,
-      title: "Why is processing a sorted array faster than processing an unsorted array?",
+      title:
+        "Why is processing a sorted array faster than processing an unsorted array?",
       body: "My first thought was that sorting brings the data into the cache, but then I thought how silly that was because the array was just generated. What is going on?",
       tags: ["java", "php", "python"],
       username: "Rick Peters",
@@ -302,8 +305,7 @@ function App() {
       question_id: 1,
       votes: 3,
       username: "Nick",
-      string:
-        "Clean your code and do it all over again",
+      string: "Clean your code and do it all over again",
     },
     {
       answer_id: 4,
@@ -321,22 +323,20 @@ function App() {
       string:
         "MVC framework helps us to completely grasp the model w.r.t the views",
     },
-    
+
     {
       answer_id: 5,
       question_id: 2,
       votes: 4,
       username: "Rick Peters",
-      string:
-        "Model-View-Controller Framework",
+      string: "Model-View-Controller Framework",
     },
     {
       answer_id: 6,
       question_id: 3,
       votes: 2,
       username: "TenHang1",
-      string:
-        "Reinstall it. Worked for me",
+      string: "Reinstall it. Worked for me",
     },
     {
       answer_id: 7,
@@ -447,8 +447,7 @@ function App() {
       question_id: 18,
       votes: 2,
       username: "TenHang1",
-      string:
-        "Go to source control -> branch -> rename branch",
+      string: "Go to source control -> branch -> rename branch",
     },
     {
       answer_id: 23,
@@ -573,23 +572,14 @@ function App() {
   };
 
   const [currUsername, setCurrUsername] = useState({
-    name: "TenHang1",
-    reputation: 112,
-    votes: 22,
-    answers: 11,
-    views: 44,
+    name: "",
   });
 
-  const verifyLogin = (email, password) => {
-    if (users.some((user) => user.email === email && password === "12345")) {
-      let temp = users.find((user) => user.email === email);
-      temp = { ...temp, name: temp.username };
-      setCurrUsername(temp);
-      setRenderLogin(true);
-      return true;
-    } else {
-      return false;
-    }
+  const verifyLogin = (returnedUser) => {
+    setCurrUsername(returnedUser);
+    console.log(returnedUser);
+    setRenderLogin(true);
+    return true;
   };
 
   const updateQuestion = (q) => {
@@ -693,7 +683,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(filteredAnswers);
+    //console.log(filteredAnswers);
   }, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
@@ -774,14 +764,11 @@ function App() {
               />
               <Route
                 path="/profile/:uID"
-                element={
-                  <Profile
-                    username={currUsername}
-                    getUser={getUser}
-                    updateUser={updateUser}
-                    getQuestions={getQuestions}
-                  />
-                }
+                element={<Profile username={currUsername} />}
+              />
+              <Route
+                path="/notFound"
+                element={<NotFound username={currUsername} />}
               />
             </>
           )}

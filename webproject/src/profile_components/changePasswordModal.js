@@ -1,10 +1,25 @@
 import { Button, Modal } from "react-bootstrap";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import axios from "axios";
 
-const ChangePasswordModal = ({ setChangePassword, setPassword }) => {
+const ChangePasswordModal = ({ setChangePassword, username }) => {
   const [temp, setTemp] = useState("");
   const [temp2, setTemp2] = useState("");
+  const setPassword = (password, username) => {
+    axios({
+      method: "patch",
+      url: `http://localhost:5000/users/profile/editPassword`,
+      Headers: { "Content-Type": "application/json" },
+      data: { password: password, username: username.name },
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -42,7 +57,7 @@ const ChangePasswordModal = ({ setChangePassword, setPassword }) => {
             variant="primary"
             onClick={() => {
               if (temp === temp2) {
-                setPassword(temp);
+                setPassword(temp, username);
                 setChangePassword(false);
               } else {
                 alert("Entered Passwords don't match");
