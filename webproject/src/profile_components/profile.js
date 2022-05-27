@@ -55,7 +55,6 @@ const Profile = ({ username }) => {
   const [changePassword, setChangePassword] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [myQuestion, setMyQuestions] = useState(false);
-  const [password, setPassword] = useState("a");
   const [picture, setPicture] = useState("b");
   const [userFetched, setUserFetched] = useState(false);
 
@@ -88,7 +87,7 @@ const Profile = ({ username }) => {
   };
 
   const handleDiscard = () => {
-    window.location.reload(false);
+    getUser(uID);
   };
 
   return (
@@ -96,7 +95,7 @@ const Profile = ({ username }) => {
       {changePassword && (
         <ChangePasswordModal
           setChangePassword={setChangePassword}
-          setPassword={setPassword}
+          username={username}
         />
       )}
       {myQuestion && (
@@ -228,9 +227,9 @@ const Profile = ({ username }) => {
         <div class="row">
           <div class="col-lg-2"></div>
           <div class="col-lg-4 col-md-6 col-sm-6">
-            <label for="linkedIn">LinkedIn Address:</label>
+            <label for="linkedInHandle">LinkedIn Address:</label>
             <input
-              id="linkedIn"
+              id="linkedInHandle"
               class="form-control  disable"
               type="text"
               value={userData.linkedInHandle}
@@ -238,9 +237,9 @@ const Profile = ({ username }) => {
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
-            <label for="gitHub">GitHub Handle:</label>
+            <label for="githubHandle">GitHub Handle:</label>
             <input
-              id="gitHub"
+              id="githubHandle"
               class="form-control  disable"
               type="text"
               value={userData.githubHandle}

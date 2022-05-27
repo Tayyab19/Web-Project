@@ -132,6 +132,7 @@ router.get("/profile/:username", async (req, res) => {
   } else res.sendStatus(400);
 });
 
+//Edit Profile
 router.patch("/profile/edit", async (req, res) => {
   const body = req.body;
 
@@ -146,6 +147,31 @@ router.patch("/profile/edit", async (req, res) => {
           linkedInHandle: body.linkedInHandle,
           preferredStack: body.preferredStack,
           company: body.company,
+        }
+      );
+
+      res.sendStatus(200);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+//Edit Password
+router.patch("/profile/editPassword", async (req, res) => {
+  const body = req.body;
+
+  if (body != null) {
+    const password = await bcrypt.hash(body.password, 10);
+
+    try {
+      await users.findOneAndUpdate(
+        { username: body.username },
+        {
+          password: password,
         }
       );
 
