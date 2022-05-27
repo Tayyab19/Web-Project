@@ -3,28 +3,50 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import "./Login.css";
+import axios from "axios";
 
-const Login = ({verifyLogin}) => {
+const Login = ({ verifyLogin }) => {
+  const signIn = async (email, password) => {
+    axios({
+      method: "post",
+      url: `http://localhost:5000/users/signin`,
+      data: {
+        email: email,
+        password: password,
+      },
+      Headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          verifyLogin(response.data);
+          navigate("/questions/page/1");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.data.Message) {
+          alert(err.response.data.Message);
+        }
+      });
+  };
 
   const navigate = useNavigate();
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [showForgetPassword, setForgetPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (verifyLogin(e.target.typeEmailX.value, e.target.typePasswordX.value)) {
-      navigate('/questions/page/1');
-    }else{
-      setErrorMessage('Invalid Username or Password');
-    }
+    signIn(e.target.typeEmailX.value, e.target.typePasswordX.value);
   };
 
   return (
     <>
       <section>
-        {showForgetPassword && <ForgotPassword setForgetPassword={setForgetPassword}/>}
+        {showForgetPassword && (
+          <ForgotPassword setForgetPassword={setForgetPassword} />
+        )}
         <div className="container py-5">
           <div className="row d-flex justify-content-center align-items-center">
             <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -36,7 +58,7 @@ const Login = ({verifyLogin}) => {
                     </h2>
                     <p>Please enter your login and password!</p>
 
-                    <form onSubmit={e => handleSubmit(e)}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                       <div className="form-outline form-white mb-4">
                         <input
                           type="email"
@@ -52,19 +74,34 @@ const Login = ({verifyLogin}) => {
                           type="password"
                           id="typePasswordX"
                           class="form-control form-control-lg"
-                          placeholder="password"
+                          placeholder="Password"
                           required="true"
                         />
                       </div>
 
                       {errorMessage && (
-                        <p style={{fontSize:'20px', color:'red', fontWeight:'bolder'}}> {errorMessage} </p>
+                        <p
+                          style={{
+                            fontSize: "20px",
+                            color: "red",
+                            fontWeight: "bolder",
+                          }}
+                        >
+                          {" "}
+                          {errorMessage}{" "}
+                        </p>
                       )}
 
                       <div class="text-end mt-2 mb-5">
-                          <a className="forgetPassword" onClick={e => {e.preventDefault(); setForgetPassword(true)}}>
-                            Forgot password?
-                          </a>
+                        <a
+                          className="forgetPassword"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setForgetPassword(true);
+                          }}
+                        >
+                          Forgot password?
+                        </a>
                       </div>
 
                       <button
