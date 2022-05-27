@@ -141,13 +141,13 @@ const QuestionForm = ({ submitQuestion }) => {
       )}
 
       <Link
-        to={"/questions/page/1"}
+        to={""}
         className={isValid() ? "disabled-link" : ""}
       >
         <button
           type="btn"
           onClick={(e) => {
-            submitQuestion(title, body, tags);
+            submitQuestion(title, body, tags, radioValue);
           }}
           class={
             isValid() ? "btn disabled btn-primary" : "btn active btn-primary"

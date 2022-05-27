@@ -650,11 +650,6 @@ function App() {
     console.log(obj);
   };
 
-  const addQuestion = (q) => {
-    setFilteredQuestions([...questions, q]);
-    setQuestions([...questions, q]);
-  };
-
   const addAnswer = (a) => {
     setFilteredAnswers([...answers, a]);
     setAnswers([...answers, a]);
@@ -671,20 +666,6 @@ function App() {
     );
     setFilteredQuestions(questions);
   };
-
-  const applyFilter = (selectedTags) => {
-    selectedTags.length > 0
-      ? setFilteredQuestions(
-          questions.filter((q) => {
-            return q.tags.some((tag) => selectedTags.includes(tag));
-          })
-        )
-      : setFilteredQuestions(questions);
-  };
-
-  useEffect(() => {
-    //console.log(filteredAnswers);
-  }, [filteredQuestions, filteredAnswers]);
 
   useEffect(() => {
     if (!isFilter) {
@@ -728,14 +709,7 @@ function App() {
               <Route
                 path="/questions/page/:pageNumber"
                 element={
-                  <AllQuestionPage
-                    questions={filteredQuestions}
-                    username={currUsername}
-                    getTags={getTags}
-                    applyFilter={applyFilter}
-                    isFilter={isFilter}
-                    setFilter={setFilter}
-                  />
+                  <AllQuestionPage />
                 }
               />
               <Route
@@ -756,9 +730,7 @@ function App() {
                 path="/questions/ask"
                 element={
                   <AddQuestion
-                    addQuestion={addQuestion}
-                    questionID={+questions.length + +1}
-                    username={currUsername}
+                    username={currUsername} //Will remove after jwt token is implemented
                   />
                 }
               />

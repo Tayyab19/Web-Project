@@ -5,14 +5,50 @@ import {Link} from 'react-router-dom'
 import Pagination from "./pagination";
 import Footer from "../global_component/footer";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, setFilter}) => {
-
+const AllQuestionPage =  () => {
+    const [questions, setQuestions] = useState([]);
+    const [filteredQuestions, setFilteredQuestions] = useState(questions);
+    const [isFilter, setFilter] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [questionsPerPage, setQuestionsPerPage] = useState(15);
-
     const { pageNumber } = useParams();
 
-    useEffect(()=>{}, [questionsPerPage]);
+    const getTags = () => {
+        let tags = [];
+        questions.forEach((q) => {
+          tags = tags.concat(q.tags);
+        });
+    
+        tags = [...new Set(tags)];
+        return tags;
+    }
+
+    const applyFilter = (selectedTags) => {
+        selectedTags.length > 0
+          ? setFilteredQuestions(
+              questions.filter((q) => {
+                return q.tags.some((tag) => selectedTags.includes(tag));
+              })
+            )
+          : setFilteredQuestions(questions);
+    }
+
+    const getQuestions = () => {
+        axios.get("http://localhost:5000/questions").then(questions => {
+            setQuestions(questions.data);
+            setFilteredQuestions(questions.data);
+        }).catch(err => alert("Error While Retrieving Questions")).finally(() => setLoading(true));
+    } 
+
+    useEffect(()=>{ getQuestions(); }, []);
+
+    useEffect(() => {
+        if (!isFilter) {
+          setFilteredQuestions(questions);
+        }
+      }, [isFilter]);
 
     return (
         <div>
@@ -26,7 +62,7 @@ const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, s
 
             <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-between">
-                    <p className="text-start" style={{fontSize: '24px'}}>{questions.length} questions</p>
+                    <p className="text-start" style={{fontSize: '24px'}}>{filteredQuestions.length} questions</p>
                     <button onClick={e => {e.preventDefault(); setFilter(!isFilter)}} className="btn btn-outline-secondary d-flex justify-content-end" style={{height: '40px', fontWeight:'bold'}} >{isFilter ? "Remove Filter" : "Filter"}</button>
                 </div>
             </div>
@@ -40,23 +76,24 @@ const AllQuestionPage = ({questions, username, getTags, applyFilter, isFilter, s
 
             {console.log(questions)}
             {
-                questions?.map((question, index) => {
+                loading  ? filteredQuestions?.map((question, index) => {
                     return(
-                    ( index >= questionsPerPage * (pageNumber-1) && index <= questionsPerPage * pageNumber ?
-                    <div className="container mb-2" style={{padding: '3px'}}>
-                            <QuestionCard key={question.question_id} question={question}/>
-                        <hr />
-                    </div>
-                    :
-                    null
-                    )
-                    )
-                })
+                            ( index >= questionsPerPage * (pageNumber-1) && index <= questionsPerPage * pageNumber ?
+                            <div className="container mb-2" style={{padding: '3px'}}>
+                                    <QuestionCard key={question.question_id} question={question}/>
+                                <hr />
+                            </div>
+                            :
+                            null
+                            )
+                        )
+                    }) :    
+                            <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
             }
 
             <div className="row mb-5">
                 <div className="col-6">
-                    <Pagination pageNumber={pageNumber} totalPages={Math.ceil(questions.length/questionsPerPage)}/>
+                    <Pagination pageNumber={pageNumber} totalPages={Math.ceil(filteredQuestions.length/questionsPerPage)}/>
                 </div>
 
                 <div className="col-6 d-flex justify-content-end">

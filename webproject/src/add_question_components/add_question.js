@@ -1,22 +1,44 @@
 import {Link} from 'react-router-dom'
 import Footer from "../global_component/footer";
 import QuestionForm from './question_form';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const AddQuestion = ({addQuestion, questionID, username}) => {
+const AddQuestion = ({username}) => {
 
-    const makeQuestionObject = (title, body, tags) => {
+    const makeQuestionObject = async (title, body, tags, radioValue) => {
         const q = {
-            "question_id": questionID,
             "title": title,
             "body": body,
             "tags": tags,
             "username": username.name,
             "reputation": username.reputation,
-            "votes": username.votes,
-            "answers": username.answers,
-            "views": username.views
+            "private": radioValue,
+            "archive": false,
+            "invited": [],
         };
-        addQuestion(q);
+        await axios.post("http://localhost:5000/questions", q).then(res => {
+            toast.success('Question Added!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+        }).catch(err => {
+            toast.error('Error While Adding Question', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            })});
+        
     }
 
     return (
@@ -28,7 +50,22 @@ const AddQuestion = ({addQuestion, questionID, username}) => {
                         <Link to={'/questions/page/1'}><button className="btn btn-primary d-flex justify-content-end">Back to Questions</button></Link>
                     </div>
                 </div>
-                <QuestionForm submitQuestion={makeQuestionObject}/>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    />
+                    {/* Same as */
+                        <QuestionForm submitQuestion={makeQuestionObject}/>
+                    }
+                <ToastContainer />
+                
             </div>
             <Footer />
         </div>
