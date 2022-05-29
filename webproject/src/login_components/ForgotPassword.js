@@ -1,11 +1,23 @@
 import { Button, Modal } from "react-bootstrap";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import axios from "axios";
 
-const ForgotPassword = ({setForgetPassword}) => {
+const ForgotPassword = ({ setForgetPassword }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Password reset link Sent");
+    axios({
+      method: "post",
+      url: `http://localhost:5000/users/forgotPassword`,
+      Headers: { "Content-Type": "application/json" },
+      data: { email: e.target.email.value },
+    })
+      .then(() => {
+        var x = "show Toast, You will receive a password reset link shortly";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>
@@ -14,10 +26,16 @@ const ForgotPassword = ({setForgetPassword}) => {
           <Modal.Title>Forgot Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={e => handleSubmit(e)}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <input type="text" placeholder="Enter Email" id="email" />
             <div class="text-center mt-3">
-              <button type="submit" className="btn btn-block btn-primary" style={{display: 'inline'}}>Send Link</button>
+              <button
+                type="submit"
+                className="btn btn-block btn-primary"
+                style={{ display: "inline" }}
+              >
+                Send Link
+              </button>
             </div>
           </form>
         </Modal.Body>

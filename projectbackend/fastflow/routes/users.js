@@ -2,6 +2,7 @@ var express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 var router = express.Router();
 const users = require("../models/user");
 
@@ -182,6 +183,33 @@ router.patch("/profile/editPassword", async (req, res) => {
     }
   } else {
     res.sendStatus(400);
+  }
+});
+
+router.post("/forgotPassword", async (req, res) => {
+  if (req.body.email) {
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "expertwebdev6@gmail.com",
+        pass: "L18-1082a",
+      },
+    });
+
+    var mailOptions = {
+      from: "expertwebdev6@gmail.com",
+      to: req.body.email,
+      subject: "Password reset Link",
+      text: "This is the Password Reset Link for your StackOverflowClone account. If you did not request this email ignore it.",
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) console.log(err);
+      else {
+        console.log("Email sent: " + info.response);
+        res.sendStatus(200);
+      }
+    });
   }
 });
 
