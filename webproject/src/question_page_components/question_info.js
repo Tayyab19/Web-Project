@@ -99,7 +99,7 @@ const QuestionInfo = ({ username }) => {
 
   useEffect(() => {
     loadData();
-  })
+  }, [])
 
 useEffect(() => {
         if (question != undefined){
