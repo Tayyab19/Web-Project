@@ -18,7 +18,6 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
 
   return (
     <>
-      {console.log(questions)}
       <Modal size="auto" show={true} onHide={() => setMyQuestions(false)}>
         <Modal.Header closeButton>
           <Modal.Title>My Questions</Modal.Title>
@@ -29,23 +28,37 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
               <div className="container mb-2" style={{ padding: "3px" }}>
                 <QuestionCard key={question._id} question={question} />
                 <button
-                  class="btn btn-outline-primary remove"
+                  className="btn btn-outline-primary remove"
                   onClick={(e) => {
                     e.preventDefault();
                   }}
                 >
-                  Edit Question
+                  Delete Question
                 </button>
-                <button
-                  class="btn btn-outline-secondary remove"
-                  style={{ float: "right" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    archiveQuestion(question.question_id);
-                  }}
-                >
-                  Archive Question
-                </button>
+                {!question.private ? (
+                  <button
+                    className="btn btn-outline-secondary remove"
+                    style={{ float: "right" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      archiveQuestion(question._id);
+                    }}
+                  >
+                    {!question.archive
+                      ? "Archive Question"
+                      : "Un-Archive Question"}
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-outline-danger remove"
+                    style={{ float: "right" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    Private Question
+                  </button>
+                )}
                 <hr />
               </div>
             );

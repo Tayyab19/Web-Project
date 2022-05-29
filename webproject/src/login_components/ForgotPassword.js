@@ -28,7 +28,7 @@ const ForgotPassword = ({ setForgetPassword }) => {
         <Modal.Body>
           <form onSubmit={(e) => handleSubmit(e)}>
             <input type="text" placeholder="Enter Email" id="email" />
-            <div class="text-center mt-3">
+            <div className="text-center mt-3">
               <button
                 type="submit"
                 className="btn btn-block btn-primary"

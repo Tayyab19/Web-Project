@@ -117,12 +117,11 @@ router.delete("/:id", async (req, res) => {
 });
 
 //Archive a Question by ID
-router.put("/archive/:id", async (req, res) => {
+router.patch("/archive/:id", async (req, res) => {
   questions
-    .findOneAndUpdate(
-      { _id: req.params.id },
-      { $set: { archive: { $not: "$archive" } } }
-    )
+    .findOneAndUpdate({ _id: req.params.id }, [
+      { $set: { archive: { $not: "$archive" } } },
+    ])
     .then((result) => {
       result ? res.send(201) : res.send(404);
     })

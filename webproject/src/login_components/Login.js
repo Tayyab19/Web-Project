@@ -4,6 +4,8 @@ import { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import "./Login.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ verifyLogin }) => {
   const signIn = async (email, password) => {
@@ -25,7 +27,15 @@ const Login = ({ verifyLogin }) => {
       .catch((err) => {
         console.log(err);
         if (err.response.data.Message) {
-          alert(err.response.data.Message);
+          toast.error(err.response.data.Message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       });
   };
@@ -43,6 +53,17 @@ const Login = ({ verifyLogin }) => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <section>
         {showForgetPassword && (
           <ForgotPassword setForgetPassword={setForgetPassword} />
@@ -65,7 +86,7 @@ const Login = ({ verifyLogin }) => {
                           id="typeEmailX"
                           className="form-control form-control-lg"
                           placeholder="Email"
-                          required="true"
+                          required={true}
                         />
                       </div>
 
@@ -73,9 +94,9 @@ const Login = ({ verifyLogin }) => {
                         <input
                           type="password"
                           id="typePasswordX"
-                          class="form-control form-control-lg"
+                          className="form-control form-control-lg"
                           placeholder="Password"
-                          required="true"
+                          required={true}
                         />
                       </div>
 
@@ -92,7 +113,7 @@ const Login = ({ verifyLogin }) => {
                         </p>
                       )}
 
-                      <div class="text-end mt-2 mb-5">
+                      <div className="text-end mt-2 mb-5">
                         <a
                           className="forgetPassword"
                           onClick={(e) => {
@@ -136,6 +157,7 @@ const Login = ({ verifyLogin }) => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </>
   );
 };

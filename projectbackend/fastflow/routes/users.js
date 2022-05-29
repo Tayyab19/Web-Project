@@ -152,6 +152,7 @@ router.patch("/profile/edit", async (req, res) => {
           linkedInHandle: body.linkedInHandle,
           preferredStack: body.preferredStack,
           company: body.company,
+          profilePhoto: body.profilePhoto,
         }
       );
 

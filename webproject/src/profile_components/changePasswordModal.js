@@ -2,6 +2,8 @@ import { Button, Modal } from "react-bootstrap";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ChangePasswordModal = ({ setChangePassword, username }) => {
   const [temp, setTemp] = useState("");
@@ -14,9 +16,27 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
       data: { password: password, username: username.name },
     })
       .then((response) => {
-        console.log(response.status);
+        toast.success("Password Changed Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setInterval(setChangePassword(false), 2000);
       })
       .catch((err) => {
+        toast.error("Unknown Error Occured", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         console.log(err);
       });
   };
@@ -28,12 +48,23 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
           <Modal.Title>Reset Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <div>
             <label for="firstPassword">Enter New Password:</label>
             <input
               onChange={(e) => setTemp(e.target.value)}
               id="firstPassword"
-              class="form-control"
+              className="form-control"
               type="password"
               value={temp}
             />
@@ -43,11 +74,12 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
             <input
               onChange={(e) => setTemp2(e.target.value)}
               id="secondPassword"
-              class="form-control"
+              className="form-control"
               type="password"
               value={temp2}
             />
           </div>
+          <ToastContainer />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setChangePassword(false)}>
@@ -56,11 +88,17 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
           <Button
             variant="primary"
             onClick={() => {
-              if (temp === temp2) {
-                setPassword(temp, username);
-                setChangePassword(false);
-              } else {
-                alert("Entered Passwords don't match");
+              if (temp === temp2) setPassword(temp, username);
+              else {
+                toast.error("Entered Passwords don't match", {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
               }
             }}
           >
