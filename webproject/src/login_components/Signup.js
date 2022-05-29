@@ -1,6 +1,8 @@
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,15 +20,32 @@ const Signup = () => {
       .then((response) => {
         console.log(response);
         if (response.status == 201) {
-          alert(
-            "Please Click on the Confirmation Link Sent to your Email Account to Verify your Account"
+          toast.success(
+            "Please Click on the Confirmation Link Sent to your Email Account to Verify your Account",
+            {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
           );
           navigate("/");
-        } else {
-          alert("Username\\Email Already in Use");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error("Username\\Email Already in Use", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,14 +57,41 @@ const Signup = () => {
           e.target.formpassword.value
         );
       } else {
-        alert("Entered Passwords Do Not Match");
+        toast.error("Entered Passwords Do Not Match", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     } else {
-      alert("Password too short");
+      toast.error("Password too short", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />{" "}
       <section>
         <div className="d-flex align-items-center h-100 ">
           <div className="container py-5 h-100">
@@ -123,6 +169,7 @@ const Signup = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </>
   );
 };
