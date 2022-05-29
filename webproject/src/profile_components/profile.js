@@ -31,8 +31,6 @@ const Profile = ({ username }) => {
   const navigate = useNavigate();
 
   const updateUser = (newUserData) => {
-    console.log("Update User");
-    console.log(newUserData);
     axios({
       method: "patch",
       url: `http://localhost:5000/users/profile/edit`,
@@ -46,8 +44,22 @@ const Profile = ({ username }) => {
         console.log(err);
       });
   };
-  const getQuestions = () => {
-    //console.log("Get Questions");
+  const getQuestions = (username) => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/questions/${username}`,
+      Headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        setQuestionsFetched(true);
+        setQuestions(response.data);
+        console.log("Response Length", response.data);
+        console.log("Questions Variable", questions);
+      })
+      .catch((err) => {
+        if (err.response.status == 404) navigate("/notFound");
+        console.log(err);
+      });
   };
 
   const { uID } = useParams();
@@ -57,14 +69,16 @@ const Profile = ({ username }) => {
   const [myQuestion, setMyQuestions] = useState(false);
   const [picture, setPicture] = useState("b");
   const [userFetched, setUserFetched] = useState(false);
+  const [questionsFetched, setQuestionsFetched] = useState(false);
 
-  const questions = getQuestions(uID);
+  const [questions, setQuestions] = useState([]);
   //console.log(questions);
   //setPicture(profile_pic);
   //Redirect to 404 Not found
 
   useEffect(() => {
     if (!userFetched) getUser(uID);
+
     if (username.name != uID) {
       let classList = $(".disable");
       for (const element of classList) {
@@ -75,7 +89,11 @@ const Profile = ({ username }) => {
         element.remove();
       }
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!questionsFetched) getQuestions(uID);
+  }, []);
 
   const handleUpdate = (value) => {
     setUser({ ...userData, [value.id]: value.value });

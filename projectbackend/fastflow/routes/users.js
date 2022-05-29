@@ -185,4 +185,15 @@ router.patch("/profile/editPassword", async (req, res) => {
   }
 });
 
+const updateReputation = async (username, value) => {
+  await users.findOneAndUpdate(
+    { username: username },
+    { $inc: { reputation: parseInt(value) } }
+  );
+};
+
+const modifyReputation = async (username, value) => {
+  await updateReputation(username, value);
+};
+
 module.exports = router;

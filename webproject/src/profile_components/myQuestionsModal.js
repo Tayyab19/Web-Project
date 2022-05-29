@@ -2,8 +2,20 @@ import { Button, Modal } from "react-bootstrap";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import QuestionCard from "../questions_list_components/question_card.js";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const MyQuestionsModal = ({ questions, setMyQuestions }) => {
+  const archiveQuestion = (_id) => {
+    axios({
+      method: "patch",
+      url: `http://localhost:5000/questions/archive/${_id}`,
+      Headers: { "Content-Type": "application/json" },
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
   return (
     <>
       {console.log(questions)}
@@ -15,7 +27,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
           {questions.map((question) => {
             return (
               <div className="container mb-2" style={{ padding: "3px" }}>
-                <QuestionCard key={question.question_id} question={question} />
+                <QuestionCard key={question._id} question={question} />
                 <button
                   class="btn btn-outline-primary remove"
                   onClick={(e) => {
@@ -29,6 +41,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
                   style={{ float: "right" }}
                   onClick={(e) => {
                     e.preventDefault();
+                    archiveQuestion(question.question_id);
                   }}
                 >
                   Archive Question
