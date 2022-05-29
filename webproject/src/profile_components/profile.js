@@ -51,8 +51,8 @@ const Profile = ({ username }) => {
       Headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        setQuestionsFetched(true);
         setQuestions(response.data);
+        setQuestionsFetched(true);
         console.log("Response Length", response.data);
         console.log("Questions Variable", questions);
       })
@@ -92,7 +92,7 @@ const Profile = ({ username }) => {
   }, []);
 
   useEffect(() => {
-    if (!questionsFetched) getQuestions(uID);
+    getQuestions(uID);
   }, []);
 
   const handleUpdate = (value) => {
