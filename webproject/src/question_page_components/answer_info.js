@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import axios from "axios";
 
-const AnswerInfo = ({answer, upVoteForAnswers}) => {
+const AnswerInfo = ({answer, username}) => {
     const [currAnsVote, setCurrAnsVote] = useState(answer.votes);
+    const [isLiked, setIsLiked] = useState(false);
+
+    const setAnswerVote = () => {
+        setCurrAnsVote(currAnsVote + 1); 
+        setIsLiked(true); 
+        axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, username]}).then(response => {
+            console.log("Updated");
+        }).catch(err => alert(err))
+    };
 
     useEffect(() => {
-        upVoteForAnswers(answer.answer_id ,currAnsVote)
-    }, [currAnsVote]);
+        answer.username_of_voters.forEach(user => {
+            if(user.name === username.name){
+                setIsLiked(true);
+            }
+        })
+    }, [])
 
     return(
         <div className="row">
             <div className="answerButton col-sm-2" style={{textAlign:"center"}}>
                 <p>{currAnsVote} likes</p>
-                <button onClick={e => {e.preventDefault(); setCurrAnsVote(currAnsVote + 1)}} className="btn btn-primary">Like</button>
+                <button onClick={e => {e.preventDefault(); setAnswerVote()}} className="btn btn-primary" disabled={isLiked}>Like</button>
             </div>
             <div className="col-sm-10" style={{
                 display:"flex",

@@ -22,7 +22,7 @@ router.get("/question/:qid", async (req, res) => {
         if (answers.length > 0){
             res.json(answers);
         } else {
-            res.send(404);
+            res.send([]);
         }
     }).catch(err => {
         res.status(400).send(err);
@@ -56,6 +56,7 @@ router.post("/", async (req, res) => {
       question_id: req.body.question_id,
       body: req.body.body,
       votes: 0,
+      username_of_voters: [],
     });
     newAnswer.save();
     res.status(201).send("Answer Added Succefully");

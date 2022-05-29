@@ -7,7 +7,7 @@ const QuestionCard = ({question}) => {
         <div className='row'>
             <div className="col-12 col-md-2 text-end">
                 <div className="d-md-none row">
-                    <p className='questionText'>{question.votes} votes  {question.votes} votes  {question.views} views</p>
+                    <p className='questionText'>{question.votes} votes  {question.views} views</p>
                 </div>
                 <div className="d-none d-md-flex row">
                     <p className='questionText'>{question.votes} votes</p>
@@ -19,7 +19,7 @@ const QuestionCard = ({question}) => {
             <div className='col-12 col-md-10 row'>
 
                 <div className="col-12">
-                    <Link className='titleLink' to={`/questions/question/${question.question_id}`}>{question.title}</Link>
+                    <Link className='titleLink' to={`/questions/question/${question._id}`}>{question.title}</Link>
                 </div>
 
                 <div className="col-12">

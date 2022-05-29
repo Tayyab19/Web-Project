@@ -6,6 +6,7 @@ const schema = mongoose.Schema({
     tags: Array,
     username: { type: String, required: true },
     votes: Number,
+    username_of_voters: Array,
     answers: Number,
     views: Number,
     private: Boolean,

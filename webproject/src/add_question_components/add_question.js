@@ -13,7 +13,6 @@ const AddQuestion = ({username}) => {
             "body": body,
             "tags": tags,
             "username": username.name,
-            "reputation": username.reputation,
             "private": radioValue,
             "archive": false,
             "invited": [],

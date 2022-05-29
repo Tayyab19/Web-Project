@@ -1,14 +1,36 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import AnswerInfo from "./answer_info";
 import voteUpLogo from './voteup.png'
 import './questionstyle.css'
+import axios from "axios";
+import { set } from "mongoose";
+import { data } from "jquery";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username,addAnswer, answerID}) => {
+const QuestionInfo = ({username}) => {
     const { qID } = useParams(); 
-    const [question] = useState(getQuestion(qID)[0])
-    const [answers, setAnswers] = useState(getAnswers(qID))
+    const [question, setQuestion] = useState();
+    const [answers, setAnswers] = useState([]);
     const [body, setBody] = useState("");
+    const [isQuestion, setIsQuestion] = useState(false);
+    const [isAnswer, setIsAnswer] = useState(false);
+    const [isVoted, setIsVoted] = useState(false);
+
+    const loadData = () => {
+        //For loading question info
+        axios.get(`http://localhost:5000/questions/question/${qID}`).then(question => {
+            setQuestion(question.data[0]);
+        }).catch(err => alert(err))
+        
+        //For loading all answer of that question
+        axios.get(`http://localhost:5000/answers/question/${qID}`).then(answer => {
+            setAnswers(answer.data);
+        }).catch(err => {
+            alert(err);
+        })
+    }
 
     const updateBody = (e) => {
         setBody(e.target.value);
@@ -18,29 +40,72 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
         return (body.length > 10 ? true : false);
     }
 
-
-    const setVote = (qID) => {
-        const q = upVote(qID);
-        return q.votes;
-    };
-
-    const setAnswerVote = (aID, votes) => {
-        upVoteForAnswers(aID, votes);
-    };
-
-    const submitAnswer = (body) => {
+    const addAnswer = async (answerBody) => {
         const a = {
-        "answer_id": answerID,
-        "question_id": parseInt(qID, 10),
-        "votes": 0,
-        "username": username.name, 
-        "string": body
+            "question_id": qID,
+            "username": username.name, 
+            "body": answerBody,
+            "votes": 0,
         }
         setAnswers([...answers, a]);
-        addAnswer(a);
-    }; 
+        await axios.post("http://localhost:5000/answers", a).then(res => {
+            toast.success('Answer Added!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+        }).catch(err => {
+            toast.error('Error While Adding Answer', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            })});
+    }
+
+    const setVote = (qID) => {
+        setQuestion({...question, votes: question.votes + 1, username_of_voters: [...question.username_of_voters, username]});
+        setIsVoted(true);
+        axios.put(`http://localhost:5000/questions/${qID}`, {...question, votes: question.votes + 1, username_of_voters: [...question.username_of_voters, username]}).then(response => {
+            console.log("Updated");
+        }).catch(err => alert(err))
+    };
+
+    useEffect(() => { loadData(); }, []);
+
+    useEffect(() => {
+        if (question != undefined){
+            question.username_of_voters.forEach(q => {
+                if(q.name == username.name){
+                setIsVoted(true);
+                }
+            });
+            setIsQuestion(true);
+            setIsAnswer(true);
+        }
+    }, [question]);
 
     return (
+        (isQuestion && isAnswer) ? 
+        <>
+        <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    />
         <div className="row">
         <div className="col-sm-2"></div>
         <div className="Question col-sm-8 row" style={{paddingTop:'40px'}}>
@@ -49,7 +114,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
                     <h5><b>{question.votes}</b></h5>
                     <img src={voteUpLogo} style={{width:'40px', height:'auto', paddingLeft:'10px', marginTop:'-2px'}}></img>
                 </div>
-                <button className="btn btn-primary questionButton" style={{width:'100%', display:'inline-block'}} onClick={() => {setVote(qID);}}>Up</button>
+                <button className="btn btn-primary questionButton" style={{width:'100%', display:'inline-block'}} onClick={() => {setVote(qID);}} disabled={isVoted}>Up</button>
             </div>
             <div className="col-sm-10">
                 <h3>{question.title}</h3>
@@ -63,7 +128,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
                     return(
                     <div className="container" style={{padding: '5px'}}>
                         <br></br>
-                            <AnswerInfo key={answer.answer_id} answer={answer} upVoteForAnswers={setAnswerVote}/>
+                            <AnswerInfo key={answer._id} answer={answer} username={username}/>
                             <br></br>
                         <hr />
                     </div>
@@ -79,7 +144,7 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
                 <textarea style={{height:'120px', resize:'none'}} type="text" onChange={e => { updateBody(e);}} class="form-control" id="QuestionBody"/>
             </div>
             {isValid()?
-                <button type="btn btn-primary" onClick={e => {e.preventDefault(); submitAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
+                <button type="btn btn-primary" onClick={e => {e.preventDefault(); addAnswer(body)}} className={"btn active btn-primary"}>Add Answer</button>
             :
             null
             }
@@ -87,6 +152,9 @@ const QuestionInfo = ({upVoteForAnswers, upVote,getAnswers,getQuestion, username
         </div>
         <div className="col-sm-2"></div>
         </div>
+        <ToastContainer />
+        </>
+        :  <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
     )
 }
 

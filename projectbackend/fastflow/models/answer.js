@@ -5,6 +5,7 @@ const schema = mongoose.Schema({
     question_id: mongoose.Types.ObjectId, 
     body: String,
     votes: Number,
+    username_of_voters: Array,
 })
 
 module.exports = mongoose.model('answers', schema);

@@ -80,6 +80,7 @@ router.post("/", async (req, res) => {
       tags: req.body.tags,
       username: req.body.username,
       votes: 0,
+      username_of_voters: [],
       answers: 0,
       views: 0,
       private: req.body.private,
