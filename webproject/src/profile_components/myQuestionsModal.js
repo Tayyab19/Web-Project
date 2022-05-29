@@ -29,7 +29,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
               <div className="container mb-2" style={{ padding: "3px" }}>
                 <QuestionCard key={question._id} question={question} />
                 <button
-                  class="btn btn-outline-primary remove"
+                  className="btn btn-outline-primary remove"
                   onClick={(e) => {
                     e.preventDefault();
                   }}
@@ -37,7 +37,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
                   Edit Question
                 </button>
                 <button
-                  class="btn btn-outline-secondary remove"
+                  className="btn btn-outline-secondary remove"
                   style={{ float: "right" }}
                   onClick={(e) => {
                     e.preventDefault();

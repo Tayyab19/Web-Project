@@ -1,5 +1,4 @@
 import Footer from "../global_component/footer";
-import profile_pic from "./download.jpg";
 import "./profile.css";
 import $ from "jquery";
 import { useEffect, useState } from "react";
@@ -18,12 +17,30 @@ const Profile = ({ username }) => {
       Headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        console.log(response.data);
         setUser(response.data);
         setUserFetched(true);
+        setPicture(response.data.profilePhoto);
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
+        console.log(err);
+      });
+  };
+
+  const setPicture = async (base64) => {
+    let newUserData = userData;
+    newUserData.profilePhoto = base64;
+
+    axios({
+      method: "patch",
+      url: `http://localhost:5000/users/profile/edit`,
+      Headers: { "Content-Type": "application/json" },
+      data: newUserData,
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -44,6 +61,7 @@ const Profile = ({ username }) => {
         console.log(err);
       });
   };
+
   const getQuestions = (username) => {
     axios({
       method: "get",
@@ -53,8 +71,6 @@ const Profile = ({ username }) => {
       .then((response) => {
         setQuestions(response.data);
         setQuestionsFetched(true);
-        console.log("Response Length", response.data);
-        console.log("Questions Variable", questions);
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
@@ -67,13 +83,11 @@ const Profile = ({ username }) => {
   const [changePassword, setChangePassword] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [myQuestion, setMyQuestions] = useState(false);
-  const [picture, setPicture] = useState("b");
   const [userFetched, setUserFetched] = useState(false);
   const [questionsFetched, setQuestionsFetched] = useState(false);
 
   const [questions, setQuestions] = useState([]);
   //console.log(questions);
-  //setPicture(profile_pic);
   //Redirect to 404 Not found
 
   useEffect(() => {
@@ -124,97 +138,97 @@ const Profile = ({ username }) => {
       )}
       {changeProfilePicture && username.name == uID && (
         <ChangePictureModal
-          picture={profile_pic}
+          picture={userData.profilePhoto}
           setChangeProfilePicture={setChangeProfilePicture}
           setPicture={setPicture}
         />
       )}
-      <div class="container profile-page">
-        <div class="row"></div>
-        <div class="row">
-          <div class="col-lg-2 col-sm-1"></div>
-          <div class="col-md-12 col-lg-4 col-sm-10">
+      <div className="container profile-page">
+        <div className="row"></div>
+        <div className="row">
+          <div className="col-lg-2 col-sm-1"></div>
+          <div className="col-md-12 col-lg-4 col-sm-10">
             {/* Fix Image */}
             <img
-              class="profile-picture"
-              src={profile_pic}
+              className="profile-picture"
+              src={userData.profilePhoto}
               onClick={() => {
                 setChangeProfilePicture(true);
               }}
             />
           </div>
-          <div class="col-lg-2 col-md-6 col-sm-6">
+          <div className="col-lg-2 col-md-6 col-sm-6">
             <label for="email">Email:</label>
             <input
               id="email"
-              class="form-control"
+              className="form-control"
               type="text"
               value={userData.email}
               disabled
             />
           </div>
-          <div class="col-lg-2 col-md-6 col-sm-6">
+          <div className="col-lg-2 col-md-6 col-sm-6">
             <label for="username">Username: </label>
             <input
               id="username"
-              class="form-control"
+              className="form-control"
               type="text"
               value={userData.username}
               disabled
             />
           </div>
-          <div class="col-lg-2 col-sm-1"></div>
+          <div className="col-lg-2 col-sm-1"></div>
         </div>
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+        <div className="row">
+          <div className="col-lg-2"></div>
+          <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="reputation">Reputation:</label>
             <input
               id="reputation"
-              class="form-control"
+              className="form-control"
               type="text"
               value={userData.reputation}
               disabled
             />
           </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="badges">Badges:</label>
             <input
               id="badges"
-              class="form-control"
+              className="form-control"
               type="text"
               value={userData.badges}
               disabled
             />
           </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="firstName">First Name:</label>
             <input
               onChange={(e) => handleUpdate(e.target)}
               id="firstName"
-              class="form-control disable"
+              className="form-control disable"
               type="text"
               value={userData.firstName}
             />
           </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="lastName">Last Name:</label>
             <input
               id="lastName"
-              class="form-control  disable"
+              className="form-control  disable"
               type="text"
               value={userData.lastName}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
-          <div class="col-lg-2"></div>
+          <div className="col-lg-2"></div>
         </div>
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-2 col-sm-4 col-md-4">
+        <div className="row">
+          <div className="col-lg-2"></div>
+          <div className="col-lg-2 col-sm-4 col-md-4">
             <br />
             <button
-              class="btn btn-outline-primary remove"
+              className="btn btn-outline-primary remove"
               onClick={(e) => {
                 e.preventDefault();
                 setChangePassword(true);
@@ -223,11 +237,11 @@ const Profile = ({ username }) => {
               Change Password
             </button>
           </div>
-          <div class="col-sm-8 col-md-8 col-lg-6 remove">
+          <div className="col-sm-8 col-md-8 col-lg-6 remove">
             <label for="invites">Invites to Answer:</label>
             {/* Handle List */}
             <select
-              class="form-select"
+              className="form-select"
               aria-label="Answer Invites"
               id="invites"
               onChange={(e) => handleUpdate(e.target)}
@@ -240,48 +254,48 @@ const Profile = ({ username }) => {
               <option value="3">Three</option>
             </select>
           </div>
-          <div class="col-lg-2"></div>
+          <div className="col-lg-2"></div>
         </div>
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
+        <div className="row">
+          <div className="col-lg-2"></div>
+          <div className="col-lg-4 col-md-6 col-sm-6">
             <label for="linkedInHandle">LinkedIn Address:</label>
             <input
               id="linkedInHandle"
-              class="form-control  disable"
+              className="form-control  disable"
               type="text"
               value={userData.linkedInHandle}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div className="col-lg-4 col-md-6 col-sm-6">
             <label for="githubHandle">GitHub Handle:</label>
             <input
               id="githubHandle"
-              class="form-control  disable"
+              className="form-control  disable"
               type="text"
               value={userData.githubHandle}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
-          <div class="col-lg-2"></div>
+          <div className="col-lg-2"></div>
         </div>
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
+        <div className="row">
+          <div className="col-lg-2"></div>
+          <div className="col-lg-4 col-md-6 col-sm-6">
             <label for="company">Company:</label>
             <input
               id="company"
-              class="form-control  disable"
+              className="form-control  disable"
               type="text"
               value={userData.company}
               onChange={(e) => handleUpdate(e.target)}
             />
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div className="col-lg-4 col-md-6 col-sm-6">
             <label for="stack">Preferred Stack:</label>
             <select
-              class="form-select  disable"
+              className="form-select  disable"
               aria-label="Preferred Stack"
               id="stack"
               onChange={(e) => handleUpdate(e.target)}
@@ -292,26 +306,29 @@ const Profile = ({ username }) => {
               <option value="3">Three</option>
             </select>
           </div>
-          <div class="col-lg-2"></div>
+          <div className="col-lg-2"></div>
         </div>
-        <div class="row">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
-            <button class="btn btn-outline-primary remove" onClick={handleSave}>
+        <div className="row">
+          <div className="col-lg-3"></div>
+          <div className="col-lg-2 col-md-4 col-sm-4 col-4">
+            <button
+              className="btn btn-outline-primary remove"
+              onClick={handleSave}
+            >
               Save Changes
             </button>
           </div>
-          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
+          <div className="col-lg-2 col-md-4 col-sm-4 col-4">
             <button
-              class="btn btn-outline-dark  remove"
+              className="btn btn-outline-dark  remove"
               onClick={handleDiscard}
             >
               Discard Changes
             </button>
           </div>
-          <div class="col-lg-2 col-md-4 col-sm-4 col-4">
+          <div className="col-lg-2 col-md-4 col-sm-4 col-4">
             <button
-              class="btn btn-outline-dark  remove"
+              className="btn btn-outline-dark  remove"
               onClick={(e) => {
                 e.preventDefault();
                 setMyQuestions(true);
@@ -320,7 +337,7 @@ const Profile = ({ username }) => {
               My Questions
             </button>
           </div>
-          <div class="col-lg-3"></div>
+          <div className="col-lg-3"></div>
         </div>
       </div>
       <Footer />

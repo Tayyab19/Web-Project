@@ -33,7 +33,7 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
             <input
               onChange={(e) => setTemp(e.target.value)}
               id="firstPassword"
-              class="form-control"
+              className="form-control"
               type="password"
               value={temp}
             />
@@ -43,7 +43,7 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
             <input
               onChange={(e) => setTemp2(e.target.value)}
               id="secondPassword"
-              class="form-control"
+              className="form-control"
               type="password"
               value={temp2}
             />

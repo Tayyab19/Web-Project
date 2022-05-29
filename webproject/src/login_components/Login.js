@@ -65,7 +65,7 @@ const Login = ({ verifyLogin }) => {
                           id="typeEmailX"
                           className="form-control form-control-lg"
                           placeholder="Email"
-                          required="true"
+                          required={true}
                         />
                       </div>
 
@@ -73,9 +73,9 @@ const Login = ({ verifyLogin }) => {
                         <input
                           type="password"
                           id="typePasswordX"
-                          class="form-control form-control-lg"
+                          className="form-control form-control-lg"
                           placeholder="Password"
-                          required="true"
+                          required={true}
                         />
                       </div>
 
@@ -92,7 +92,7 @@ const Login = ({ verifyLogin }) => {
                         </p>
                       )}
 
-                      <div class="text-end mt-2 mb-5">
+                      <div className="text-end mt-2 mb-5">
                         <a
                           className="forgetPassword"
                           onClick={(e) => {

@@ -9,7 +9,7 @@ const SyntaxNav = () => {
   return (
     <>
       <Navbar bg="light" variant="light">
-        <Container class="container-fluid">
+        <Container className="container-fluid">
           <Navbar.Brand href="#home">Languages</Navbar.Brand>
           <Nav className=" text-black me-auto">
             <Nav.Link className="text-black">

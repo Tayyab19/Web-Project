@@ -27,7 +27,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
         //Should redirect to Filter Page. Shoul Not Use MyQuestions Modal.
       )}
       <nav
-        class="navbar navbar-expand-lg navbar-light row"
+        className="navbar navbar-expand-lg navbar-light row"
         style={{
           backgroundColor: "#e49b35",
           color: "white",
@@ -37,7 +37,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
           width: "auto",
         }}
       >
-        <div class="container-fluid">
+        <div className="container-fluid">
           <button
             className="navbar-toggler collapsed"
             type="button"
@@ -50,47 +50,47 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            class="navbar-collapse collapse col-4 col-md-5"
+            className="navbar-collapse collapse col-4 col-md-5"
             id="navbarSupportedContent"
           >
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
-              <li class="nav-item mt-2" style={{ paddingLeft: "17px" }}>
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
+              <li className="nav-item mt-2" style={{ paddingLeft: "17px" }}>
                 <Link to={`/profile/${username.name}`}>
                   <img
                     data-tip="Profile"
-                    class="logo-icon"
+                    className="logo-icon"
                     src={profile_logo}
                     style={{ width: "40px" }}
                   />
                 </Link>
               </li>
               <li
-                class="nav-item"
+                className="nav-item"
                 style={{ paddingLeft: "13px", marginTop: "0px !important" }}
               >
                 <Link to={"/questions/ask"}>
                   <img
-                    class="logo-icon"
+                    className="logo-icon"
                     src={question_logo}
                     style={{ width: "50px" }}
                     data-tip="Ask a Question"
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2 " style={{ paddingLeft: "13px" }}>
+              <li className="nav-item mt-2 " style={{ paddingLeft: "13px" }}>
                 <Link to={"/syntaxes"}>
                   <img
-                    class="logo-icon"
+                    className="logo-icon"
                     src={list_logo}
                     data-tip="View Syntax List"
                     style={{ width: "40px" }}
                   />
                 </Link>
               </li>
-              <li class="nav-item mt-2" style={{ paddingLeft: "17px" }}>
+              <li className="nav-item mt-2" style={{ paddingLeft: "17px" }}>
                 <Link to={"/"} onClick={(e) => renderLogin(false)}>
                   <img
-                    class="logo-icon"
+                    className="logo-icon"
                     src={logout_logo}
                     style={{ width: "40px" }}
                     data-tip="Logout"
@@ -113,7 +113,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
             FAST FLOW
           </Link>
           <form
-            class="d-flex justify-content-center col-3 col-md-4 mt-3 mt-md-0 mx-5 mx-md-0"
+            className="d-flex justify-content-center col-3 col-md-4 mt-3 mt-md-0 mx-5 mx-md-0"
             style={{ width: "auto" }}
             onSubmit={(e) => handleSubmit(e)}
           >
@@ -126,7 +126,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
               id="searchInput"
             />
             <button
-              class="btn btn-outline-dark mx-2"
+              className="btn btn-outline-dark mx-2"
               type="submit"
               style={{
                 backgroundColor: "black",

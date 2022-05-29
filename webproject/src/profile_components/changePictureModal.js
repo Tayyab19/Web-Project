@@ -8,27 +8,22 @@ const ChangePictureModal = ({
   setPicture,
 }) => {
   const [file, setFile] = useState([]);
-  const [base64, setBase64] = useState([]);
+  const [base64, setBase64] = useState(picture);
 
-  const updateProfilePicture = (base64) => {
-    var x;
-  };
+  const updateProfilePicture = (base64) => {};
 
   const getBase64 = (file) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setBase64(reader.result);
-      console.log(base64);
+      //setPicture(reader.result);
     };
   };
 
   const handleFileInputChange = (e) => {
-    setTimeout(10000);
-    setFile(e.target.files);
-    console.log(e.target.files);
-    console.log(file);
-    getBase64(file);
+    setFile(e.target.files[0]);
+    getBase64(e.target.files[0]);
   };
   return (
     <>
@@ -42,13 +37,13 @@ const ChangePictureModal = ({
         </Modal.Header>
         <Modal.Body>
           <div>
-            <img class="profile-picture" src={picture} />
+            <img className="profile-picture" src={base64} />
           </div>
           <div>
             <label for="picture">Browse:</label>
             <input
               id="picture"
-              class="form-control"
+              className="form-control"
               type="file"
               onChange={handleFileInputChange}
             />
@@ -67,8 +62,8 @@ const ChangePictureModal = ({
               if (file === "") {
                 alert("No Picture Selected");
               } else {
-                //setPicture();
-                updateProfilePicture(base64);
+                setPicture(base64);
+                //updateProfilePicture(base64);
                 setChangeProfilePicture(false);
               }
             }}

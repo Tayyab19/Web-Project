@@ -52,7 +52,7 @@ const QuestionForm = ({ submitQuestion }) => {
           ))}
         </ButtonGroup>
       </div>
-      <div class="mb-5">
+      <div className="mb-5">
         <br />
         <label for="QuestionTitle" className="form-label fw-bold">
           Title
@@ -63,7 +63,7 @@ const QuestionForm = ({ submitQuestion }) => {
         </label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="QuestionTitle"
           onChange={(e) => {
             e.preventDefault();
@@ -72,13 +72,13 @@ const QuestionForm = ({ submitQuestion }) => {
           placeholder="e.g. How do you add item in a python list?"
         />
         {isValid() ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             Atleast 10 character for your title
           </div>
         ) : null}
       </div>
 
-      <div class="mb-5">
+      <div className="mb-5">
         <label for="QuestionBody" className="form-label fw-bold">
           Body
         </label>{" "}
@@ -93,12 +93,12 @@ const QuestionForm = ({ submitQuestion }) => {
             e.preventDefault();
             updateBody(e);
           }}
-          class="form-control"
+          className="form-control"
           id="QuestionBody"
         />
       </div>
 
-      <div class="mb-3">
+      <div className="mb-3">
         <label for="QuestionTags" className="form-label fw-bold">
           Tags
         </label>{" "}
@@ -108,7 +108,7 @@ const QuestionForm = ({ submitQuestion }) => {
         </label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="QuestionTags"
           onChange={(e) => {
             e.preventDefault();
@@ -129,7 +129,7 @@ const QuestionForm = ({ submitQuestion }) => {
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="InvitedUSers"
             onChange={(e) => {
               e.preventDefault();
@@ -146,7 +146,7 @@ const QuestionForm = ({ submitQuestion }) => {
           onClick={(e) => {
             submitQuestion(title, body, tags, radioValue === "Private");
           }}
-          class={
+          className={
             isValid() ? "btn disabled btn-primary" : "btn active btn-primary"
           }
         >

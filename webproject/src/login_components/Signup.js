@@ -62,45 +62,45 @@ const Signup = () => {
                         <input
                           type="email"
                           id="formemail"
-                          class="form-control form-control-md"
+                          className="form-control form-control-md"
                           placeholder="Email"
                           required="true"
                         />
                       </div>
 
-                      <div class="form-outline mb-4">
+                      <div className="form-outline mb-4">
                         <input
                           type="text"
                           id="formusername"
-                          class="form-control form-control-md"
+                          className="form-control form-control-md"
                           placeholder="Username"
                           required="true"
                         />
                       </div>
 
-                      <div class="form-outline mb-4">
+                      <div className="form-outline mb-4">
                         <input
                           type="password"
                           id="formpassword"
-                          class="form-control form-control-md"
+                          className="form-control form-control-md"
                           placeholder="Password"
                           required="true"
                         />
                       </div>
 
-                      <div class="form-outline mb-4">
+                      <div className="form-outline mb-4">
                         <input
                           type="password"
                           id="formpassword2"
-                          class="form-control form-control-md"
+                          className="form-control form-control-md"
                           placeholder="Re-Type Your Password"
                           required="true"
                         />
                       </div>
 
-                      <div class="d-flex justify-content-center mb-3">
+                      <div className="d-flex justify-content-center mb-3">
                         <button
-                          class="btn btn-primary  btn-block btn-lg gradient-custom-4 text-body"
+                          className="btn btn-primary  btn-block btn-lg gradient-custom-4 text-body"
                           type="submit"
                         >
                           SIGN UP
