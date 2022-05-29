@@ -36,13 +36,9 @@ const Profile = ({ username }) => {
       url: `http://localhost:5000/users/profile/edit`,
       Headers: { "Content-Type": "application/json" },
       data: newUserData,
-    })
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   const navigate = useNavigate();
@@ -53,13 +49,9 @@ const Profile = ({ username }) => {
       url: `http://localhost:5000/users/profile/edit`,
       Headers: { "Content-Type": "application/json" },
       data: newUserData,
-    })
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   const getQuestions = (username) => {
@@ -87,8 +79,6 @@ const Profile = ({ username }) => {
   const [questionsFetched, setQuestionsFetched] = useState(false);
 
   const [questions, setQuestions] = useState([]);
-  //console.log(questions);
-  //Redirect to 404 Not found
 
   useEffect(() => {
     if (!userFetched) getUser(uID);
@@ -115,7 +105,6 @@ const Profile = ({ username }) => {
 
   const handleSave = () => {
     updateUser(userData);
-    console.log("Done");
   };
 
   const handleDiscard = () => {
