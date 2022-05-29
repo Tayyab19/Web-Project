@@ -16,6 +16,7 @@ const QuestionInfo = ({ username }) => {
   const [isAnswer, setIsAnswer] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
 
+
   const loadData = () => {
     //For loading question info
     axios
@@ -83,7 +84,6 @@ const QuestionInfo = ({ username }) => {
       votes: question.votes + 1,
       username_of_voters: [...question.username_of_voters, username],
     });
-    setIsVoted(true);
     axios
       .put(`http://localhost:5000/questions/${qID}`, {
         ...question,
@@ -94,6 +94,7 @@ const QuestionInfo = ({ username }) => {
         console.log("Updated");
       })
       .catch((err) => alert(err));
+    setIsVoted(true);
   };
 
   useEffect(() => {
@@ -104,7 +105,7 @@ useEffect(() => {
         if (question != undefined){
             question.username_of_voters.forEach(q => {
                 if(q.name == username.name){
-                setIsVoted(true);
+                  setIsVoted(true);
                 }
             });
             setIsQuestion(true);
@@ -154,7 +155,8 @@ useEffect(() => {
             <button
               className="btn btn-primary questionButton"
               style={{ width: "100%", display: "inline-block" }}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setVote(qID);
               }}
               disabled={isVoted}
