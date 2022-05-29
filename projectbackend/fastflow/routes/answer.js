@@ -58,8 +58,13 @@ router.post("/", async (req, res) => {
       votes: 0,
       username_of_voters: [],
     });
-    newAnswer.save();
-    res.status(201).send("Answer Added Succefully");
+    newAnswer.save((err, result) => {
+      if(err){
+        res.status(400);
+      }else{
+        res.status(201).send(result);
+      }
+    });
   } else {
     res.send(400);
   }

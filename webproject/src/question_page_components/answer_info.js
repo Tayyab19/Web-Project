@@ -9,14 +9,15 @@ const AnswerInfo = ({answer, username}) => {
     const setAnswerVote = () => {
         setCurrAnsVote(currAnsVote + 1); 
         setIsLiked(true); 
-        axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, username]}).then(response => {
+        axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, {name: username}]}).then(response => {
             console.log("Updated");
         }).catch(err => alert(err))
     };
 
     useEffect(() => {
         answer.username_of_voters.forEach(user => {
-            if(user.name === username.name){
+            console.log(username);
+            if(user.name === username){
                 setIsLiked(true);
             }
         })
@@ -32,7 +33,7 @@ const AnswerInfo = ({answer, username}) => {
                 display:"flex",
                 alignItems:"center"
             }}>
-                {answer.string}
+                {answer.body}
             </div>
             <div style={{display:"flex",justifyContent:"right"}}>
                 <p><i>~{answer.username}</i></p>

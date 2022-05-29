@@ -40,16 +40,17 @@ const QuestionInfo = ({username}) => {
     return body.length > 10 ? true : false;
   };
 
-<<<<<<< HEAD
     const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
             "username": username.name, 
             "body": answerBody,
             "votes": 0,
+            "username_of_voters": [],
         }
         setAnswers([...answers, a]);
         await axios.post("http://localhost:5000/answers", a).then(res => {
+            setAnswers([...answers, res.data]);
             toast.success('Answer Added!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -83,6 +84,7 @@ const QuestionInfo = ({username}) => {
 
     useEffect(() => {
         if (question != undefined){
+            console.log(answers);
             question.username_of_voters.forEach(q => {
                 if(q.name == username.name){
                 setIsVoted(true);
@@ -95,7 +97,7 @@ const QuestionInfo = ({username}) => {
 
     return (
         (isQuestion && isAnswer) ? 
-        <>
+        <div>
         <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -129,7 +131,7 @@ const QuestionInfo = ({username}) => {
                     return(
                     <div className="container" style={{padding: '5px'}}>
                         <br></br>
-                            <AnswerInfo key={answer._id} answer={answer} username={username}/>
+                            <AnswerInfo key={answer._id} answer={answer} username={username.name}/>
                             <br></br>
                         <hr />
                     </div>
@@ -150,130 +152,12 @@ const QuestionInfo = ({username}) => {
             null
             }
             </form>
-=======
-  const setVote = (qID) => {
-    const q = upVote(qID);
-    return q.votes;
-  };
-
-  const setAnswerVote = (aID, votes) => {
-    upVoteForAnswers(aID, votes);
-  };
-
-  const submitAnswer = (body) => {
-    const a = {
-      answer_id: answerID,
-      question_id: parseInt(qID, 10),
-      votes: 0,
-      username: username.name,
-      string: body,
-    };
-    setAnswers([...answers, a]);
-    addAnswer(a);
-  };
-
-  return (
-    <div className="row">
-      <div className="col-sm-2"></div>
-      <div className="Question col-sm-8 row" style={{ paddingTop: "40px" }}>
-        <div className="col-sm-2" style={{ textAlign: "center" }}>
-          <div
-            className="voteUpQuestion"
-            style={{
-              padding: "5px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <h5>
-              <b>{question.votes}</b>
-            </h5>
-            <img
-              src={voteUpLogo}
-              style={{
-                width: "40px",
-                height: "auto",
-                paddingLeft: "10px",
-                marginTop: "-2px",
-              }}
-            ></img>
-          </div>
-          <button
-            className="btn btn-primary questionButton"
-            style={{ width: "100%", display: "inline-block" }}
-            onClick={() => {
-              setVote(qID);
-            }}
-          >
-            Up
-          </button>
->>>>>>> c40674026536f16cf51e136b1d305e4915c9ea46
         </div>
-        <div className="col-sm-10">
-          <h3>{question.title}</h3>
-          <h6 style={{ padding: "20px" }}>{question.body}</h6>
-        </div>
-<<<<<<< HEAD
         <ToastContainer />
-        </>
-        :  <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
-    )
-}
-=======
-        <hr></hr>
-        <br></br>
-        <br></br>
-        <br></br>
-        <h4>Answers:</h4>
-        <br></br>
-        <br></br>
->>>>>>> c40674026536f16cf51e136b1d305e4915c9ea46
-
-        {answers?.map((answer) => {
-          return (
-            <div className="container" style={{ padding: "5px" }}>
-              <br></br>
-              <AnswerInfo
-                key={answer.answer_id}
-                answer={answer}
-                upVoteForAnswers={setAnswerVote}
-              />
-              <br></br>
-              <hr />
-            </div>
-          );
-        })}
-
-        <form className="p-5 mb-5">
-          <h6>Add New Comment:</h6>
-          <h8>Please enter more than 10 characters</h8>
-          <div className="mb-5">
-            <textarea
-              style={{ height: "120px", resize: "none" }}
-              type="text"
-              onChange={(e) => {
-                updateBody(e);
-              }}
-              className="form-control"
-              id="QuestionBody"
-            />
-          </div>
-          {isValid() ? (
-            <button
-              type="btn btn-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                submitAnswer(body);
-              }}
-              className={"btn active btn-primary"}
-            >
-              Add Answer
-            </button>
-          ) : null}
-        </form>
       </div>
       <div className="col-sm-2"></div>
-    </div>
+    </div> 
+    : <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
   );
 };
 
