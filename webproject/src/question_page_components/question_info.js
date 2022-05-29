@@ -1,36 +1,40 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import AnswerInfo from "./answer_info";
-import voteUpLogo from './voteup.png'
-import './questionstyle.css'
+import voteUpLogo from "./voteup.png";
+import "./questionstyle.css";
 import axios from "axios";
-import { set } from "mongoose";
-import { data } from "jquery";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const QuestionInfo = ({username}) => {
-    const { qID } = useParams(); 
-    const [question, setQuestion] = useState();
-    const [answers, setAnswers] = useState([]);
-    const [body, setBody] = useState("");
-    const [isQuestion, setIsQuestion] = useState(false);
-    const [isAnswer, setIsAnswer] = useState(false);
-    const [isVoted, setIsVoted] = useState(false);
+const QuestionInfo = ({ username }) => {
+  const { qID } = useParams();
+  const [question, setQuestion] = useState();
+  const [answers, setAnswers] = useState([]);
+  const [body, setBody] = useState("");
+  const [isQuestion, setIsQuestion] = useState(false);
+  const [isAnswer, setIsAnswer] = useState(false);
+  const [isVoted, setIsVoted] = useState(false);
 
-    const loadData = () => {
-        //For loading question info
-        axios.get(`http://localhost:5000/questions/question/${qID}`).then(question => {
-            setQuestion(question.data[0]);
-        }).catch(err => alert(err))
-        
-        //For loading all answer of that question
-        axios.get(`http://localhost:5000/answers/question/${qID}`).then(answer => {
-            setAnswers(answer.data);
-        }).catch(err => {
-            alert(err);
-        })
-    }
+  const loadData = () => {
+    //For loading question info
+    axios
+      .get(`http://localhost:5000/questions/question/${qID}`)
+      .then((question) => {
+        setQuestion(question.data[0]);
+      })
+      .catch((err) => alert(err));
+
+    //For loading all answer of that question
+    axios
+      .get(`http://localhost:5000/answers/question/${qID}`)
+      .then((answer) => {
+        setAnswers(answer.data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   const updateBody = (e) => {
     setBody(e.target.value);
@@ -40,7 +44,7 @@ const QuestionInfo = ({username}) => {
     return body.length > 10 ? true : false;
   };
 
-    const addAnswer = async (answerBody) => {
+  const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
             "username": username.name, 
@@ -70,21 +74,34 @@ const QuestionInfo = ({username}) => {
             draggable: true,
             progress: undefined,
             })});
-    }
+  }
 
-    const setVote = (qID) => {
-        setQuestion({...question, votes: question.votes + 1, username_of_voters: [...question.username_of_voters, username]});
-        setIsVoted(true);
-        axios.put(`http://localhost:5000/questions/${qID}`, {...question, votes: question.votes + 1, username_of_voters: [...question.username_of_voters, username]}).then(response => {
-            console.log("Updated");
-        }).catch(err => alert(err))
-    };
+  
+  const setVote = (qID) => {
+    setQuestion({
+      ...question,
+      votes: question.votes + 1,
+      username_of_voters: [...question.username_of_voters, username],
+    });
+    setIsVoted(true);
+    axios
+      .put(`http://localhost:5000/questions/${qID}`, {
+        ...question,
+        votes: question.votes + 1,
+        username_of_voters: [...question.username_of_voters, username],
+      })
+      .then((response) => {
+        console.log("Updated");
+      })
+      .catch((err) => alert(err));
+  };
 
-    useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  })
 
-    useEffect(() => {
+useEffect(() => {
         if (question != undefined){
-            console.log(answers);
             question.username_of_voters.forEach(q => {
                 if(q.name == username.name){
                 setIsVoted(true);
@@ -93,7 +110,7 @@ const QuestionInfo = ({username}) => {
             setIsQuestion(true);
             setIsAnswer(true);
         }
-    }, [question]);
+  }, [question]);
 
     return (
         (isQuestion && isAnswer) ? 
@@ -111,20 +128,51 @@ const QuestionInfo = ({username}) => {
                     />
         <div className="row">
         <div className="col-sm-2"></div>
-        <div className="Question col-sm-8 row" style={{paddingTop:'40px'}}>
-            <div className="col-sm-2" style={{textAlign:"center"}}>
-                <div className="voteUpQuestion" style={{padding:'5px',display:'flex',justifyContent:'center'}}>
-                    <h5><b>{question.votes}</b></h5>
-                    <img src={voteUpLogo} style={{width:'40px', height:'auto', paddingLeft:'10px', marginTop:'-2px'}}></img>
-                </div>
-                <button className="btn btn-primary questionButton" style={{width:'100%', display:'inline-block'}} onClick={() => {setVote(qID);}} disabled={isVoted}>Up</button>
+        <div className="Question col-sm-8 row" style={{ paddingTop: "40px" }}>
+          <div className="col-sm-2" style={{ textAlign: "center" }}>
+            <div
+              className="voteUpQuestion"
+              style={{
+                padding: "5px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h5>
+                <b>{question.votes}</b>
+              </h5>
+              <img
+                src={voteUpLogo}
+                style={{
+                  width: "40px",
+                  height: "auto",
+                  paddingLeft: "10px",
+                  marginTop: "-2px",
+                }}
+              ></img>
             </div>
-            <div className="col-sm-10">
-                <h3>{question.title}</h3>
-                <h6 style={{padding:"20px"}}>{question.body}</h6>
-            </div>
-            <hr></hr><br></br><br></br><br></br>
-            <h4>Answers:</h4><br></br><br></br>
+            <button
+              className="btn btn-primary questionButton"
+              style={{ width: "100%", display: "inline-block" }}
+              onClick={() => {
+                setVote(qID);
+              }}
+              disabled={isVoted}
+            >
+              Up
+            </button>
+          </div>
+          <div className="col-sm-10">
+            <h3>{question.title}</h3>
+            <h6 style={{ padding: "20px" }}>{question.body}</h6>
+          </div>
+          <hr></hr>
+          <br></br>
+          <br></br>
+          <br></br>
+          <h4>Answers:</h4>
+          <br></br>
+          <br></br>
 
             {
                 answers?.map((answer) => {
@@ -160,5 +208,4 @@ const QuestionInfo = ({username}) => {
     : <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
   );
 };
-
 export default QuestionInfo;
