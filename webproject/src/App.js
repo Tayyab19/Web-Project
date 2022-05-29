@@ -27,7 +27,7 @@ function App() {
     return true;
   };
 
-  const getSearchQuestion = (searchTerm) => {
+  const getSearchQuestion = (searchTerm, questions) => {
     let myQuestions = [];
     for (const element of questions) {
       if (element.title.includes(searchTerm)) myQuestions.push(element);
@@ -54,17 +54,11 @@ function App() {
               <Route path="/syntaxes" element={<SyntaxNav />} />
               <Route
                 path="/questions/page/:pageNumber"
-                element={
-                  <AllQuestionPage />
-                }
+                element={<AllQuestionPage />}
               />
               <Route
                 path="/questions/question/:qID"
-                element={
-                  <QuestionInfo
-                    username={currUsername}
-                  />
-                }
+                element={<QuestionInfo username={currUsername} />}
               />
               <Route
                 path="/questions/ask"
