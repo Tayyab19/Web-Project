@@ -14,6 +14,7 @@ const schema = mongoose.Schema({
   preferredStack: String,
   invites: Array,
   company: String,
+  profilePhoto: String,
 });
 
 module.exports = mongoose.model("users", schema);

@@ -1,5 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 
 const ChangePictureModal = ({
@@ -7,8 +7,29 @@ const ChangePictureModal = ({
   setChangeProfilePicture,
   setPicture,
 }) => {
-  const fileInput = React.createRef();
+  const [file, setFile] = useState([]);
+  const [base64, setBase64] = useState([]);
 
+  const updateProfilePicture = (base64) => {
+    var x;
+  };
+
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setBase64(reader.result);
+      console.log(base64);
+    };
+  };
+
+  const handleFileInputChange = (e) => {
+    setTimeout(10000);
+    setFile(e.target.files);
+    console.log(e.target.files);
+    console.log(file);
+    getBase64(file);
+  };
   return (
     <>
       <Modal
@@ -29,7 +50,7 @@ const ChangePictureModal = ({
               id="picture"
               class="form-control"
               type="file"
-              ref={fileInput}
+              onChange={handleFileInputChange}
             />
           </div>
         </Modal.Body>
@@ -43,10 +64,11 @@ const ChangePictureModal = ({
           <Button
             variant="primary"
             onClick={() => {
-              if (fileInput === undefined) {
+              if (file === "") {
                 alert("No Picture Selected");
               } else {
-                setPicture(fileInput.current.files[0].name);
+                //setPicture();
+                updateProfilePicture(base64);
                 setChangeProfilePicture(false);
               }
             }}
