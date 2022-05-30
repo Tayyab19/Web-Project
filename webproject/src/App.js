@@ -20,9 +20,11 @@ function App() {
     name: "",
   });
 
-  const verifyLogin = (returnedUser) => {
-    setCurrUsername(returnedUser);
-    console.log(returnedUser);
+  const verifyLogin = (accessToken) => {
+    // setCurrUsername(returnedUser);
+    // console.log(returnedUser);
+    console.log(accessToken.accessToken);
+    localStorage.setItem("token", accessToken.accessToken);
     setRenderLogin(true);
     return true;
   };

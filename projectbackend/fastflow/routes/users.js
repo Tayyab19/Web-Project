@@ -90,6 +90,24 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+//JWT
+ACCESS_TOKEN_SECRET = "kajnkankjxnasnxkajsxkansx"
+
+function generateAccessToken(username) {
+  return jwt.sign(username, ACCESS_TOKEN_SECRET, {expiresIn: "45m"}) 
+}
+
+verifyToken = (req, res, next) => {
+  const header = req.headers['authorization'];
+  if(typeof header !== 'undefined'){
+    const token = header;
+    req.token = token;
+    next();
+  }else{
+    res.sendStatus(403);
+  }
+}
+
 //User Login
 router.post("/signin", async (req, res) => {
   if (req.body.email == null) {
@@ -110,12 +128,10 @@ router.post("/signin", async (req, res) => {
 
       await bcrypt.compare(password, encryptedPassword).then((flag) => {
         if (flag) {
-          // const accessToken = generateAccessToken({ user: email });
-          // res.json({
-          //   accessToken: accessToken,
-          // });
+          const username = userWithEmail.username;
+          const accessToken = generateAccessToken({ username: username });
           res.status(200).json({
-            name: userWithEmail.username,
+            accessToken: accessToken,
           });
         } else {
           //Look for Status Code
@@ -203,7 +219,7 @@ router.post("/forgotPassword", async (req, res) => {
   }
 });
 
-router.put("/profile/reputation", (req, res) => {
+router.put("/profile/reputation",async (req, res) => {
   await users.findOneAndUpdate(
     { username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }, (err, response) => {
         if (err) {

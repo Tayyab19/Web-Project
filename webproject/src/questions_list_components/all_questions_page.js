@@ -37,7 +37,9 @@ const AllQuestionPage = () => {
 
   const getQuestions = () => {
     axios
-      .get("http://localhost:5000/questions")
+      .get("http://localhost:5000/questions", {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }})
       .then((questions) => {
         setQuestions(questions.data);
         setFilteredQuestions(questions.data);

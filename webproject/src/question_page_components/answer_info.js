@@ -17,7 +17,7 @@ const AnswerInfo = ({answer, username}) => {
     const setAnswerVote = () => {
         setCurrAnsVote(currAnsVote + 1); 
         setIsLiked(true); 
-        axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, {name: username}]}).then(response => {
+        axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, username]}).then(response => {
             console.log("Updated");
             updateReputation();
         }).catch(err => alert(err))
@@ -26,7 +26,7 @@ const AnswerInfo = ({answer, username}) => {
     useEffect(() => {
         answer.username_of_voters.forEach(user => {
             console.log(username);
-            if(user.name === username){
+            if(user === username){
                 setIsLiked(true);
             }
         })

@@ -1,26 +1,47 @@
 var express = require("express");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 var router = express.Router();
 const questions = require("../models/question");
 
+//JWT
+ACCESS_TOKEN_SECRET = "kajnkankjxnasnxkajsxkansx";
+
+function verifyToken(req, res, next) {
+  const header = req.headers['authorization'];
+  if(typeof header !== 'undefined'){
+    const token = header;
+    req.token = token;
+    next();
+  }else{
+    res.sendStatus(403);
+  }
+}
+
 //Return all public questions in database
-router.get("/", async (req, res) => {
-  questions
-    .find({})
-    .then((questions) => {
-      const reply = [];
-      questions.forEach((element) => {
-        if (!element.private && !element.archive) reply.push(element);
+router.get("/", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      questions
+      .find({})
+      .then((questions) => {
+        const reply = [];
+        questions.forEach((element) => {
+          if (!element.private && !element.archive) reply.push(element);
+        });
+        if (reply.length > 0) {
+          res.json(reply);
+        } else {
+          res.send(404);
+        }
+      })
+      .catch((err) => {
+        res.status(400).send(err);
       });
-      if (reply.length > 0) {
-        res.json(reply);
-      } else {
-        res.send(404);
-      }
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+    }
+  })
 });
 
 //Return all questions in database
@@ -40,35 +61,52 @@ router.get("/getAll", async (req, res) => {
 });
 
 //Return all questions of a single user
-router.get("/:username", async (req, res) => {
-  questions
-    .find({ username: req.params.username })
-    .then((questions) => {
-      if (questions.length > 0) {
-        res.json(questions);
-      } else {
-        res.send(404);
-      }
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+router.get("/:username", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      questions
+        .find({ username: req.params.username })
+        .then((questions) => {
+          if (questions.length > 0) {
+            res.json({
+              questions: questions,
+              username: username.username,
+            });
+          } else {
+            res.send(404);
+          }
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+    }
+  });
 });
 
 //Return single question by ID
-router.get("/question/:id", async (req, res) => {
-  questions
-    .find({ _id: req.params.id })
-    .then((questions) => {
-      if (questions.length > 0) {
-        res.json(questions);
-      } else {
-        res.send(404);
-      }
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+router.get("/question/:id", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      questions
+        .find({ _id: req.params.id })
+        .then((questions) => {
+          if (questions.length > 0) {
+            res.json({
+              questions: questions,
+              username: username.username,
+            });
+          } else {
+            res.send(404);
+          }
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+  }});
 });
 
 //Add question to database

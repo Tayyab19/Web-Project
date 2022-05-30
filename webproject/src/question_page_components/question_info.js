@@ -7,7 +7,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const QuestionInfo = ({ username }) => {
+const QuestionInfo = ({}) => {
   const { qID } = useParams();
   const [question, setQuestion] = useState();
   const [answers, setAnswers] = useState([]);
@@ -15,14 +15,19 @@ const QuestionInfo = ({ username }) => {
   const [isQuestion, setIsQuestion] = useState(false);
   const [isAnswer, setIsAnswer] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
+  const [username, setUsername] = useState();
 
 
   const loadData = () => {
     //For loading question info
     axios
-      .get(`http://localhost:5000/questions/question/${qID}`)
-      .then((question) => {
-        setQuestion(question.data[0]);
+      .get(`http://localhost:5000/questions/question/${qID}`, {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }})
+      .then((response) => {
+        console.log(response);
+        setUsername(response.data.username);
+        setQuestion(response.data.questions[0]);
       })
       .catch((err) => alert(err));
 
@@ -56,7 +61,7 @@ const QuestionInfo = ({ username }) => {
   const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
-            "username": username.name, 
+            "username": username, 
             "body": answerBody,
             "votes": 0,
             "username_of_voters": [],
@@ -72,7 +77,7 @@ const QuestionInfo = ({ username }) => {
                 draggable: true,
                 progress: undefined,
                 });
-            updateReputation(username.name, 3);
+            updateReputation(username, 3);
         }).catch(err => {
             toast.error('Error While Adding Answer', {
             position: "top-right",
@@ -113,7 +118,7 @@ const QuestionInfo = ({ username }) => {
 useEffect(() => {
         if (question != undefined){
             question.username_of_voters.forEach(q => {
-                if(q.name == username.name){
+                if(q.name == username){
                   setIsVoted(true);
                 }
             });
@@ -190,7 +195,7 @@ useEffect(() => {
                     return(
                     <div className="container" style={{padding: '5px'}}>
                         <br></br>
-                            <AnswerInfo key={answer._id} answer={answer} username={username.name}/>
+                            <AnswerInfo key={answer._id} answer={answer} username={username}/>
                             <br></br>
                         <hr />
                     </div>
