@@ -5,15 +5,15 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ChangePasswordModal = ({ setChangePassword, username }) => {
+const ChangePasswordModal = ({ setChangePassword }) => {
   const [temp, setTemp] = useState("");
   const [temp2, setTemp2] = useState("");
-  const setPassword = (password, username) => {
+  const setPassword = (password) => {
     axios({
       method: "patch",
       url: `http://localhost:5000/users/profile/editPassword`,
-      Headers: { "Content-Type": "application/json" },
-      data: { password: password, username: username.name },
+      Headers: { "Content-Type": "application/json",'Authorization': localStorage.getItem("token") },
+      data: { password: password },
     })
       .then((response) => {
         toast.success("Password Changed Successfully", {
@@ -88,7 +88,7 @@ const ChangePasswordModal = ({ setChangePassword, username }) => {
           <Button
             variant="primary"
             onClick={() => {
-              if (temp === temp2) setPassword(temp, username);
+              if (temp === temp2) setPassword(temp);
               else {
                 toast.error("Entered Passwords don't match", {
                   position: "top-right",

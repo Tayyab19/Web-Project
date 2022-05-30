@@ -34,7 +34,7 @@ router.get("/", verifyToken, async (req, res) => {
         if (reply.length > 0) {
           res.json(reply);
         } else {
-          res.send(404);
+          res.sendStatus(404);
         }
       })
       .catch((err) => {
@@ -52,7 +52,7 @@ router.get("/getAll", async (req, res) => {
       if (questions.length > 0) {
         res.json(questions);
       } else {
-        res.send(404);
+        res.sendStatus(404);
       }
     })
     .catch((err) => {
@@ -60,7 +60,7 @@ router.get("/getAll", async (req, res) => {
     });
 });
 
-//Return all questions of a single user
+//Return all questions of a single user that are not archived or private
 router.get("/:username", verifyToken, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
@@ -69,14 +69,15 @@ router.get("/:username", verifyToken, async (req, res) => {
       questions
         .find({ username: req.params.username })
         .then((questions) => {
-          if (questions.length > 0) {
-            res.json({
-              questions: questions,
-              username: username.username,
+            const reply = [];
+            questions.forEach((element) => {
+              if (!element.private && !element.archive) reply.push(element);
             });
-          } else {
-            res.send(404);
-          }
+            if (reply.length > 0) {
+              res.json({questions : reply, username : username.username});
+            } else {
+              res.sendStatus(404);
+            }
         })
         .catch((err) => {
           res.status(400).send(err);
@@ -84,6 +85,29 @@ router.get("/:username", verifyToken, async (req, res) => {
     }
   });
 });
+
+//Return all question of current user
+router.get("/myQuestions/thisUser", verifyToken, async (req, res) => {
+    jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        questions
+          .find({ username: username.username })
+          .then((questions) => {
+              if (questions.length > 0) {
+                res.json({questions : questions, username : username.username});
+              } else {
+                res.sendStatus(404);
+              }
+          })
+          .catch((err) => {
+            res.status(400).send(err);
+          });
+      }
+    });
+  });
+  
 
 //Return single question by ID
 router.get("/question/:id", verifyToken, async (req, res) => {

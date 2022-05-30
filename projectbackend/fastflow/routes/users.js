@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
     });
 });
 
-//Delete a USer by email
+//Delete a User by email
 router.delete("/:id", async (req, res) => {
   await users.deleteOne({ email: email });
   res.send("Deleted");
@@ -79,7 +79,7 @@ router.post("/signup", async (req, res) => {
 
       if (result.email != null) {
         const result = sendEmail(email, "Account Activation Link", 'Insert Link');
-        
+
         res.status(201).send({
           Message: "User Registered",
         });
@@ -134,7 +134,6 @@ router.post("/signin", async (req, res) => {
             accessToken: accessToken,
           });
         } else {
-          //Look for Status Code
           res
             .status(500)
             .send({ Message: "Invalid Username/Password Combination" });
@@ -219,6 +218,26 @@ router.post("/forgotPassword", async (req, res) => {
   }
 });
 
+//Get the User currently logged into the system
+router.get("/myProfile", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      users
+        .findOne({ username: username.username })
+        .then((thisUser) => {
+          if (thisUser != null) {
+            res.status(200).json(thisUser);
+          } else res.sendStatus(404);
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+    }
+  });
+});
+
 router.put("/profile/reputation",async (req, res) => {
   await users.findOneAndUpdate(
     { username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }, (err, response) => {
@@ -254,16 +273,5 @@ const sendEmail = (email, subject, link) => {
     
   });
 }
-
-const updateReputation = async (username, value) => {
-  await users.findOneAndUpdate(
-    { username: username },
-    { $inc: { reputation: parseInt(value) } }
-  );
-};
-
-const modifyReputation = async (username, value) => {
-  await updateReputation(username, value);
-};
 
 module.exports = router;

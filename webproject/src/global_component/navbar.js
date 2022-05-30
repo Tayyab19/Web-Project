@@ -55,7 +55,7 @@ const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
               <li className="nav-item mt-2" style={{ paddingLeft: "17px" }}>
-                <Link to={`/profile/${username.name}`}>
+                <Link to={`/profile/${localStorage.getItem("token")}`}>
                   <img
                     data-tip="Profile"
                     className="logo-icon"

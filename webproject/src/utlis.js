@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export async function  updateReputation (name, value) {
     await axios.put("http://localhost:5000/users/profile/reputation", {
       username: name, 

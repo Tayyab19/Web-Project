@@ -9,7 +9,7 @@ import MyQuestionsModal from "./myQuestionsModal";
 import axios from "axios";
 
 //ChangePassword and ChangeProfilePicture should be from App.js
-const Profile = ({ username }) => {
+const Profile = ({ }) => {
   const getUser = async (username) => {
     axios({
       method: "get",
@@ -18,14 +18,30 @@ const Profile = ({ username }) => {
     })
       .then((response) => {
         setUser(response.data);
-        setUserFetched(true);
         setPicture(response.data.profilePhoto);
+        getQuestions(response.data.username);
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
         console.log(err);
       });
   };
+
+  const getMyUser = async () => {
+    axios.get(`http://localhost:5000/users/myProfile`,{headers: {
+      'Authorization': localStorage.getItem("token") 
+    }})
+      .then((response) => {
+        setUser(response.data);
+        setPicture(response.data.profilePhoto);
+        setMyAccount(true);
+        getMyQuestions();
+      })
+      .catch((err) => {
+        if (err.response.status == 404) navigate("/notFound");
+        console.log(err);
+      });
+  }
 
   const setPicture = async (base64) => {
     let newUserData = userData;
@@ -55,14 +71,24 @@ const Profile = ({ username }) => {
   };
 
   const getQuestions = (username) => {
-    axios({
-      method: "get",
-      url: `http://localhost:5000/questions/${username}`,
-      Headers: { "Content-Type": "application/json" },
-    })
+    axios.get(`http://localhost:5000/questions/${username}`,{headers: {
+      'Authorization': localStorage.getItem("token") 
+    }})
       .then((response) => {
-        setQuestions(response.data);
-        setQuestionsFetched(true);
+        setQuestions(response.data.questions);
+      })
+      .catch((err) => {
+        if (err.response.status == 404) navigate("/notFound");
+        console.log(err);
+      });
+  };
+
+  const getMyQuestions = () => {
+    axios.get(`http://localhost:5000/questions/myQuestions/thisUser`,{headers: {
+      'Authorization': localStorage.getItem("token") 
+    }})
+      .then((response) => {
+        setQuestions(response.data.questions);
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
@@ -75,28 +101,26 @@ const Profile = ({ username }) => {
   const [changePassword, setChangePassword] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [myQuestion, setMyQuestions] = useState(false);
-  const [userFetched, setUserFetched] = useState(false);
-  const [questionsFetched, setQuestionsFetched] = useState(false);
+  const [myAccount, setMyAccount] = useState(false);
 
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    if (!userFetched) getUser(uID);
-
-    if (username.name != uID) {
-      let classList = $(".disable");
-      for (const element of classList) {
-        element.setAttribute("disabled", "");
-      }
-      classList = $(".remove");
-      for (const element of classList) {
-        element.remove();
-      }
+    if (localStorage.getItem('token') === uID){
+      getMyUser();
     }
-  }, []);
+    else{
+        getUser(uID);
 
-  useEffect(() => {
-    getQuestions(uID);
+        let classList = $(".disable");
+        for (const element of classList) {
+          element.setAttribute("disabled", "");
+        }
+        classList = $(".remove");
+        for (const element of classList) {
+          element.remove();
+    }
+  }
   }, []);
 
   const handleUpdate = (value) => {
@@ -108,7 +132,7 @@ const Profile = ({ username }) => {
   };
 
   const handleDiscard = () => {
-    getUser(uID);
+    getUser(userData.username);
   };
 
   return (
@@ -116,16 +140,16 @@ const Profile = ({ username }) => {
       {changePassword && (
         <ChangePasswordModal
           setChangePassword={setChangePassword}
-          username={username}
         />
       )}
       {myQuestion && (
         <MyQuestionsModal
           questions={questions}
           setMyQuestions={setMyQuestions}
+          myAccount={myAccount}
         />
       )}
-      {changeProfilePicture && username.name == uID && (
+      {changeProfilePicture && myAccount == true && (
         <ChangePictureModal
           picture={userData.profilePhoto}
           setChangeProfilePicture={setChangeProfilePicture}
@@ -137,7 +161,6 @@ const Profile = ({ username }) => {
         <div className="row">
           <div className="col-lg-2 col-sm-1"></div>
           <div className="col-md-12 col-lg-4 col-sm-10">
-            {/* Fix Image */}
             <img
               className="profile-picture"
               src={userData.profilePhoto}
@@ -317,13 +340,13 @@ const Profile = ({ username }) => {
           </div>
           <div className="col-lg-2 col-md-4 col-sm-4 col-4">
             <button
-              className="btn btn-outline-dark  remove"
+              className="btn btn-outline-dark"
               onClick={(e) => {
                 e.preventDefault();
                 setMyQuestions(true);
               }}
             >
-              My Questions
+              User Questions
             </button>
           </div>
           <div className="col-lg-3"></div>

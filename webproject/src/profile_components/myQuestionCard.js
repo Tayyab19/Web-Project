@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const MyQuestionsCard = ({question}) => {
+const MyQuestionsCard = ({question, myAccount}) => {
     const archiveQuestion = (_id) => {
         axios({
           method: "patch",
@@ -36,7 +36,7 @@ const MyQuestionsCard = ({question}) => {
                 <div className="container mb-2" style={{ padding: "3px" }}>
                 <QuestionCard question={question} />
                 <br/>
-                {!question.private ? (
+                {myAccount && (!question.private ? (
                     <button
                     className="btn btn-outline-primary remove"   
                     onClick={(e) => {
@@ -69,7 +69,7 @@ const MyQuestionsCard = ({question}) => {
                     >
                     Private Question
                     </button>
-                )}
+                ))}
                 <hr />
                 </div>
             <ToastContainer />

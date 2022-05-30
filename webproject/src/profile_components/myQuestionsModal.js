@@ -3,7 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import MyQuestionsCard from "./myQuestionCard.js";
 
-const MyQuestionsModal = ({ questions, setMyQuestions }) => {
+const MyQuestionsModal = ({ questions, setMyQuestions, myAccount }) => {
   return (
     <>
       <Modal size="auto" show={true} onHide={() => setMyQuestions(false)}>
@@ -13,7 +13,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions }) => {
         <Modal.Body>
           {questions.map((question) => {
             return (
-            <MyQuestionsCard key={question._id} question={question} />
+            <MyQuestionsCard key={question._id} question={question} myAccount={myAccount} />
           )})}
         </Modal.Body>
         <Modal.Footer>
