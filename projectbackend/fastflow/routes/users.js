@@ -78,11 +78,15 @@ router.post("/signup", async (req, res) => {
       });
 
       if (result.email != null) {
-        const result = sendEmail(email, "Account Activation Link", 'Insert Link');
-
-        res.status(201).send({
-          Message: "User Registered",
-        });
+        const accessToken = generateAccessToken({ username: username });
+        const link = 'http://localhost:5000/users/verify/'+accessToken
+        const result2 = sendEmail(result.email, "Account Activation Link", link);
+        if (result2)
+          res.sendStatus(201);
+        else{
+          await users.findOneAndDelete({email:email});
+          res.sendStatus(500);
+        }
       } else {
         res.status(500).send({ Message: "An Unexpected Error Occured" });
       }
@@ -99,6 +103,17 @@ function generateAccessToken(username) {
 
 verifyToken = (req, res, next) => {
   const header = req.headers['authorization'];
+  if(typeof header !== 'undefined'){
+    const token = header;
+    req.token = token;
+    next();
+  }else{
+    res.sendStatus(403);
+  }
+}
+
+verifyTokenFromLink = (req, res, next) => {
+  const header = req.params.reqToken;
   if(typeof header !== 'undefined'){
     const token = header;
     req.token = token;
@@ -208,14 +223,57 @@ router.patch("/profile/editPassword", async (req, res) => {
   }
 });
 
+//Send Password Reset Link
 router.post("/forgotPassword", async (req, res) => {
   if (req.body.email) {
-    const result = sendEmail(req.body.email, "Password Reset Link", 'Insert Link');
+    const accessToken = generateAccessToken({ username: username });
+    const link = 'http://localhost:5000/users/forgotPassword/'+accessToken
+    const result = sendEmail(req.body.email, "Password Reset Link", link);
     if (result)
       res.sendStatus(200);
     else
       res.sendStatus(500);
   }
+});
+
+//Save new Password 
+router.post("/forgotPassword/:reqToken", verifyTokenFromLink, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      users
+        .findOneAndUpdate({ username: username.username }, {password:req.body.password})
+        .then((thisUser) => {
+          if (thisUser != null) {
+            res.sendStatus(200);
+          } else res.sendStatus(404);
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+    }
+  });
+});
+
+//Verify account
+router.post("/verify/:reqToken", verifyTokenFromLink, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      users
+        .findOneAndUpdate({ username: username.username }, {verified:true})
+        .then((thisUser) => {
+          if (thisUser != null) {
+            res.sendStatus(200);
+          } else res.sendStatus(404);
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+    }
+  });
 });
 
 //Get the User currently logged into the system
@@ -249,6 +307,7 @@ router.put("/profile/reputation",async (req, res) => {
     });
     res.send(200);
 })
+
 const sendEmail = (email, subject, link) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
