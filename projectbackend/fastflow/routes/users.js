@@ -78,6 +78,8 @@ router.post("/signup", async (req, res) => {
       });
 
       if (result.email != null) {
+        const result = sendEmail(email, "Account Activation Link", 'Insert Link');
+        
         res.status(201).send({
           Message: "User Registered",
         });
@@ -193,28 +195,11 @@ router.patch("/profile/editPassword", async (req, res) => {
 
 router.post("/forgotPassword", async (req, res) => {
   if (req.body.email) {
-    var transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "expertwebdev6@gmail.com",
-        pass: "L18-1082a",
-      },
-    });
-
-    var mailOptions = {
-      from: "expertwebdev6@gmail.com",
-      to: req.body.email,
-      subject: "Password reset Link",
-      text: "This is the Password Reset Link for your StackOverflowClone account. If you did not request this email ignore it.",
-    };
-
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) console.log(err);
-      else {
-        console.log("Email sent: " + info.response);
-        res.sendStatus(200);
-      }
-    });
+    const result = sendEmail(req.body.email, "Password Reset Link", 'Insert Link');
+    if (result)
+      res.sendStatus(200);
+    else
+      res.sendStatus(500);
   }
 });
 
@@ -229,6 +214,30 @@ router.put("/profile/reputation", (req, res) => {
     });
     res.send(200);
 })
+const sendEmail = (email, subject, link) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "expertwebdev6@gmail.com",
+      pass: "L18-1082a",
+    },
+  });
+
+  var mailOptions = {
+    from: "expertwebdev6@gmail.com",
+    to: email,
+    subject: subject,
+    text: `This is the ${subject} for your StackOverflowClone account. If you did not request this, please ignore it.\n${link}`,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err); 
+      return false;
+    } else return true;
+    
+  });
+}
 
 const updateReputation = async (username, value) => {
   await users.findOneAndUpdate(
