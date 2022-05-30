@@ -6,6 +6,7 @@ import "./questionstyle.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {updateReputation} from '../utlis'
 
 const QuestionInfo = ({}) => {
   const { qID } = useParams();
@@ -33,7 +34,9 @@ const QuestionInfo = ({}) => {
 
     //For loading all answer of that question
     axios
-      .get(`http://localhost:5000/answers/question/${qID}`)
+      .get(`http://localhost:5000/answers/question/${qID}`, {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }})
       .then((answer) => {
         setAnswers(answer.data);
       })
@@ -50,14 +53,6 @@ const QuestionInfo = ({}) => {
     return body.length > 10 ? true : false;
   };
 
-  const updateReputation = async (name, value) => {
-    await axios.put("http://localhost:5000/users/profile/reputation", {
-      username: name, 
-      reputation: value,
-    }).then(res => console.log(res))
-    .catch(err => console.log(err));
-  }
-
   const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
@@ -66,7 +61,9 @@ const QuestionInfo = ({}) => {
             "votes": 0,
             "username_of_voters": [],
         }
-       await axios.post("http://localhost:5000/answers", a).then(res => {
+       await axios.post("http://localhost:5000/answers", a, {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }}).then(res => {
             setAnswers([...answers, res.data]);
             toast.success('Answer Added!', {
                 position: "top-right",
@@ -99,10 +96,12 @@ const QuestionInfo = ({}) => {
     });
     axios
       .put(`http://localhost:5000/questions/${qID}`, {
-        ...question,
+        ...question, 
         votes: question.votes + 1,
         username_of_voters: [...question.username_of_voters, username],
-      })
+      }, {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }})
       .then((response) => {
         console.log("Updated");
         updateReputation(question.username, 1);

@@ -4,28 +4,23 @@ import QuestionForm from './question_form';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {updateReputation} from '../utlis'
 
-const AddQuestion = ({username}) => {
 
-    const updateReputation = async () => {
-        await axios.put("http://localhost:5000/users/profile/reputation", {
-          username: username.name, 
-          reputation: 3,
-        }).then(res => console.log(res))
-        .catch(err => console.log(err));
-      }
+const AddQuestion = ({}) => {
 
     const makeQuestionObject = async (title, body, tags, radioValue) => {
         const q = {
             "title": title,
             "body": body,
             "tags": tags,
-            "username": username.name,
             "private": radioValue,
             "archive": false,
             "invited": [],
         };
-        await axios.post("http://localhost:5000/questions", q).then(res => {
+        await axios.post("http://localhost:5000/questions", q, {headers: {
+            'Authorization': localStorage.getItem("token") 
+          }}).then(res => {
             toast.success('Question Added!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -35,7 +30,8 @@ const AddQuestion = ({username}) => {
                 draggable: true,
                 progress: undefined,
                 });
-            updateReputation();
+                console.log(res);
+            updateReputation(res.username, 3);
         }).catch(err => {
             toast.error('Error While Adding Question', {
             position: "top-right",

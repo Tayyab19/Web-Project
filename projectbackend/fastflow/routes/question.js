@@ -110,30 +110,39 @@ router.get("/question/:id", verifyToken, async (req, res) => {
 });
 
 //Add question to database
-router.post("/", async (req, res) => {
-  if (req.body.title && req.body.username) {
-    const newQuestion = new questions({
-      title: req.body.title,
-      body: req.body.body,
-      tags: req.body.tags,
-      username: req.body.username,
-      votes: 0,
-      username_of_voters: [],
-      answers: 0,
-      views: 0,
-      private: req.body.private,
-      archive: req.body.archive,
-      invited: req.body.invited,
-    });
-    await newQuestion.save();
-    await res.status(201).send("Question Added Succefully");
+router.post("/", verifyToken, async (req, res) => {
+  await jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      if (req.body.title) {
+        const newQuestion = new questions({
+          title: req.body.title,
+          body: req.body.body,
+          tags: req.body.tags,
+          username: username.username,
+          votes: 0,
+          username_of_voters: [],
+          answers: 0,
+          views: 0,
+          private: req.body.private,
+          archive: req.body.archive,
+          invited: req.body.invited,
+        });
+        newQuestion.save();
+        res.status(201).send(username.username);
   } else {
     res.send(400);
   }
+  }}); 
 });
 
 //Update question
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
   questions
     .findOneAndUpdate({ _id: req.params.id }, req.body)
     .then((result) => {
@@ -142,6 +151,7 @@ router.put("/:id", async (req, res) => {
     .catch((err) => {
       res.status(400).send(err);
     });
+  }});
 });
 
 //Delete question by ID
