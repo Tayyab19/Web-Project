@@ -45,6 +45,14 @@ const QuestionInfo = ({ username }) => {
     return body.length > 10 ? true : false;
   };
 
+  const updateReputation = async (name, value) => {
+    await axios.put("http://localhost:5000/users/profile/reputation", {
+      username: name, 
+      reputation: value,
+    }).then(res => console.log(res))
+    .catch(err => console.log(err));
+  }
+
   const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
@@ -53,8 +61,7 @@ const QuestionInfo = ({ username }) => {
             "votes": 0,
             "username_of_voters": [],
         }
-        setAnswers([...answers, a]);
-        await axios.post("http://localhost:5000/answers", a).then(res => {
+       await axios.post("http://localhost:5000/answers", a).then(res => {
             setAnswers([...answers, res.data]);
             toast.success('Answer Added!', {
                 position: "top-right",
@@ -65,6 +72,7 @@ const QuestionInfo = ({ username }) => {
                 draggable: true,
                 progress: undefined,
                 });
+            updateReputation(username.name, 3);
         }).catch(err => {
             toast.error('Error While Adding Answer', {
             position: "top-right",
@@ -92,6 +100,7 @@ const QuestionInfo = ({ username }) => {
       })
       .then((response) => {
         console.log("Updated");
+        updateReputation(question.username, 1);
       })
       .catch((err) => alert(err));
     setIsVoted(true);

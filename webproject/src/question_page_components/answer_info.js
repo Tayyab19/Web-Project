@@ -6,11 +6,20 @@ const AnswerInfo = ({answer, username}) => {
     const [currAnsVote, setCurrAnsVote] = useState(answer.votes);
     const [isLiked, setIsLiked] = useState(false);
 
+    const updateReputation = async () => {
+        await axios.put("http://localhost:5000/users/profile/reputation", {
+          username: answer.username, 
+          reputation: 1,
+        }).then(res => console.log(res))
+        .catch(err => console.log(err));
+      }
+
     const setAnswerVote = () => {
         setCurrAnsVote(currAnsVote + 1); 
         setIsLiked(true); 
         axios.put(`http://localhost:5000/answers/${answer._id}`, {...answer, votes: answer.votes + 1, username_of_voters: [...answer.username_of_voters, {name: username}]}).then(response => {
             console.log("Updated");
+            updateReputation();
         }).catch(err => alert(err))
     };
 

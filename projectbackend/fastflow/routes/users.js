@@ -218,6 +218,18 @@ router.post("/forgotPassword", async (req, res) => {
   }
 });
 
+router.put("/profile/reputation", (req, res) => {
+  await users.findOneAndUpdate(
+    { username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }, (err, response) => {
+        if (err) {
+          res.send(404);
+        } else {
+          res.send(200);
+        } 
+    });
+    res.send(200);
+})
+
 const updateReputation = async (username, value) => {
   await users.findOneAndUpdate(
     { username: username },

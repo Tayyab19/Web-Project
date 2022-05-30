@@ -7,6 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddQuestion = ({username}) => {
 
+    const updateReputation = async () => {
+        await axios.put("http://localhost:5000/users/profile/reputation", {
+          username: username.name, 
+          reputation: 3,
+        }).then(res => console.log(res))
+        .catch(err => console.log(err));
+      }
+
     const makeQuestionObject = async (title, body, tags, radioValue) => {
         const q = {
             "title": title,
@@ -27,6 +35,7 @@ const AddQuestion = ({username}) => {
                 draggable: true,
                 progress: undefined,
                 });
+            updateReputation();
         }).catch(err => {
             toast.error('Error While Adding Question', {
             position: "top-right",
