@@ -282,6 +282,7 @@ router.get("/myProfile", verifyToken, async (req, res) => {
   });
 });
 
+//Increase Reputation
 router.put("/profile/reputation",async (req, res) => {
   await users.findOneAndUpdate(
     { username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }, (err, response) => {
@@ -292,6 +293,20 @@ router.put("/profile/reputation",async (req, res) => {
         } 
     });
     res.send(200);
+})
+
+//Add question to invite list
+router.post('/addQuestionToList', async (req,res) => {
+  console.log(req.body)
+  const userList = req.body.userList;
+  const qid = req.body.qid;
+
+  userList.forEach(async (element) => {
+    await users.findOneAndUpdate({username:element},{ $addToSet: { invites: qid }})    
+  });
+  console.log(count);
+
+  res.sendStatus(200);
 })
 
 const sendEmail = async (email, subject, link) => {

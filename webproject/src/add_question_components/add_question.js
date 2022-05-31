@@ -9,14 +9,18 @@ import {updateReputation} from '../utlis'
 
 const AddQuestion = ({}) => {
 
-    const makeQuestionObject = async (title, body, tags, radioValue) => {
+    const sendInvites = (invited,qid) => {
+        axios.post('http://localhost:5000/users/addQuestionToList',{userList:invited,qid:qid})
+        .then(()=>{console.log('success')})
+    }
+    const makeQuestionObject = async (title, body, tags, invites, radioValue) => {
         const q = {
             "title": title,
             "body": body,
             "tags": tags,
             "private": radioValue,
             "archive": false,
-            "invited": [],
+            "invited": invites,
         };
         await axios.post("http://localhost:5000/questions", q, {headers: {
             'Authorization': localStorage.getItem("token") 
@@ -31,7 +35,10 @@ const AddQuestion = ({}) => {
                 progress: undefined,
                 });
                 console.log(res);
-            updateReputation(res.username, 3);
+                console.log(q)
+            sendInvites(q.invited, res.data._id)
+            //Has Problems
+            //updateReputation(res.data.username, 3);
         }).catch(err => {
             toast.error('Error While Adding Question', {
             position: "top-right",

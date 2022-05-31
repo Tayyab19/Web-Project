@@ -162,7 +162,7 @@ router.get("/question/:id", verifyToken, async (req, res) => {
 
 //Add question to database
 router.post("/", verifyToken, async (req, res) => {
-  await jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, async (err, username) => {
     if (err) {
       res.sendStatus(403);
     } else {
@@ -180,8 +180,8 @@ router.post("/", verifyToken, async (req, res) => {
           archive: req.body.archive,
           invited: req.body.invited,
         });
-        newQuestion.save();
-        res.status(201).send(username.username);
+        const result = await newQuestion.save();
+        res.status(201).send({_id:result._id,username:username.username});
   } else {
     res.send(400);
   }

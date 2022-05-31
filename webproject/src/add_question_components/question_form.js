@@ -22,6 +22,12 @@ const QuestionForm = ({ submitQuestion }) => {
     setTags(e.target.value.split(","));
   };
 
+  const [invites, setInvites] = useState([]);
+
+  const updateInvites = (e) => {
+    setInvites(e.target.value.split(","));
+  };
+
   const isValid = () => {
     return title.length <= 10 ? true : false;
   };
@@ -133,6 +139,7 @@ const QuestionForm = ({ submitQuestion }) => {
             id="InvitedUSers"
             onChange={(e) => {
               e.preventDefault();
+              updateInvites(e);
             }}
             placeholder="Username1, Username2....."
           />
@@ -144,7 +151,7 @@ const QuestionForm = ({ submitQuestion }) => {
         <button
           type="btn"
           onClick={(e) => {
-            submitQuestion(title, body, tags, radioValue === "Private");
+            submitQuestion(title, body, tags, invites, radioValue === "Private");
           }}
           className={
             isValid() ? "btn disabled btn-primary" : "btn active btn-primary"
