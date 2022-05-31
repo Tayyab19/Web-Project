@@ -9,9 +9,9 @@ const ChangePasswordModal = ({ setChangePassword }) => {
   const [temp, setTemp] = useState("");
   const [temp2, setTemp2] = useState("");
   const setPassword = (password) => {
-    axios.patch(`http://localhost:5000/users/profile/editPassword`,{headers: {
+    axios.patch(`http://localhost:5000/users/profile/editPassword`,{password:password},{headers: {
       'Authorization': localStorage.getItem("token") 
-    }},{data : {password:password}})
+    }})
       .then((response) => {
         toast.success("Password Changed Successfully", {
           position: "top-right",

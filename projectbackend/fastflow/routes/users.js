@@ -103,7 +103,7 @@ function generateAccessToken(username) {
 
 verifyToken = (req, res, next) => {
   const header = req.headers['authorization'];
-  console.log(req)
+  console.log(header)
   if(typeof header !== 'undefined'){
     const token = header;
     req.token = token;
@@ -207,7 +207,7 @@ router.patch("/profile/edit", async (req, res) => {
 //Edit Password
 router.patch("/profile/editPassword", verifyToken, async (req, res) => {
   const body = req.body;
-  console.log(req.body)
+  //console.log(req.body)
   jwt.verify(req.token, ACCESS_TOKEN_SECRET,async (err, username) => {
   if (body != null) {
     const password = await bcrypt.hash(body.password, 10);
