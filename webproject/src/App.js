@@ -53,6 +53,8 @@ function App() {
           <Route path="/" element={<Login verifyLogin={verifyLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/verify/:token" element={<SignUpRedirect />}/>
+          <Route path="/resetPassword/:token" element={<ResetPassword />}/>
           {renderLogin && (
             <>
               <Route path="/syntaxes" element={<SyntaxNav />} />
@@ -75,14 +77,6 @@ function App() {
               <Route
                 path="/profile/:uID"
                 element={<Profile username={currUsername} />}
-              />
-              <Route
-                path="/verify/:token"
-                element={<SignUpRedirect />}
-              />
-              <Route
-                path="/resetPassword/:token"
-                element={<ResetPassword />}
               />
               <Route
                 path="/notFound"
