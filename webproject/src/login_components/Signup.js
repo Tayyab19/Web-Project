@@ -32,7 +32,7 @@ const Signup = () => {
               progress: undefined,
             }
           );
-          navigate("/");
+          //navigate("/");
         }
       })
       .catch((err) => {

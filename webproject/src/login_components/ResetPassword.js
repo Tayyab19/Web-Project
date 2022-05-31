@@ -9,10 +9,9 @@ const ResetPassword = () => {
   const {token} = useParams();
 
   const passwordReset = (password) => {
-      axios.post(`http://localhost:5000/users/resetPassword`,{headers: {
-        'Authorization': token 
-      }},{data:{password:password}})
-      .then((response) => {
+    axios.patch(`http://localhost:5000/users/profile/editPassword`,{headers: {
+      'Authorization': {token} 
+    }},{data : {password:password}}).then((response) => {
         if (response.status == 200) {
             navigate("/");
           }

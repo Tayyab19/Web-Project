@@ -10,9 +10,7 @@ const SignUpRedirect = () => {
   const {token} = useParams();
 
   const signUpVerify = () => {
-      axios.post(`http://localhost:5000/users/verify`,{headers: {
-        'Authorization': token 
-      }})
+      axios.post(`http://localhost:5000/users/verify/${token}`)
       .then((response) => {
         if (response.status == 200) {
             navigate("/");

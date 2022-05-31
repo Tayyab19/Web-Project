@@ -78,7 +78,6 @@ const Profile = ({ }) => {
         setQuestions(response.data.questions);
       })
       .catch((err) => {
-        if (err.response.status == 404) navigate("/notFound");
         console.log(err);
       });
   };
@@ -91,7 +90,6 @@ const Profile = ({ }) => {
         setQuestions(response.data.questions);
       })
       .catch((err) => {
-        if (err.response.status == 404) navigate("/notFound");
         console.log(err);
       });
   };

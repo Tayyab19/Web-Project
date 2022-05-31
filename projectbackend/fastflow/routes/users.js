@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 
 //Delete a User by email
 router.delete("/:id", async (req, res) => {
-  await users.deleteOne({ email: email });
+  await users.deleteOne({ email: req.params.id });
   res.send("Deleted");
 });
 
@@ -79,14 +79,14 @@ router.post("/signup", async (req, res) => {
 
       if (result.email != null) {
         const accessToken = generateAccessToken({ username: username });
-        const link = 'http://localhost:5000/users/verify/'+accessToken
-        const result2 = sendEmail(result.email, "Account Activation Link", link);
-        if (result2)
-          res.sendStatus(201);
-        else{
-          await users.findOneAndDelete({email:email});
-          res.sendStatus(500);
-        }
+        const link = 'http://localhost:3000/verify/'+accessToken
+        const result2 = sendEmail(result.email, "Account Activation Link", link)       
+          if (result2)
+            res.sendStatus(201);
+          else{
+            await users.findOneAndDelete({email:email});
+            res.sendStatus(500);
+          }
       } else {
         res.status(500).send({ Message: "An Unexpected Error Occured" });
       }
@@ -103,6 +103,18 @@ function generateAccessToken(username) {
 
 verifyToken = (req, res, next) => {
   const header = req.headers['authorization'];
+  console.log(req)
+  if(typeof header !== 'undefined'){
+    const token = header;
+    req.token = token;
+    next();
+  }else{
+    res.sendStatus(403);
+  }
+}
+
+verifyTokenWithLink = (req, res, next) => {
+  const header = req.params.id;
   if(typeof header !== 'undefined'){
     const token = header;
     req.token = token;
@@ -132,11 +144,16 @@ router.post("/signin", async (req, res) => {
 
       await bcrypt.compare(password, encryptedPassword).then((flag) => {
         if (flag) {
+          if (userWithEmail.verified){
           const username = userWithEmail.username;
           const accessToken = generateAccessToken({ username: username });
           res.status(200).json({
             accessToken: accessToken,
           });
+        }
+        else{
+          res.status(500).send({ Message: "Please Verify Your Account" })
+        }
         } else {
           res
             .status(500)
@@ -188,15 +205,16 @@ router.patch("/profile/edit", async (req, res) => {
 });
 
 //Edit Password
-router.patch("/profile/editPassword", async (req, res) => {
+router.patch("/profile/editPassword", verifyToken, async (req, res) => {
   const body = req.body;
-
+  console.log(req.body)
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET,async (err, username) => {
   if (body != null) {
     const password = await bcrypt.hash(body.password, 10);
 
     try {
       await users.findOneAndUpdate(
-        { username: body.username },
+        { username: username.username },
         {
           password: password,
         }
@@ -209,14 +227,15 @@ router.patch("/profile/editPassword", async (req, res) => {
     }
   } else {
     res.sendStatus(400);
-  }
+  }})
 });
 
 //Send Password Reset Link
 router.post("/forgotPassword", async (req, res) => {
   if (req.body.email) {
+    const username = await users.findOne({email:req.body.email}).username;
     const accessToken = generateAccessToken({ username: username });
-    const link = 'http://localhost:5000/users/forgotPassword/'+accessToken
+    const link = 'http://localhost:3000/resetPassword/'+accessToken
     const result = sendEmail(req.body.email, "Password Reset Link", link);
     if (result)
       res.sendStatus(200);
@@ -225,28 +244,8 @@ router.post("/forgotPassword", async (req, res) => {
   }
 });
 
-//Save new Password 
-router.post("/resetPassword", verifyToken, async (req, res) => {
-  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
-    if (err) {
-      res.sendStatus(403);
-    } else {
-      users
-        .findOneAndUpdate({ username: username.username }, {password:req.body.password})
-        .then((thisUser) => {
-          if (thisUser != null) {
-            res.sendStatus(200);
-          } else res.sendStatus(404);
-        })
-        .catch((err) => {
-          res.status(400).send(err);
-        });
-    }
-  });
-});
-
 //Verify account
-router.post("/verify", verifyToken, async (req, res) => {
+router.post("/verify/:id", verifyTokenWithLink, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
       res.sendStatus(403);
@@ -297,7 +296,7 @@ router.put("/profile/reputation",async (req, res) => {
     res.send(200);
 })
 
-const sendEmail = (email, subject, link) => {
+const sendEmail = async (email, subject, link) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -312,14 +311,16 @@ const sendEmail = (email, subject, link) => {
     subject: subject,
     text: `This is the ${subject} for your StackOverflowClone account. If you did not request this, please ignore it.\n${link}`,
   };
-
-  transporter.sendMail(mailOptions, (err, info) => {
+  
+  let flag = false;
+  transporter.sendMail(mailOptions).then((info, err) => {
     if (err) {
-      console.log(err); 
-      return false;
-    } else return true;
-    
+      console.log(err)
+      flag =  false;
+    } else flag = true;
   });
+
+  return flag;
 }
 
 module.exports = router;
