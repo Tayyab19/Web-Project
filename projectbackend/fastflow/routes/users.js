@@ -112,17 +112,6 @@ verifyToken = (req, res, next) => {
   }
 }
 
-verifyTokenFromLink = (req, res, next) => {
-  const header = req.params.reqToken;
-  if(typeof header !== 'undefined'){
-    const token = header;
-    req.token = token;
-    next();
-  }else{
-    res.sendStatus(403);
-  }
-}
-
 //User Login
 router.post("/signin", async (req, res) => {
   if (req.body.email == null) {
@@ -237,7 +226,7 @@ router.post("/forgotPassword", async (req, res) => {
 });
 
 //Save new Password 
-router.post("/forgotPassword/:reqToken", verifyTokenFromLink, async (req, res) => {
+router.post("/resetPassword", verifyToken, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
       res.sendStatus(403);
@@ -257,7 +246,7 @@ router.post("/forgotPassword/:reqToken", verifyTokenFromLink, async (req, res) =
 });
 
 //Verify account
-router.post("/verify/:reqToken", verifyTokenFromLink, async (req, res) => {
+router.post("/verify", verifyToken, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
       res.sendStatus(403);

@@ -12,6 +12,8 @@ import Signup from "./login_components/Signup";
 import ForgotPassword from "./login_components/ForgotPassword";
 import SyntaxNav from "./syntaxes_components/SyntaxNav";
 import NotFound from "./global_component/notFound";
+import SignUpRedirect from "./login_components/SignupRedirect";
+import ResetPassword from "./login_components/ResetPassword";
 
 function App() {
   const [renderLogin, setRenderLogin] = useState(false);
@@ -73,6 +75,14 @@ function App() {
               <Route
                 path="/profile/:uID"
                 element={<Profile username={currUsername} />}
+              />
+              <Route
+                path="/verify/:token"
+                element={<SignUpRedirect />}
+              />
+              <Route
+                path="/resetPassword/:token"
+                element={<ResetPassword />}
               />
               <Route
                 path="/notFound"
