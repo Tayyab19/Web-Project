@@ -8,7 +8,7 @@ const MyQuestionsModal = ({ questions, setMyQuestions, myAccount }) => {
     <>
       <Modal size="auto" show={true} onHide={() => setMyQuestions(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>My Questions</Modal.Title>
+          <Modal.Title>Questions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {questions.map((question) => {

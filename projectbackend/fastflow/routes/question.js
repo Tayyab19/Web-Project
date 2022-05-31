@@ -86,6 +86,33 @@ router.get("/:username", verifyToken, async (req, res) => {
   });
 });
 
+//Return Questions with term in Title
+router.post('/search/search',verifyToken, async (req, res) => {
+    jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        questions
+          .find({ title: {$regex : req.body.searchTerm} })
+          .then((questions) => {
+              const reply = [];
+              questions.forEach((element) => {
+                if (!element.private && !element.archive) reply.push(element);
+              });
+              if (reply.length > 0) {
+                res.json({questions : reply, username : username.username});
+              } else {
+                res.sendStatus(404);
+              }
+          })
+          .catch((err) => {
+              console.log(err)
+            res.status(400).send(err);
+          });
+      }
+    });
+  });
+
 //Return all question of current user
 router.get("/myQuestions/thisUser", verifyToken, async (req, res) => {
     jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {

@@ -8,7 +8,6 @@ import ChangePictureModal from "./changePictureModal";
 import MyQuestionsModal from "./myQuestionsModal";
 import axios from "axios";
 
-//ChangePassword and ChangeProfilePicture should be from App.js
 const Profile = ({ }) => {
   const getUser = async (username) => {
     axios({

@@ -10,7 +10,7 @@ const ResetPassword = () => {
 
   const passwordReset = (password) => {
     axios.patch(`http://localhost:5000/users/profile/editPassword`,{password:password},{headers: {
-      'Authorization': localStorage.getItem("token") 
+      'Authorization': token 
     }}).then((response) => {
         if (response.status == 200) {
             navigate("/");

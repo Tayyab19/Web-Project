@@ -6,16 +6,40 @@ import MyQuestionsModal from "../profile_components/myQuestionsModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/js/bootstrap.min.js";
+import axios from "axios";
 
-const Navbar = ({ username, renderLogin, getSearchQuestion }) => {
+const Navbar = ({ renderLogin }) => {
   const [myQuestion, setMyQuestions] = useState(false);
-  const [questions, setQuestions] = useState(" ");
+  const [questions, setQuestions] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setQuestions(getSearchQuestion(e.target.searchInput.value));
-    // console.log(questions.length);
+    getSearchQuestion(e.target.searchInput.value);
     setMyQuestions(true);
   };
+
+  const getSearchQuestion = async (searchTerm) => {
+    await setQuestions([]);
+    axios
+      .get(`http://localhost:5000/questions/${searchTerm}`, {headers: {
+        'Authorization': localStorage.getItem("token") 
+      }}).then((response1) => { 
+        setQuestions(response1.data.questions);
+        axios
+        .post("http://localhost:5000/questions/search/search",{searchTerm:searchTerm}, {headers: {
+          'Authorization': localStorage.getItem("token") 
+         }}).then((response) => { setQuestions(questions.concat(response.data.questions))})
+        .catch((err) => {})
+      })
+        .catch((err) => {          
+          axios
+          .post("http://localhost:5000/questions/search/search",{searchTerm:searchTerm}, {headers: {
+            'Authorization': localStorage.getItem("token") 
+           }}).then((response) => { setQuestions(response.data.questions)})
+          .catch((err) => {})})
+        .finally(()=>{          })
+  }
+
   return (
     <>
       {myQuestion && (
