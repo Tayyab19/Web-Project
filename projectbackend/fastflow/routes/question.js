@@ -243,4 +243,17 @@ router.patch("/archive/:id", async (req, res) => {
     });
 });
 
+//Get Questions from list of question ids
+router.post('/getListQuestion', async (req,res)=> {
+    let data = []
+    const idList = req.body._idList
+
+    for (let i = 0; i < idList.length; i++){
+        const result = await questions.findById(idList[i])
+        data.push(result)
+    }
+
+    res.status(200).json({questions:data});
+  })
+
 module.exports = router;
