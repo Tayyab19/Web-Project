@@ -44,9 +44,11 @@ const Profile = ({ }) => {
   }
 
   const getInvitedQuestions = async (inviteList) =>{
-
+      await axios.post('http://localhost:5000/questions/getListQuestion',{_idList : inviteList})
+      .then((response)=>{setInviteQuestions(response.data.questions); console.log(response.data.questions)})
+      .catch((err)=>{console.log(err)})
   }
-  
+
   const setPicture = async (base64) => {
     let newUserData = userData;
     newUserData.profilePhoto = base64;
@@ -161,7 +163,7 @@ const Profile = ({ }) => {
       )}
       {viewInvites && (
         <MyQuestionsModal
-          questions={[]}
+          questions={inviteQuestions}
           setMyQuestions={setViewInvites}
         />
       )}
