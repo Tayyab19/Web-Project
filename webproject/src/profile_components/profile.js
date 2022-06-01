@@ -35,6 +35,7 @@ const Profile = ({ }) => {
         setPicture(response.data.profilePhoto);
         setMyAccount(true);
         getMyQuestions();
+        getInvitedQuestions(response.data.invites);
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
@@ -42,6 +43,10 @@ const Profile = ({ }) => {
       });
   }
 
+  const getInvitedQuestions = async (inviteList) =>{
+
+  }
+  
   const setPicture = async (base64) => {
     let newUserData = userData;
     newUserData.profilePhoto = base64;
@@ -99,8 +104,9 @@ const Profile = ({ }) => {
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
   const [myQuestion, setMyQuestions] = useState(false);
   const [myAccount, setMyAccount] = useState(false);
-
+  const [viewInvites,setViewInvites] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [inviteQuestions, setInviteQuestions] = useState([])
 
   useEffect(() => {
     if (localStorage.getItem('token') === uID){
@@ -151,6 +157,12 @@ const Profile = ({ }) => {
           picture={userData.profilePhoto}
           setChangeProfilePicture={setChangeProfilePicture}
           setPicture={setPicture}
+        />
+      )}
+      {viewInvites && (
+        <MyQuestionsModal
+          questions={[]}
+          setMyQuestions={setViewInvites}
         />
       )}
       <div className="container profile-page">
@@ -234,39 +246,6 @@ const Profile = ({ }) => {
         </div>
         <div className="row">
           <div className="col-lg-2"></div>
-          <div className="col-lg-2 col-sm-4 col-md-4">
-            <br />
-            <button
-              className="btn btn-outline-primary remove"
-              onClick={(e) => {
-                e.preventDefault();
-                setChangePassword(true);
-              }}
-            >
-              Change Password
-            </button>
-          </div>
-          <div className="col-sm-8 col-md-8 col-lg-6 remove">
-            <label for="invites">Invites to Answer:</label>
-            {/* Handle List */}
-            <select
-              className="form-select"
-              aria-label="Answer Invites"
-              id="invites"
-              onChange={(e) => handleUpdate(e.target)}
-            >
-              <option defaultValue>
-                {userData.invites && userData.invites[0]}
-              </option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div className="col-lg-2"></div>
-        </div>
-        <div className="row">
-          <div className="col-lg-2"></div>
           <div className="col-lg-4 col-md-6 col-sm-6">
             <label for="linkedInHandle">LinkedIn Address:</label>
             <input
@@ -316,6 +295,35 @@ const Profile = ({ }) => {
             </select>
           </div>
           <div className="col-lg-2"></div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3"></div>
+          <div className="col-lg-3 col-sm-5 col-md-5">
+            <br />
+            <button
+              className="btn btn-outline-primary remove"
+              style={{float:'right'}}
+              onClick={(e) => {
+                e.preventDefault();
+                setChangePassword(true);
+              }}
+            >
+              Change Password
+            </button>
+          </div>
+          <div className="col-lg-3 col-sm-5 col-md-5">
+            <br />
+            <button
+              className="btn btn-outline-primary remove"
+              onClick={(e) => {
+                e.preventDefault();
+                setViewInvites(true);
+              }}
+            >
+              View Invites
+            </button>
+          </div>
+          <div className="col-lg-3"></div>
         </div>
         <div className="row">
           <div className="col-lg-3"></div>
