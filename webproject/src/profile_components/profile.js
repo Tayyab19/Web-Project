@@ -19,6 +19,7 @@ const Profile = ({ }) => {
         setUser(response.data);
         setPicture(response.data.profilePhoto);
         getQuestions(response.data.username);
+        setBadges(response.data.badges)
       })
       .catch((err) => {
         if (err.response.status == 404) navigate("/notFound");
@@ -27,6 +28,7 @@ const Profile = ({ }) => {
   };
 
   const getMyUser = async () => {
+    //await fetch({url:`http://localhost:5000/users/myProfile`,headers:{'Authorization': localStorage.getItem("token"),method:'get' }})
     axios.get(`http://localhost:5000/users/myProfile`,{headers: {
       'Authorization': localStorage.getItem("token") 
     }})
@@ -34,11 +36,11 @@ const Profile = ({ }) => {
         setUser(response.data);
         setPicture(response.data.profilePhoto);
         setMyAccount(true);
-        getMyQuestions();
-        getInvitedQuestions(response.data.invites);
+        // getMyQuestions();
+        // getInvitedQuestions(response.data.invites);
+        setBadges(response.data.badges)
       })
       .catch((err) => {
-        if (err.response.status == 404) navigate("/notFound");
         console.log(err);
       });
   }
@@ -109,6 +111,7 @@ const Profile = ({ }) => {
   const [viewInvites,setViewInvites] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [inviteQuestions, setInviteQuestions] = useState([])
+  const [myBadges, setBadges] = useState(['asked1','asked5'])
 
   useEffect(() => {
     if (localStorage.getItem('token') === uID){
@@ -161,7 +164,7 @@ const Profile = ({ }) => {
           setPicture={setPicture}
         />
       )}
-      {viewInvites && (
+      {viewInvites && myAccount && (
         <MyQuestionsModal
           questions={inviteQuestions}
           setMyQuestions={setViewInvites}
@@ -216,13 +219,14 @@ const Profile = ({ }) => {
           </div>
           <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="badges">Badges:</label>
-            <input
-              id="badges"
-              className="form-control"
-              type="text"
-              value={userData.badges}
-              disabled
-            />
+            <div id='addBadge'>
+              {myBadges.map((val,index) => {
+              return (
+              <>
+              <img src={require('./' + val + '.png')} key={index} style={{ height: '40px', width: '40px' }} alt='Text' />
+              </>
+            )})}
+            </div>
           </div>
           <div className="col-lg-2 col-md-3 col-sm-3">
             <label for="firstName">First Name:</label>

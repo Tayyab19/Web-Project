@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import QuestionCard from "./question_card";
 import Filter from "./filter";
 import { Link } from "react-router-dom";
-import Pagination from "./pagination";
 import Footer from "../global_component/footer";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -13,7 +11,6 @@ const AllQuestionPage = () => {
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
   const [isFilter, setFilter] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [questionsPerPage, setQuestionsPerPage] = useState(15);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
