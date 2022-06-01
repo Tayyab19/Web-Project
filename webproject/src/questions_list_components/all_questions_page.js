@@ -6,14 +6,16 @@ import Pagination from "./pagination";
 import Footer from "../global_component/footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const AllQuestionPage = () => {
   const [questions, setQuestions] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
   const [isFilter, setFilter] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [questionsPerPage, setQuestionsPerPage] = useState(15);
-  const { pageNumber } = useParams();
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const getTags = () => {
     let tags = [];
@@ -37,19 +39,37 @@ const AllQuestionPage = () => {
 
   const getQuestions = () => {
     axios
-      .get("http://localhost:5000/questions", {headers: {
+      .get(`http://localhost:5000/questions/infintescrollquestions/0`, {headers: {
         'Authorization': localStorage.getItem("token") 
       }})
-      .then((questions) => {
-        setQuestions(questions.data);
-        setFilteredQuestions(questions.data);
+      .then((response) => {
+        setTotalQuestions(response.data.totalQuestions);
+        setQuestions(response.data.questions);
+        setFilteredQuestions(response.data.questions);
       })
       .catch((err) => alert("Error While Retrieving Questions"))
       .finally(() => setLoading(true));
   };
 
+  const fetchMoreData = async () => {
+    console.log(localStorage.getItem("token") )
+    axios
+    .get(`http://localhost:5000/questions/infintescrollquestions/${pageNumber}`, {headers: {
+      'Authorization': localStorage.getItem("token") 
+    }})
+    .then((response) => {
+        console.log(response.data);
+        console.log(pageNumber);
+        setQuestions([...questions, ...response.data.questions]);
+        setFilteredQuestions([...filteredQuestions, ...response.data.questions]);
+        setLoading(false);
+        setPageNumber(pageNumber + 1);
+    })
+    .catch((err) => {console.log(err);} ).finally(() => {if (!loading) setLoading(true)});
+  }
+
   useEffect(() => {
-    getQuestions();
+     getQuestions();
   }, []);
 
   useEffect(() => {
@@ -98,89 +118,28 @@ const AllQuestionPage = () => {
 
         <hr />
 
-        {console.log(questions)}
-        {loading ? (
-          filteredQuestions?.map((question, index) => {
-            return index >= questionsPerPage * (pageNumber - 1) &&
-              index <= questionsPerPage * pageNumber ? (
-              <div className="container mb-2" style={{ padding: "3px" }}>
-                <QuestionCard key={question.question_id} question={question} />
-                <hr />
-              </div>
-            ) : null;
-          })
-        ) : (
-          <h1 className="my-5 text-center fw-bolder">Loading ...</h1>
-        )}
-
-        <div className="row mb-5">
-          <div className="col-6">
-            <Pagination
-              pageNumber={pageNumber}
-              totalPages={Math.ceil(
-                filteredQuestions.length / questionsPerPage
-              )}
-            />
+        <InfiniteScroll
+          dataLength={filteredQuestions.length}
+          prefill={true}
+          next={fetchMoreData}
+          hasMore={filteredQuestions.length < totalQuestions}
+          loader={<h4>Loading...</h4>}
+        >
+          <div className="container">
+          {console.log(questions)}
+          {
+            
+            filteredQuestions?.map((question, index) => {
+              return (
+                <div className="container mb-2" style={{ padding: "3px" }}>
+                  <QuestionCard key={question.question_id} question={question} />
+                  <hr />
+                </div>
+              )
+            }) 
+          }
           </div>
-
-          <div className="col-6 d-flex justify-content-end">
-            <nav aria-label="Page navigation example">
-              <ul className="pagination pagination-sm">
-                <li className="page-item mx-1">
-                  <Link to={"/questions/page/1"}>
-                    <button
-                      onClick={(e) => {
-                        setQuestionsPerPage(15);
-                      }}
-                      className={
-                        questionsPerPage === 15
-                          ? "btn bg-primary text-white"
-                          : "btn bg-secondary text-white"
-                      }
-                    >
-                      15
-                    </button>
-                  </Link>
-                </li>
-                <li className="page-item mx-1">
-                  <Link to={"/questions/page/1"}>
-                    <button
-                      onClick={(e) => {
-                        setQuestionsPerPage(30);
-                      }}
-                      className={
-                        questionsPerPage === 30
-                          ? "btn bg-primary text-white"
-                          : "btn bg-secondary text-white"
-                      }
-                    >
-                      30
-                    </button>
-                  </Link>
-                </li>
-                <li className="page-item mx-1">
-                  <Link to={"/questions/page/1"}>
-                    <button
-                      onClick={(e) => {
-                        setQuestionsPerPage(50);
-                      }}
-                      className={
-                        questionsPerPage === 50
-                          ? "btn bg-primary text-white"
-                          : "btn bg-secondary text-white"
-                      }
-                    >
-                      50
-                    </button>
-                  </Link>
-                </li>
-                <p className="mx-1 mt-1" style={{ fontWeight: "bold" }}>
-                  per page
-                </p>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        </InfiniteScroll>
       </div>
       <Footer />
     </div>

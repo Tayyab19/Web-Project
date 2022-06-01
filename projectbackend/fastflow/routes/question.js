@@ -19,6 +19,36 @@ function verifyToken(req, res, next) {
 }
 
 //Return all public questions in database
+router.get("/infintescrollquestions/:pagenumber", verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      questions
+      .find({})
+      .then((questions) => {
+        const reply = [];
+        questions.forEach((element, index) => {
+          if(index >= req.params.pagenumber * 10 && index < (req.params.pagenumber * 10) + 10){
+            reply.push(element);
+          }
+        });
+        if (reply.length > 0) {
+          res.json({"questions": reply,
+            "totalQuestions": questions.length,
+        });
+        } else {
+          res.sendStatus(404);
+        }
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      });
+    }
+  })
+});
+
+//Return all public questions in database
 router.get("/", verifyToken, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
@@ -44,23 +74,7 @@ router.get("/", verifyToken, async (req, res) => {
   })
 });
 
-//Return all questions in database
-router.get("/getAll", async (req, res) => {
-  questions
-    .find({})
-    .then((questions) => {
-      if (questions.length > 0) {
-        res.json(questions);
-      } else {
-        res.sendStatus(404);
-      }
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
-});
-
-//Return all questions of a single user that are not archived or private
+//Return all questions of a single user Infinite Scroll
 router.get("/:username", verifyToken, async (req, res) => {
   jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
     if (err) {
