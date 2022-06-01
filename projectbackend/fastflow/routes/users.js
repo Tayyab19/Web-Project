@@ -304,7 +304,6 @@ router.post('/addQuestionToList', async (req,res) => {
   userList.forEach(async (element) => {
     await users.findOneAndUpdate({username:element},{ $addToSet: { invites: qid }})    
   });
-  console.log(count);
 
   res.sendStatus(200);
 })
