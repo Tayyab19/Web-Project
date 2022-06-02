@@ -1,8 +1,8 @@
-'use strict';
- 
 import React from 'react';
-import FacebookLogin from 'react-facebook-login';
- 
+//import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props' 
+import { FaFacebook } from "react-icons/fa";
+
 class Facebook extends React.Component {
   faceBookData(response) {
     console.log(response)
@@ -15,8 +15,9 @@ class Facebook extends React.Component {
       autoLoad={false}
       fields="name,email"
       callback={this.faceBookData}
-      icon='fa-facebook'
-      size='2em'
+      render={renderProps => (
+        <FaFacebook onClick={renderProps.onClick} size="2em" color="" />
+      )}
     />
     )
   }

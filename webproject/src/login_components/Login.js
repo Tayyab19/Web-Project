@@ -6,7 +6,6 @@ import "./Login.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FacebookLogin } from "react-facebook-login";
 import Facebook from "./facebook";
 
 const Login = ({ verifyLogin }) => {
