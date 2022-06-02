@@ -6,6 +6,8 @@ import "./Login.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FacebookLogin } from "react-facebook-login";
+import Facebook from "./facebook";
 
 const Login = ({ verifyLogin }) => {
   const signIn = async (email, password) => {
@@ -40,7 +42,12 @@ const Login = ({ verifyLogin }) => {
       });
   };
 
+  const faceBookData = (response)=>{
+    console.log(response)
+  }
+
   const navigate = useNavigate();
+
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -137,9 +144,9 @@ const Login = ({ verifyLogin }) => {
                       <a href="#!" className="text-black mx-3">
                         <FaGoogle size="2em" color="" />
                       </a>
-                      <a href="#!" className="text-black login-color mx-3">
-                        <FaFacebook size="2em" />
-                      </a>
+                      <div>
+                          <Facebook/>
+                      </div>
                     </div>
                   </div>
 
