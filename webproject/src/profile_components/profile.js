@@ -36,8 +36,8 @@ const Profile = ({ }) => {
         setUser(response.data);
         setPicture(response.data.profilePhoto);
         setMyAccount(true);
-        // getMyQuestions();
-        // getInvitedQuestions(response.data.invites);
+        getMyQuestions();
+        getInvitedQuestions(response.data.invites);
         setBadges(response.data.badges)
       })
       .catch((err) => {
@@ -55,25 +55,19 @@ const Profile = ({ }) => {
     let newUserData = userData;
     newUserData.profilePhoto = base64;
 
-    axios({
-      method: "patch",
-      url: `http://localhost:5000/users/profile/edit`,
-      Headers: { "Content-Type": "application/json" },
-      data: newUserData,
-    }).catch((err) => {
+    await axios.patch(`http://localhost:5000/users//profile/edit`,newUserData,{headers: {
+      'Authorization': localStorage.getItem("token") 
+    }}).catch((err) => {
       console.log(err);
     });
   };
 
   const navigate = useNavigate();
 
-  const updateUser = (newUserData) => {
-    axios({
-      method: "patch",
-      url: `http://localhost:5000/users/profile/edit`,
-      Headers: { "Content-Type": "application/json" },
-      data: newUserData,
-    }).catch((err) => {
+  const updateUser = async (newUserData) => {
+    await axios.patch(`http://localhost:5000/users//profile/edit`,newUserData,{headers: {
+      'Authorization': localStorage.getItem("token") 
+    }}).catch((err) => {
       console.log(err);
     });
   };
@@ -223,6 +217,7 @@ const Profile = ({ }) => {
               {myBadges.map((val,index) => {
               return (
               <>
+              {console.log(require('./' + val + '.png'))}
               <img src={require('./' + val + '.png')} key={index} style={{ height: '40px', width: '40px' }} alt='Text' />
               </>
             )})}

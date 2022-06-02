@@ -13,6 +13,20 @@ const AddQuestion = ({}) => {
         axios.post('http://localhost:5000/users/addQuestionToList',{userList:invited,qid:qid})
         .then(()=>{console.log('success')})
     }
+
+    const checkAskedBadge = (count) => {
+        let val = '';
+        if (count==1)
+            val = 'asked1'
+        else if (count==5)
+            val = 'asked5'
+
+        if (val!='')
+            axios.patch("http://localhost:5000/users/addBadge", {badge:val},{headers: {
+                'Authorization': localStorage.getItem("token") 
+                }})
+    }
+
     const makeQuestionObject = async (title, body, tags, invites, radioValue) => {
         const q = {
             "title": title,
@@ -36,7 +50,10 @@ const AddQuestion = ({}) => {
                 });
                 console.log(res);
                 console.log(q)
-            sendInvites(q.invited, res.data._id)
+            if (radioValue)
+                sendInvites(q.invited, res.data._id)
+            console.log(res.data.count)
+            checkAskedBadge(res.data.userCount);
             //Has Problems
             //updateReputation(res.data.username, 3);
         }).catch(err => {

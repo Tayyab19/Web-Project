@@ -19,6 +19,21 @@ const QuestionInfo = ({}) => {
   const [username, setUsername] = useState();
 
 
+  const checkAnsweredBadge = (count) => {
+    console.log(count)
+    let val = '';
+    if (count==10)
+        val = 'answers10'
+    else if (count==20)
+        val = 'answers20'
+
+    console.log(val)
+    if (val!='')
+        axios.patch("http://localhost:5000/users/addBadge", {badge:val},{headers: {
+            'Authorization': localStorage.getItem("token") 
+            }})
+  }
+
   const loadData = () => {
     //For loading question info
     axios
@@ -64,7 +79,8 @@ const QuestionInfo = ({}) => {
        await axios.post("http://localhost:5000/answers", a, {headers: {
         'Authorization': localStorage.getItem("token") 
       }}).then(res => {
-            setAnswers([...answers, res.data]);
+            console.log(res)
+            setAnswers([...answers, res.data.answer]);
             toast.success('Answer Added!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -74,7 +90,9 @@ const QuestionInfo = ({}) => {
                 draggable: true,
                 progress: undefined,
                 });
-            updateReputation(username, 3);
+           // updateReputation(username, 3);
+           
+            checkAnsweredBadge(res.data.userCount)
         }).catch(err => {
             toast.error('Error While Adding Answer', {
             position: "top-right",

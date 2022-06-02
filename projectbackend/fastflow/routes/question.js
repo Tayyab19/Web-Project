@@ -195,7 +195,8 @@ router.post("/", verifyToken, async (req, res) => {
           invited: req.body.invited,
         });
         const result = await newQuestion.save();
-        res.status(201).send({_id:result._id,username:username.username});
+        const count = (await questions.find({username:username.username})).length;
+        res.status(201).send({_id:result._id, username:username.username, userCount: count});
   } else {
     res.send(400);
   }

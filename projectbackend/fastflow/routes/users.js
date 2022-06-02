@@ -174,14 +174,20 @@ router.get("/profile/:username", async (req, res) => {
   } else res.sendStatus(400);
 });
 
+router.patch('/universalEdit/:id', async(req,res)=>{
+  await users.findOneAndUpdate({username:req.params.id}, {$addToSet: { badges: 'asked5' }})
+  res.sendStatus(200);
+})
+
 //Edit Profile
 router.patch("/profile/edit", async (req, res) => {
   const body = req.body;
-
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET,async (err, username) => {
   if (body != null) {
+    console.log(username)
     try {
       await users.findOneAndUpdate(
-        { username: body.username },
+        { username: username.username },
         {
           firstName: body.firstName,
           lastName: body.lastName,
@@ -201,6 +207,7 @@ router.patch("/profile/edit", async (req, res) => {
   } else {
     res.sendStatus(400);
   }
+})
 });
 
 //Edit Password
@@ -217,7 +224,6 @@ router.patch("/profile/editPassword", verifyToken, async (req, res) => {
           password: password,
         }
       );
-      console.log('modified')
       res.sendStatus(200);
     } catch (e) {
       console.log(e);
@@ -297,7 +303,6 @@ router.put("/profile/reputation",async (req, res) => {
 
 //Add question to invite list
 router.post('/addQuestionToList', async (req,res) => {
-  console.log(req.body)
   const userList = req.body.userList;
   const qid = req.body.qid;
 
@@ -307,6 +312,25 @@ router.post('/addQuestionToList', async (req,res) => {
 
   res.sendStatus(200);
 })
+
+router.patch('/addBadge', verifyToken, async (req, res) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      users
+        .findOneAndUpdate({ username: username.username },{ $addToSet: { badges: req.body.badge }})
+        .then((thisUser) => {
+          if (thisUser != null) {
+            res.status(200).send('done');
+          } else res.sendStatus(404);
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+    }
+  });
+});
 
 
 const sendEmail = async (email, subject, link) => {

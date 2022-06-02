@@ -70,7 +70,7 @@ router.get("/answer/:id", async (req, res) => {
 
 //Add answer to database
 router.post("/", verifyToken, async (req, res) => {
-  jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+  jwt.verify(req.token, ACCESS_TOKEN_SECRET,async  (err, username) => {
     if (err) {
       res.sendStatus(403);
     } else {
@@ -82,13 +82,10 @@ router.post("/", verifyToken, async (req, res) => {
       votes: 0,
       username_of_voters: [],
     });
-    newAnswer.save((err, result) => {
-      if(err){
-        res.status(400);
-      }else{
-        res.status(201).send(result);
-      }
-    });
+    const result2 = await newAnswer.save();
+    let count = (await answers.find({username:req.body.username})).length
+    res.status(201).json({answer:result2,userCount:count});
+
   } else {
     res.send(400);
   }
