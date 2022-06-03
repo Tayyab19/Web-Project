@@ -43,8 +43,8 @@ const Login = ({ verifyLogin }) => {
       });
   };
 
-  const faceBookData = (response)=>{
-    console.log(response)
+  const handleClick = ()=>{
+    window.open('http://localhost:5000/google/auth/google','_blank')
   }
 
   const navigate = useNavigate();
@@ -143,7 +143,8 @@ const Login = ({ verifyLogin }) => {
 
                     <div className="d-flex justify-content-center text-center mt-4 pt-1">
                       <div>
-                        <Google/>
+                        {/* <Google/> */}
+                        <FaGoogle onClick={handleClick} size="2em" color=""/>
                       </div>
                       &nbsp;
                       <div>
