@@ -290,15 +290,14 @@ router.get("/myProfile", verifyToken, async (req, res) => {
 
 //Increase Reputation
 router.put("/profile/reputation",async (req, res) => {
-  await users.findOneAndUpdate(
-    { username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }, (err, response) => {
-        if (err) {
-          res.send(404);
-        } else {
-          res.send(200);
-        } 
+  await users.findOneAndUpdate({ username: req.body.username }, { $inc: { reputation: parseInt(req.body.reputation) } }).then( ( response, err) => {
+      if (err) {
+        console.log(err)
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(200);
+      } 
     });
-    res.send(200);
 })
 
 //Add question to invite list
