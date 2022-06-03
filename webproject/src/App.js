@@ -40,29 +40,12 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/verify/:token" element={<SignUpRedirect />}/>
           <Route path="/resetPassword/:token" element={<ResetPassword />}/>
-              <Route path="/syntaxes" element={<><Navbar getSearchQuestion={getSearchQuestion} /><SyntaxNav /></>} />
-              <Route
-                path="/questions"
-                element={<><Navbar getSearchQuestion={getSearchQuestion} /><AllQuestionPage /></>}
-              />
-              <Route
-                path="/questions/question/:qID"
-                element={<><Navbar getSearchQuestion={getSearchQuestion} /><QuestionInfo /></>}
-              />
-              <Route
-                path="/questions/ask"
-                element={
-                  <><Navbar getSearchQuestion={getSearchQuestion} /><AddQuestion /></>
-                }
-              />
-              <Route
-                path="/profile/:uID"
-                element={<><Navbar getSearchQuestion={getSearchQuestion} /><Profile /></>}
-              />
-              <Route
-                path="/notFound"
-                element={<><Navbar getSearchQuestion={getSearchQuestion} /><NotFound  /></>}
-              />
+          <Route path="/syntaxes" element={<><Navbar getSearchQuestion={getSearchQuestion} /><SyntaxNav /></>} />
+          <Route path="/questions" element={<><Navbar getSearchQuestion={getSearchQuestion} /><AllQuestionPage /></>}/>
+          <Route path="/questions/question/:qID" element={<><Navbar getSearchQuestion={getSearchQuestion} /><QuestionInfo /></>}/>
+          <Route path="/questions/ask" element={<><Navbar getSearchQuestion={getSearchQuestion} /><AddQuestion /></>}/>
+          <Route path="/profile/:uID" element={<><Navbar getSearchQuestion={getSearchQuestion} /><Profile /></>}/>
+          <Route path="/notFound" element={<><Navbar getSearchQuestion={getSearchQuestion} /><NotFound  /></>}/>
         </Routes>
       </Router>
     </>
