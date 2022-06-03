@@ -5,7 +5,6 @@ import AllQuestionPage from "./components/questionsListComponents/all_questions_
 import QuestionInfo from "./components/questionPageComponents/question_info";
 import AddQuestion from "./components/addQuestionComponents/add_question";
 import Profile from "./components/profileComponents/profile";
-import { useEffect, useState } from "react";
 import Navbar from "./components/globalComponent/navbar";
 import Login from "./components/loginComponents/Login";
 import Signup from "./components/loginComponents/Signup";
