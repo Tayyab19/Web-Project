@@ -1,4 +1,4 @@
-import Footer from "../global_component/footer";
+import Footer from "../globalComponent/footer";
 import "./profile.css";
 import $ from "jquery";
 import { useEffect, useState } from "react";

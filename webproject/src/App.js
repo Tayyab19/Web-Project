@@ -1,19 +1,20 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AllQuestionPage from "./questions_list_components/all_questions_page";
-import QuestionInfo from "./question_page_components/question_info";
-import AddQuestion from "./add_question_components/add_question";
-import Profile from "./profile_components/profile";
+import AllQuestionPage from "./components/questionsListComponents/all_questions_page";
+import QuestionInfo from "./components/questionPageComponents/question_info";
+import AddQuestion from "./components/addQuestionComponents/add_question";
+import Profile from "./components/profileComponents/profile";
 import { useEffect, useState } from "react";
-import Navbar from "./global_component/navbar";
-import Login from "./login_components/Login";
-import Signup from "./login_components/Signup";
-import ForgotPassword from "./login_components/ForgotPassword";
-import SyntaxNav from "./syntaxes_components/SyntaxNav";
-import NotFound from "./global_component/notFound";
-import SignUpRedirect from "./login_components/SignupRedirect";
-import ResetPassword from "./login_components/ResetPassword";
+import Navbar from "./components/globalComponent/navbar";
+import Login from "./components/loginComponents/Login";
+import Signup from "./components/loginComponents/Signup";
+import ForgotPassword from "./components/loginComponents/ForgotPassword";
+import SyntaxNav from "./components/syntaxesComponents/SyntaxNav";
+import NotFound from "./components/globalComponent/notFound";
+import SignUpRedirect from "./components/loginComponents/SignupRedirect";
+import ResetPassword from "./components/loginComponents/ResetPassword";
+
 
 function App() {
   const [renderLogin, setRenderLogin] = useState(false);

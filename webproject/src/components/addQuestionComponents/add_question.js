@@ -1,44 +1,24 @@
 import {Link} from 'react-router-dom'
-import Footer from "../global_component/footer";
+import Footer from "../globalComponent/footer";
 import QuestionForm from './question_form';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {updateReputation} from '../utlis'
 
+const AddQuestion = ({username}) => {
 
-const AddQuestion = ({}) => {
-
-    const sendInvites = (invited,qid) => {
-        axios.post('http://localhost:5000/users/addQuestionToList',{userList:invited,qid:qid})
-        .then(()=>{console.log('success')})
-    }
-
-    const checkAskedBadge = (count) => {
-        let val = '';
-        if (count==1)
-            val = 'asked1'
-        else if (count==5)
-            val = 'asked5'
-
-        if (val!='')
-            axios.patch("http://localhost:5000/users/addBadge", {badge:val},{headers: {
-                'Authorization': localStorage.getItem("token") 
-                }})
-    }
-
-    const makeQuestionObject = async (title, body, tags, invites, radioValue) => {
+    const makeQuestionObject = async (title, body, tags, radioValue) => {
         const q = {
             "title": title,
             "body": body,
             "tags": tags,
+            "username": username.name,
+            "reputation": username.reputation,
             "private": radioValue,
             "archive": false,
-            "invited": invites,
+            "invited": [],
         };
-        await axios.post("http://localhost:5000/questions", q, {headers: {
-            'Authorization': localStorage.getItem("token") 
-          }}).then(res => {
+        await axios.post("http://localhost:5000/questions", q).then(res => {
             toast.success('Question Added!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -48,14 +28,6 @@ const AddQuestion = ({}) => {
                 draggable: true,
                 progress: undefined,
                 });
-                console.log(res);
-                console.log(q)
-            if (radioValue)
-                sendInvites(q.invited, res.data._id)
-            console.log(res.data.count)
-            checkAskedBadge(res.data.userCount);
-            //Has Problems
-            updateReputation(res.data.username, 3);
         }).catch(err => {
             toast.error('Error While Adding Question', {
             position: "top-right",
