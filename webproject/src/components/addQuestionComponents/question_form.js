@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../questions_list_components/question.css";
+import "../questionsListComponents/question.css";
 import { ToggleButton, ButtonGroup } from "react-bootstrap";
 
 const QuestionForm = ({ submitQuestion }) => {

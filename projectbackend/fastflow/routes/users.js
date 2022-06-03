@@ -180,7 +180,7 @@ router.patch('/universalEdit/:id', async(req,res)=>{
 })
 
 //Edit Profile
-router.patch("/profile/edit", async (req, res) => {
+router.patch("/profile/edit",verifyToken, async (req, res) => {
   const body = req.body;
   jwt.verify(req.token, ACCESS_TOKEN_SECRET,async (err, username) => {
   if (body != null) {
