@@ -49,7 +49,6 @@ const Login = ({ verifyLogin }) => {
 
   const navigate = useNavigate();
 
-
   const [errorMessage, setErrorMessage] = useState("");
 
   const [showForgetPassword, setForgetPassword] = useState(false);
@@ -148,7 +147,7 @@ const Login = ({ verifyLogin }) => {
                       </div>
                       &nbsp;
                       <div>
-                          <Facebook/>
+                          <Facebook verifyLogin={verifyLogin} />
                       </div>
                     </div>
                   </div>
