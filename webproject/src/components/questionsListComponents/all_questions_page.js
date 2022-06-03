@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import QuestionCard from "./question_card";
 import Filter from "./filter";
 import { Link } from "react-router-dom";
-import Footer from "../global_component/footer";
+import Footer from "../globalComponent/footer";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 

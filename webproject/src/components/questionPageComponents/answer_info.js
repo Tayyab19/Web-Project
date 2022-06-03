@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "axios";
-import {updateReputation} from '../utlis'
+import {updateReputation} from '../../utlis'
 
 const AnswerInfo = ({answer, username}) => {
     const [currAnsVote, setCurrAnsVote] = useState(answer.votes);

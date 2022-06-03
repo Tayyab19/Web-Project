@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import QuestionCard from "../questions_list_components/question_card.js";
+import QuestionCard from "../questionsListComponents/question_card.js";
 import axios from 'axios'
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";

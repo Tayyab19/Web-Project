@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "nodemailer": "^6.7.5"
+    "express-session": "^1.17.3",
+    "nodemailer": "^6.7.5",
+    "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0"
   }
 }

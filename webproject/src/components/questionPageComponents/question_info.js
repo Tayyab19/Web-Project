@@ -6,7 +6,7 @@ import "./questionstyle.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {updateReputation} from '../utlis'
+import {updateReputation} from '../../utlis'
 
 const QuestionInfo = ({}) => {
   const { qID } = useParams();

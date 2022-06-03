@@ -2,7 +2,7 @@ import profile_logo from "./profile_logo.png";
 import logout_logo from "./logout_logo.png";
 import question_logo from "./questionflag.png";
 import list_logo from "./list_logo.png";
-import MyQuestionsModal from "../profile_components/myQuestionsModal";
+import MyQuestionsModal from "../profileComponents/myQuestionsModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -124,7 +124,7 @@ const Navbar = ({ renderLogin }) => {
             </ul>
           </div>
           <Link
-            to={"questions/page/1"}
+            to={"/questions"}
             className={
               "mx-5 fw-bolder text-dark p-1 text-center col-4 col-md-3"
             }

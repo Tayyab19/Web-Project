@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom'
-import Footer from "../global_component/footer";
+import Footer from "../globalComponent/footer";
 import QuestionForm from './question_form';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {updateReputation} from '../utlis'
+import {updateReputation} from '../../utlis'
 
 
 const AddQuestion = ({}) => {
