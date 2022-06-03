@@ -55,7 +55,7 @@ const Profile = ({ }) => {
     let newUserData = userData;
     newUserData.profilePhoto = base64;
 
-    await axios.patch(`http://localhost:5000/users//profile/edit`,newUserData,{headers: {
+    await axios.patch(`http://localhost:5000/users/profile/edit`,newUserData,{headers: {
       'Authorization': localStorage.getItem("token") 
     }}).catch((err) => {
       console.log(err);
@@ -65,7 +65,7 @@ const Profile = ({ }) => {
   const navigate = useNavigate();
 
   const updateUser = async (newUserData) => {
-    await axios.patch(`http://localhost:5000/users//profile/edit`,newUserData,{headers: {
+    await axios.patch(`http://localhost:5000/users/profile/edit`,newUserData,{headers: {
       'Authorization': localStorage.getItem("token") 
     }}).catch((err) => {
       console.log(err);
