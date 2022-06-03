@@ -55,7 +55,7 @@ router.get("/", verifyToken, async (req, res) => {
       res.sendStatus(403);
     } else {
       questions
-      .find({})
+      .find({private:false, archive:false})
       .then((questions) => {
         const reply = [];
         questions.forEach((element) => {
