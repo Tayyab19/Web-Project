@@ -24,7 +24,7 @@ const Login = ({ verifyLogin }) => {
       .then((response) => {
         if (response.status == 200) {
           verifyLogin(response.data);
-          navigate("/questions/page/1");
+          navigate("/questions");
         }
       })
       .catch((err) => {

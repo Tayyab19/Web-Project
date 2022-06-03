@@ -16,18 +16,11 @@ import SignUpRedirect from "./components/loginComponents/SignupRedirect";
 import ResetPassword from "./components/loginComponents/ResetPassword";
 
 function App() {
-  const [renderLogin, setRenderLogin] = useState(false);
-
-  const [currUsername, setCurrUsername] = useState({
-    name: "",
-  });
-
   const verifyLogin = (accessToken) => {
     // setCurrUsername(returnedUser);
     // console.log(returnedUser);
     console.log(accessToken.accessToken);
     localStorage.setItem("token", accessToken.accessToken);
-    setRenderLogin(true);
     return true;
   };
 
@@ -42,48 +35,35 @@ function App() {
   return (
     <>
       <Router>
-        {renderLogin && (
-          <Navbar
-            username={currUsername}
-            renderLogin={renderLogin}
-            getSearchQuestion={getSearchQuestion}
-          />
-        )}
         <Routes>
           <Route path="/" element={<Login verifyLogin={verifyLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/verify/:token" element={<SignUpRedirect />}/>
           <Route path="/resetPassword/:token" element={<ResetPassword />}/>
-          {renderLogin && (
-            <>
-              <Route path="/syntaxes" element={<SyntaxNav />} />
+              <Route path="/syntaxes" element={<><Navbar getSearchQuestion={getSearchQuestion} /><SyntaxNav /></>} />
               <Route
-                path="/questions/page/:pageNumber"
-                element={<AllQuestionPage />}
+                path="/questions"
+                element={<><Navbar getSearchQuestion={getSearchQuestion} /><AllQuestionPage /></>}
               />
               <Route
                 path="/questions/question/:qID"
-                element={<QuestionInfo username={currUsername} />}
+                element={<><Navbar getSearchQuestion={getSearchQuestion} /><QuestionInfo /></>}
               />
               <Route
                 path="/questions/ask"
                 element={
-                  <AddQuestion
-                    username={currUsername} //Will remove after jwt token is implemented
-                  />
+                  <><Navbar getSearchQuestion={getSearchQuestion} /><AddQuestion /></>
                 }
               />
               <Route
                 path="/profile/:uID"
-                element={<Profile username={currUsername} />}
+                element={<><Navbar getSearchQuestion={getSearchQuestion} /><Profile /></>}
               />
               <Route
                 path="/notFound"
-                element={<NotFound username={currUsername} />}
+                element={<><Navbar getSearchQuestion={getSearchQuestion} /><NotFound  /></>}
               />
-            </>
-          )}
         </Routes>
       </Router>
     </>

@@ -124,7 +124,7 @@ const Navbar = ({ renderLogin }) => {
             </ul>
           </div>
           <Link
-            to={"questions/page/1"}
+            to={"/questions"}
             className={
               "mx-5 fw-bolder text-dark p-1 text-center col-4 col-md-3"
             }
