@@ -23,6 +23,7 @@ function App() {
     return true;
   };
 
+  
   const getSearchQuestion = (searchTerm, questions) => {
     let myQuestions = [];
     for (const element of questions) {
