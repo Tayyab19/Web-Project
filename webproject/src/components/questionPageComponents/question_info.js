@@ -69,6 +69,9 @@ const QuestionInfo = ({}) => {
     return body.length > 10 ? true : false;
   };
 
+  const updateAnswerCount = async (qid) => {
+    await axios.patch("http://localhost:5000/questions/incrementCount", {_id:qid}).then((res)=>console.log(res)).catch((err)=>console.log(err))
+  }
   const addAnswer = async (answerBody) => {
         const a = {
             "question_id": qID,
@@ -91,8 +94,8 @@ const QuestionInfo = ({}) => {
                 draggable: true,
                 progress: undefined,
                 });
-           updateReputation(username, 3);
-           
+            updateReputation(username, 3);
+            updateAnswerCount(a.question_id);
             checkAnsweredBadge(res.data.userCount)
         }).catch(err => {
             toast.error('Error While Adding Answer', {

@@ -25,7 +25,7 @@ router.get("/infintescrollquestions/:pagenumber", verifyToken, async (req, res) 
       res.sendStatus(403);
     } else {
       questions
-      .find({})
+      .find({private:false,archive:false})
       .then((questions) => {
         const reply = [];
         questions.forEach((element, index) => {
@@ -256,5 +256,16 @@ router.post('/getListQuestion', async (req,res)=> {
 
     res.status(200).json({questions:data});
   })
+
+router.patch('/incrementCount',async (req,res) => {
+  await questions.findOneAndUpdate({ _id: req.body._id }, { $inc: { answers: 1 } }).then( ( response, err) => {
+    if (err) {
+      console.log(err)
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(200);
+    } 
+  });
+})
 
 module.exports = router;
