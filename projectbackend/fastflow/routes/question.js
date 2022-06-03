@@ -8,7 +8,10 @@ const questions = require("../models/question");
 ACCESS_TOKEN_SECRET = "kajnkankjxnasnxkajsxkansx";
 
 function verifyToken(req, res, next) {
+
   const header = req.headers['authorization'];
+  console.log(header);
+  console.log("here");
   if(typeof header !== 'undefined'){
     const token = header;
     req.token = token;
@@ -130,6 +133,8 @@ router.post('/search/search',verifyToken, async (req, res) => {
 //Return all question of current user
 router.get("/myQuestions/thisUser", verifyToken, async (req, res) => {
     jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, username) => {
+
+
       if (err) {
         res.sendStatus(403);
       } else {

@@ -15,7 +15,6 @@ import NotFound from "./components/globalComponent/notFound";
 import SignUpRedirect from "./components/loginComponents/SignupRedirect";
 import ResetPassword from "./components/loginComponents/ResetPassword";
 
-
 function App() {
   const [renderLogin, setRenderLogin] = useState(false);
 
