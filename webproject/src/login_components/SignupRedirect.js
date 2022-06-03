@@ -8,8 +8,10 @@ const SignUpRedirect = () => {
 
   const [text, setText] = useState('Redirecting......')
   const {token} = useParams();
+  const [loading,setLoading] = useState(false);
 
   const signUpVerify = () => {
+      setLoading(true);
       axios.post(`http://localhost:5000/users/verify/${token}`)
       .then((response) => {
         if (response.status == 200) {
@@ -22,7 +24,8 @@ const SignUpRedirect = () => {
   };
 
   useEffect(()=>{
-      signUpVerify();
+      if (!loading)
+        signUpVerify();
   },[])
   
   return (

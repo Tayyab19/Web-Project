@@ -66,7 +66,8 @@ const AllQuestionPage = () => {
   }
 
   useEffect(() => {
-     getQuestions();
+    if (loading)
+      getQuestions();
   }, []);
 
   useEffect(() => {

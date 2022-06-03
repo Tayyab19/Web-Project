@@ -6,7 +6,9 @@ import "./Login.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FacebookLogin } from "react-facebook-login";
 import Facebook from "./facebook";
+import Google from "./google";
 
 const Login = ({ verifyLogin }) => {
   const signIn = async (email, password) => {
@@ -140,9 +142,10 @@ const Login = ({ verifyLogin }) => {
                     </form>
 
                     <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="#!" className="text-black mx-3">
-                        <FaGoogle size="2em" color="" />
-                      </a>
+                      <div>
+                        <Google/>
+                      </div>
+                      &nbsp;
                       <div>
                           <Facebook/>
                       </div>

@@ -7,7 +7,6 @@ class Facebook extends React.Component {
   faceBookData(response) {
     console.log(response)
   }
- 
   render() {
     return (
       <FacebookLogin

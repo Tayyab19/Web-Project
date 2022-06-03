@@ -17,6 +17,7 @@ const QuestionInfo = ({}) => {
   const [isAnswer, setIsAnswer] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
   const [username, setUsername] = useState();
+  const [loading,setLoading] = useState(false);
 
 
   const checkAnsweredBadge = (count) => {
@@ -90,7 +91,7 @@ const QuestionInfo = ({}) => {
                 draggable: true,
                 progress: undefined,
                 });
-           // updateReputation(username, 3);
+           updateReputation(username, 3);
            
             checkAnsweredBadge(res.data.userCount)
         }).catch(err => {
@@ -129,7 +130,10 @@ const QuestionInfo = ({}) => {
   };
 
   useEffect(() => {
-    loadData();
+    if (!loading){
+      loadData();
+      setLoading(true);
+    }
   }, [])
 
 useEffect(() => {

@@ -105,23 +105,27 @@ const Profile = ({ }) => {
   const [viewInvites,setViewInvites] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [inviteQuestions, setInviteQuestions] = useState([])
-  const [myBadges, setBadges] = useState(['asked1','asked5'])
+  const [myBadges, setBadges] = useState([])
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('token') === uID){
-      getMyUser();
-    }
-    else{
-        getUser(uID);
+    if (!loading){
+      setLoading(true);
+      if (localStorage.getItem('token') === uID){
+        getMyUser();
+      }
+      else{
+          getUser(uID);
 
-        let classList = $(".disable");
-        for (const element of classList) {
-          element.setAttribute("disabled", "");
-        }
-        classList = $(".remove");
-        for (const element of classList) {
-          element.remove();
-    }
+          let classList = $(".disable");
+          for (const element of classList) {
+            element.setAttribute("disabled", "");
+          }
+          classList = $(".remove");
+          for (const element of classList) {
+            element.remove();
+      }
+  }
   }
   }, []);
 

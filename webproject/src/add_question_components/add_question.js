@@ -55,7 +55,7 @@ const AddQuestion = ({}) => {
             console.log(res.data.count)
             checkAskedBadge(res.data.userCount);
             //Has Problems
-            //updateReputation(res.data.username, 3);
+            updateReputation(res.data.username, 3);
         }).catch(err => {
             toast.error('Error While Adding Question', {
             position: "top-right",
