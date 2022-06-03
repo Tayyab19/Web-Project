@@ -49,14 +49,11 @@ const AllQuestionPage = () => {
   };
 
   const fetchMoreData = async () => {
-    console.log(localStorage.getItem("token") )
     axios
     .get(`http://localhost:5000/questions/infintescrollquestions/${pageNumber}`, {headers: {
       'Authorization': localStorage.getItem("token") 
     }})
     .then((response) => {
-        console.log(response.data);
-        console.log(pageNumber);
         setQuestions([...questions, ...response.data.questions]);
         setFilteredQuestions([...filteredQuestions, ...response.data.questions]);
         setLoading(false);
@@ -124,7 +121,6 @@ const AllQuestionPage = () => {
           loader={<h4>Loading...</h4>}
         >
           <div className="container">
-          {console.log(questions)}
           {
             
             filteredQuestions?.map((question, index) => {

@@ -13,13 +13,13 @@ const SyntaxNav = () => {
           <Navbar.Brand href="#home">Languages</Navbar.Brand>
           <Nav className=" text-black me-auto">
             <Nav.Link className="text-black">
-              <a onClick={() => setsID("html")}>Html </a>
+              <p onClick={() => setsID("html")}>Html </p>
             </Nav.Link>
             <Nav.Link>
-              <a onClick={() => setsID("css")}>CSS</a>
+              <p onClick={() => setsID("css")}>CSS</p>
             </Nav.Link>
             <Nav.Link>
-              <a onClick={() => setsID("javascript")}>Javascript </a>
+              <p onClick={() => setsID("javascript")}>Javascript </p>
             </Nav.Link>
           </Nav>
         </Container>

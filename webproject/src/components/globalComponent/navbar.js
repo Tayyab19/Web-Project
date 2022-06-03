@@ -79,7 +79,7 @@ const Navbar = ({ renderLogin }) => {
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-2">
               <li className="nav-item mt-2" style={{ paddingLeft: "17px" }}>
-                <Link to={`/profile/${localStorage.getItem("token")}`}>
+                <Link to={`/profile/${localStorage.getItem("token")}`} onClick={window.location.reload}>
                   <img
                     data-tip="Profile"
                     className="logo-icon"
@@ -92,7 +92,7 @@ const Navbar = ({ renderLogin }) => {
                 className="nav-item"
                 style={{ paddingLeft: "13px", marginTop: "0px !important" }}
               >
-                <Link to={"/questions/ask"}>
+                <Link to={"/questions/ask"} onClick={window.location.reload}>
                   <img
                     className="logo-icon"
                     src={question_logo}
@@ -124,7 +124,7 @@ const Navbar = ({ renderLogin }) => {
             </ul>
           </div>
           <Link
-            to={"/questions"}
+            to={"/questions" }
             className={
               "mx-5 fw-bolder text-dark p-1 text-center col-4 col-md-3"
             }
@@ -133,6 +133,7 @@ const Navbar = ({ renderLogin }) => {
               textDecoration: "none",
               backgroundColor: "orange",
             }}
+            onClick={window.location.reload}
           >
             FAST FLOW
           </Link>

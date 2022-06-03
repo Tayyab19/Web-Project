@@ -28,8 +28,8 @@ const QuestionCard = ({question}) => {
                 <div className='row'>
                     <div className='col-10'>
                         {
-                            question.tags.map(tag => {
-                                return (<span className='mx-1' style={{fontSize:'12px', backgroundColor:'#ADD8E6', padding:'6px'}}>{tag}</span>)
+                            question.tags.map((tag,index) => {
+                                return (<span key={index} className='mx-1' style={{fontSize:'12px', backgroundColor:'#ADD8E6', padding:'6px'}}>{tag}</span>)
                             })
                         }
                     </div>
