@@ -43,9 +43,10 @@ const Login = ({ verifyLogin }) => {
       });
   };
 
-  const faceBookData = (response)=>{
+  const thirdPartyLogin = (response) => {
     console.log(response)
   }
+
 
   const navigate = useNavigate();
 
@@ -143,11 +144,11 @@ const Login = ({ verifyLogin }) => {
 
                     <div className="d-flex justify-content-center text-center mt-4 pt-1">
                       <div>
-                        <Google/>
+                        <Google login={thirdPartyLogin}/>
                       </div>
                       &nbsp;
                       <div>
-                          <Facebook/>
+                          <Facebook login={thirdPartyLogin}/>
                       </div>
                     </div>
                   </div>
