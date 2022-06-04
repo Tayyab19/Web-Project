@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import QuestionCard from "./question_card";
 import Filter from "./filter";
 import { Link } from "react-router-dom";
@@ -7,6 +8,7 @@ import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const AllQuestionPage = () => {
+  const { id } = useParams();
   const [questions, setQuestions] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
   const [isFilter, setFilter] = useState(false);
@@ -34,7 +36,12 @@ const AllQuestionPage = () => {
       : setFilteredQuestions(questions);
   };
 
+
   const getQuestions = () => {
+    console.log(id);
+    if(id){
+      localStorage.setItem("token",id);
+    }
     axios
       .get(`http://localhost:5000/questions/infintescrollquestions/0`, {headers: {
         'Authorization': localStorage.getItem("token") 

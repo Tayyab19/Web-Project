@@ -23,7 +23,7 @@ function App() {
     return true;
   };
 
-  
+
   const getSearchQuestion = (searchTerm, questions) => {
     let myQuestions = [];
     for (const element of questions) {
@@ -43,6 +43,7 @@ function App() {
           <Route path="/resetPassword/:token" element={<ResetPassword />}/>
           <Route path="/syntaxes" element={<><Navbar getSearchQuestion={getSearchQuestion} /><SyntaxNav /></>} />
           <Route path="/questions" element={<><Navbar getSearchQuestion={getSearchQuestion} /><AllQuestionPage /></>}/>
+          <Route path="/questions/:id" element={<><Navbar getSearchQuestion={getSearchQuestion} /><AllQuestionPage /></>}/>
           <Route path="/questions/question/:qID" element={<><Navbar getSearchQuestion={getSearchQuestion} /><QuestionInfo /></>}/>
           <Route path="/questions/ask" element={<><Navbar getSearchQuestion={getSearchQuestion} /><AddQuestion /></>}/>
           <Route path="/profile/:uID" element={<><Navbar getSearchQuestion={getSearchQuestion} /><Profile /></>}/>

@@ -42,7 +42,7 @@ const Login = ({ verifyLogin }) => {
   };
 
   const handleClick = ()=>{
-    window.open('http://localhost:5000/google/auth/google','_blank')
+    window.open('http://localhost:5000/google/auth/google','_blank');
   }
 
   const navigate = useNavigate();
